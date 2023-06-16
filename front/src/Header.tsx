@@ -6,13 +6,17 @@ export default function Header() {
   const { user } = useContext<UserContextType>(UserContext);
   const router = useNavigate();
   return (
-    <header className="flex justify-between">
-      <Link to={'/'} className="flex items-center gap-1">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 -rotate-90">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-        </svg>
-        <span className="font-bold text-xl">헤더</span>
+    <header className="flex justify-between h-16 items-center bg-header_bg px-10">
+      <Link to={'/'} className="flex items-center ">
+        <span className="font-bold text-xl text-header_element">My Portfolio</span>
       </Link>
+      <div className="relative xl:w-1/3 lg:w-1/2
+      sm:w-1/3 xs:w-32 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 absolute right-2 text-header_element">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        </svg>
+        <input type="text" className="border bg-inherit border-header_element rounded-xl h-8 w-full px-5 text-header_element"/>
+      </div>
       {user ? (
         <div className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 cursor-pointer " onClick={()=>router('/account')}>
           <div className="bg-gray-500 text-white rounded-full border border-gray-500 overflow-hidden">
@@ -26,11 +30,15 @@ export default function Header() {
         </div>
         ) : 
         <div className="flex gap-2">
-          <Link to={'/register'} className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 ">
-            회원가입
+          <Link to={'/register'} className="flex items-center gap-2 xs:gap-0 ">
+            <p className="text-header_element font-sans text-sm">
+              회원가입
+            </p>
           </Link>
-          <Link to={'/login'} className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 ">
-            로그인
+          <Link to={'/login'} className="flex items-center gap-2 xs:gap-0 ">
+            <p className="text-header_element font-sans text-sm ml-5">
+              로그인
+            </p>
           </Link>
         </div>
         }      
