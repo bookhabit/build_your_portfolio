@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import { useState} from "react";
 import axios from "axios";
+import { Button, Input, Label, Textarea } from "../elements";
 
 
 export default function ReigsterPage() {
@@ -35,11 +36,36 @@ export default function ReigsterPage() {
       <div className="mb-64">
         <h1 className="text-4xl text-center mb-4">Register</h1>
         <form className="max-w-md mx-auto" onSubmit={registerUser}>
+          <Input 
+                label="회원가입"
+                type="text"
+                placeholder="이름을 입력해주세요"
+                _onChange={()=>console.log('이벤트')}
+                sort="authInput"
+            />
+          <Label
+                icon="별 아이콘"
+                sort="authInput"
+                label="제목"
+          />
+          <Textarea
+                label="설명"
+                placeholder="이름을 입력해주세요"
+                _onChange={()=>console.log('이벤트')}
+                sort="authInput"
+          />
+          <Button
+                text="로그인"
+                _onClick={()=>console.log('러븥')}
+                sort="social"
+          />
+          <div>구분선 테스트</div>
           <input 
                 type="text" 
                 placeholder="이 현진"
                 value={name}
                 onChange={ev=>setName(ev.target.value)}
+                className="bg-red-50"
                 />
           <input type="email"
                  placeholder="your@email.com"

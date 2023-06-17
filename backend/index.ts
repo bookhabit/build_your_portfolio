@@ -17,7 +17,6 @@ import pathLB from "path"
 dotenv.config();
 const app: Express = express();
 
-
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 
