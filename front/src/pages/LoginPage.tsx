@@ -1,7 +1,11 @@
 import {Link, Navigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import axios from "axios";
+import googleSvg from "../assets/google.svg"
+import githubSvg from "../assets/github.svg"
 import { UserContext, UserContextType } from "../UserContext";
+import { Button } from "../elements";
+import Input, { InputChangeEvent } from "../elements/Input";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -21,32 +25,73 @@ export default function LoginPage() {
     }
   }
 
+  const onChangeInput = (event:InputChangeEvent)=>{
+    if(event.target.name==="email"){
+      setEmail(event.target.value)
+    }else if(event.target.name==="password"){
+      setPassword(event.target.value)
+    }
+  }
+
   if(redirect){
     return <Navigate to="/"/>
   }
 
+  async function registerGithub(event:React.FormEvent){ 
+    event.preventDefault()
+    console.log('깃허브 로그인 로직')
+  }
+
+  async function registerGoogle(event:React.FormEvent){ 
+    event.preventDefault()
+    console.log('구글 로그인 로직')
+  }
+
   return (
-    <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-64">
-        <h1 className="text-4xl text-center mb-4">Login</h1>
-        <form className="max-w-md mx-auto" onSubmit={handleLogin}>
-          <input type="email"
-                 placeholder="your@email.com"
-                 value={email}
-                 onChange={ev => setEmail(ev.target.value)} />
-          <input type="password"
-                 placeholder="password"
-                 value={password}
-                 onChange={ev => setPassword(ev.target.value)} />
-          <button className="primary">Login</button>
-          <div className="text-center py-2 text-gray-500">
-            Don't have an account yet? 
-            <Link className="underline text-black ml-4" to={'/register'}>
-                Register now
-            </Link>
+    <div className="flex items-center justify-center h-full">
+        <form className="authForm py-12 bg-form_bg ">
+          <h1 className=" text-4xl font-bold text-center mb-4">Login</h1>
+          <div className="flex flex-col my-12 gap-8 items-center">
+                <Input 
+                    type="email"
+                    placeholder="your@email.com"
+                    _onChange={onChangeInput}
+                    sort="authInput"
+                    value={email}
+                    name="email"
+                />
+                <Input 
+                    type="password"
+                    placeholder="password"
+                    _onChange={onChangeInput}
+                    sort="authInput"
+                    value={password}
+                    name="password"
+                />
+
+          </div>
+          <div className="flex flex-col items-center gap-4">
+            <Button
+                  text="Login"
+                  _onClick={handleLogin}
+                  sort="auth"
+            />
+            <Button
+                text="Login with Github"
+                _onClick={registerGithub}
+                sort="social"
+                icon={githubSvg}
+                alt="깃허브 로고"
+            />
+            <Button
+                  text="Login with Google"
+                  _onClick={registerGoogle}
+                  sort="social"
+                  icon={googleSvg}
+                  alt="구글로고"
+            />
           </div>
         </form>
-      </div>
     </div>
   );
 }
