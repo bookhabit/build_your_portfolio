@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        '2xl': '0 10px 15px 2px rgba(0, 0, 0, 0.5)',
+      },
       colors:{
         primary:'#F5385D',
         header_element:'#FFFFFF',

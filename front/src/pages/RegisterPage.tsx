@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import axios from "axios";
 import googleSvg from "../assets/google.svg"
 import githubSvg from "../assets/github.svg"
@@ -55,8 +55,9 @@ export default function ReigsterPage() {
   }
 
   return (
+    
     <div className="flex items-center justify-center h-full">
-        <form className="authForm py-12 bg-form_bg ">
+        <form className={`authForm py-12 bg-form_bg shadow-2xl`}>
           <h1 className=" text-4xl font-bold text-center mb-4">Register</h1>
           <div className="flex flex-col my-12 gap-8 items-center">
               <Input 
