@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+.authForm{
+    height: 550px;
+    width:500px;
+}

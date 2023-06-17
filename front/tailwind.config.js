@@ -20,7 +20,8 @@ export default {
         resume_card_BG:'#F5F5F5',
         portfolio_form_label:'#656262',
         category_select:'#5F9ED9',
-        form_bg:'#E7E7E7'
+        form_bg:'#E7E7E7',
+        border_focus:'#BEFFAD',
       }
     },
     screens: {

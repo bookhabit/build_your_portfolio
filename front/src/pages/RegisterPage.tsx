@@ -1,8 +1,10 @@
 import {Link, useNavigate} from "react-router-dom";
 import { useState} from "react";
 import axios from "axios";
+import googleSvg from "../assets/google.svg"
+import githubSvg from "../assets/github.svg"
 import { Button, Input, Label, Textarea } from "../elements";
-
+import { InputChangeEvent } from "../elements/Input";
 
 export default function ReigsterPage() {
   const [name,setName] = useState<string>('');
@@ -12,8 +14,19 @@ export default function ReigsterPage() {
 
   const router = useNavigate();
 
-  async function registerUser(event:React.FormEvent){ 
+  const onChangeInput = (event:InputChangeEvent)=>{
+    if(event.target.name==="name"){
+      setName(event.target.value)
+    }else if(event.target.name==="email"){
+      setEmail(event.target.value)
+    }else if(event.target.name==="password"){
+      setPassword(event.target.value)
+    }
+  }
+
+  async function registerLocal(event:React.FormEvent){ 
     event.preventDefault();
+    
     try{
       await axios.post('/register',{
         name:name,
@@ -27,63 +40,73 @@ export default function ReigsterPage() {
     }
   }
 
+  async function registerGithub(event:React.FormEvent){ 
+    event.preventDefault()
+    console.log('깃허브 로그인 로직')
+  }
+
+  async function registerGoogle(event:React.FormEvent){ 
+    event.preventDefault()
+    console.log('구글 로그인 로직')
+  }
+
   if(redirect){
     router('/login')
   }
 
   return (
-    <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-64">
-        <h1 className="text-4xl text-center mb-4">Register</h1>
-        <form className="max-w-md mx-auto" onSubmit={registerUser}>
-          <Input 
-                label="회원가입"
-                type="text"
-                placeholder="이름을 입력해주세요"
-                _onChange={()=>console.log('이벤트')}
-                sort="authInput"
-            />
-          <Label
-                icon="별 아이콘"
-                sort="authInput"
-                label="제목"
-          />
-          <Textarea
-                label="설명"
-                placeholder="이름을 입력해주세요"
-                _onChange={()=>console.log('이벤트')}
-                sort="authInput"
-          />
-          <Button
-                text="로그인"
-                _onClick={()=>console.log('러븥')}
-                sort="social"
-          />
-          <div>구분선 테스트</div>
-          <input 
-                type="text" 
-                placeholder="이 현진"
-                value={name}
-                onChange={ev=>setName(ev.target.value)}
-                className="bg-red-50"
+    <div className="flex items-center justify-center h-full">
+        <form className="authForm py-12 bg-form_bg ">
+          <h1 className=" text-4xl font-bold text-center mb-4">Register</h1>
+          <div className="flex flex-col my-12 gap-8 items-center">
+              <Input 
+                    type="text"
+                    placeholder="이름을 입력해주세요"
+                    _onChange={onChangeInput}
+                    sort="authInput"
+                    value={name}
+                    name="name"
                 />
-          <input type="email"
-                 placeholder="your@email.com"
-                 value={email}
-                 onChange={ev => setEmail(ev.target.value)} />
-          <input type="password"
-                 placeholder="password"
-                 value={password}
-                 onChange={ev => setPassword(ev.target.value)} />
-          <button className="primary">Register</button>
-          <div className="text-center py-2 text-gray-500">
-            if you have an account? 
-            <Link className="underline text-black ml-4" to={'/login'}>
-                Login now
-            </Link>
+                <Input 
+                    type="email"
+                    placeholder="your@email.com"
+                    _onChange={onChangeInput}
+                    sort="authInput"
+                    value={email}
+                    name="email"
+                />
+                <Input 
+                    type="password"
+                    placeholder="password"
+                    _onChange={onChangeInput}
+                    sort="authInput"
+                    value={password}
+                    name="password"
+                />
+
+          </div>
+          <div className="flex flex-col items-center gap-4">
+            <Button
+                  text="Sign up"
+                  _onClick={registerLocal}
+                  sort="auth"
+            />
+            <Button
+                text="Login with Github"
+                _onClick={registerGithub}
+                sort="social"
+                icon={githubSvg}
+                alt="깃허브 로고"
+            />
+            <Button
+                  text="Login with Google"
+                  _onClick={registerGoogle}
+                  sort="social"
+                  icon={googleSvg}
+                  alt="구글로고"
+            />
           </div>
         </form>
-      </div>
     </div>
   );
 }
