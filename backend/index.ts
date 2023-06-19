@@ -13,6 +13,7 @@ import imageDownloader from "image-downloader"
 import multer from 'multer'
 import fs from 'fs'
 import pathLB from "path"
+import { Error } from "mongoose";
 
 dotenv.config();
 const app: Express = express();
@@ -31,17 +32,31 @@ connectToMongoDB();
 // 회원가입
 app.post('/register', async (req:Request,res:Response) => {
       const {name,email,password} = req.body;
-      try {
+      // validation
+      const dbEmail=await User.findOne({email:email})
+      if(dbEmail?.email===email){
+        return res.json({ 
+          // 이메일이 중복된다면 json객체를 반환한다.
+          status: 409,
+          message: "이미 존재하는 이메일 입니다.",
+        });
+      }else{
+        try{
           const userDoc = await User.create({
-          name,
-          email,
-          password:bcrypt.hashSync(password, bcryptSalt),
-          });
-          res.json(userDoc);
-      } catch (e) {
-          res.status(422).json(e);
+            name,
+            email,
+            password:bcrypt.hashSync(password, bcryptSalt),
+            });
+            res.json({
+              status:200,
+              user:userDoc
+            });
+        }catch(e){
+          res.status(422)
+        }
       }
-  });
+      }
+  );
 
 // 로그인
 app.post('/login', async (req:Request,res:Response) => {
