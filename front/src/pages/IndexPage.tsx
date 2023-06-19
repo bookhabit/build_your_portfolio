@@ -15,6 +15,18 @@ export default function IndexPage() {
       setPosts(response.data)
     })
   },[])
+
+  // 포트폴리오 작성이 처음이라면 이력서 form페이지로 리다이렉션 시키기
+  const handleClick = ()=>{
+    // api 요청 : 데이터베이스에 유저의 포트폴리오 정보가 있는지 확인
+    const firstUser = true
+    if(firstUser){
+      router('/resume/create')
+    }else{
+      router('/protfolio/create')
+    }
+  }
+
   return (
     <div className="relative h-screen">
       <div className="mt-8 grid gap-x-6 gap-y-8 xs:grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -30,9 +42,9 @@ export default function IndexPage() {
       ))}
       </div>
       {user && (
-        <div className="absolute w-20 bottom-0 right-0">
-          <button className="bg-primary w-full p-2 text-white rounded-full" onClick={()=>router('/post/create')}>
-            글 등록
+        <div className="absolute w-48 bottom-5 right-5">
+          <button className="w-full bg-header_bg text-header_element p-2 rounded-full" onClick={handleClick}>
+            포트폴리오 등록하기
           </button>
         </div>
       )}

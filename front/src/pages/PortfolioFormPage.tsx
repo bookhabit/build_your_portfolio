@@ -4,7 +4,7 @@ import { Navigate, useParams } from "react-router";
 import axios from "axios";
 // import PhotosUploader from "./PhotosUploader";
 
-export default function PostFormPage() {
+export default function PortfolioFormPage() {
     const {id:postId} = useParams();
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('');
