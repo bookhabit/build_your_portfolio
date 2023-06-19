@@ -38,7 +38,6 @@ interface IProps{
 
 const Input = (props:IProps) => {
     const {label ,placeholder, _onChange,sort,type,value,name,isValid,errorMessage,validateMode } = props;
-    console.log(isValid,errorMessage,validateMode)
       return(
         <React.Fragment>
             {label}

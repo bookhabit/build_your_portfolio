@@ -8,7 +8,7 @@ import { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 
-type ValidationForm = {
+type ValidationRegisterForm = {
   name:string,
   email:string,
   password:string
@@ -20,8 +20,7 @@ export default function ReigsterPage() {
   const [password, setPassword] = useState<string>('');
   const [redirect, setRedirect] = useState<boolean>(false);
   const formRef = useRef(null);
-  const [errorMessage,setErrorMessage] = useState<ValidationForm>({
-    // 기본값이 폼 필수요소 체크
+  const [errorMessage,setErrorMessage] = useState<ValidationRegisterForm>({
     name:"",
     email:"",
     password:"",

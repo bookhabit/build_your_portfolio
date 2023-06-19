@@ -73,10 +73,10 @@ app.post('/login', async (req:Request,res:Response) => {
         res.cookie('token', token).json(userDoc);
       });
     } else {
-      res.status(422).json('pass not ok');
+      res.status(400).json('비밀번호가 일치하지 않습니다');
     }
   } else {
-    res.json('not found');
+    res.status(404).json('해당 이메일의 유저를 찾을 수 없습니다');
   }
 });
 
