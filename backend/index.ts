@@ -35,11 +35,7 @@ app.post('/register', async (req:Request,res:Response) => {
       // validation
       const dbEmail=await User.findOne({email:email})
       if(dbEmail?.email===email){
-        return res.json({ 
-          // 이메일이 중복된다면 json객체를 반환한다.
-          status: 409,
-          message: "이미 존재하는 이메일 입니다.",
-        });
+        return res.status(409).json('이미 존재하는 이메일 입니다.');
       }else{
         try{
           const userDoc = await User.create({
@@ -47,10 +43,7 @@ app.post('/register', async (req:Request,res:Response) => {
             email,
             password:bcrypt.hashSync(password, bcryptSalt),
             });
-            res.json({
-              status:200,
-              user:userDoc
-            });
+            res.status(200).json({userDoc});
         }catch(e){
           res.status(422)
         }

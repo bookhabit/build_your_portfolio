@@ -150,21 +150,21 @@ export default function ReigsterPage() {
           email:email,
           password:password
         })
-        if(res.data.status===200){
+        console.log('res',res)
+        if(res.status===200){
           alert('register successful.')
           setRedirect(true)
-        }else if(res.data.status===409){
-          // 이미 존재하는 이메일 validation
+        }
+      }catch(err:any){
+        if(err.response?.status===409){
+          setValidateMode(true)
           setErrorMessage((prevState) => ({
             ...prevState,
-            email: res.data.message,
+            email: err.response.data
           }));
-        }else{
-          alert('회원가입에 실패하였습니다')
-        }
-      }catch(e){
-        console.log(e)
-        alert('register failed')
+          }else{
+            alert('회원가입에 실패하였습니다')
+          }
       }
     }
   }
