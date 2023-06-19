@@ -1,16 +1,22 @@
-import {Link, useNavigate} from "react-router-dom";
-import { useEffect, useState} from "react";
+import { useNavigate} from "react-router-dom";
+import { useEffect, useRef, useState} from "react";
 import axios from "axios";
 import googleSvg from "../assets/google.svg"
 import githubSvg from "../assets/github.svg"
 import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
+import gsap from 'gsap'
 
 export default function ReigsterPage() {
   const [name,setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [redirect, setRedirect] = useState<boolean>(false);
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(formRef.current,{x: -1000}, {x: 0} )
+  }, [])
 
   const router = useNavigate();
 
@@ -28,14 +34,16 @@ export default function ReigsterPage() {
     event.preventDefault();
     
     try{
-      await axios.post('/register',{
+      const res = await axios.post('/register',{
         name:name,
         email:email,
         password:password
       })
+      console.log('회원가입',res)
       alert('register successful.')
       setRedirect(true)
     }catch(e){
+      console.log(e)
       alert('register failed')
     }
   }
@@ -57,7 +65,7 @@ export default function ReigsterPage() {
   return (
     
     <div className="flex items-center justify-center h-full">
-        <form className={`authForm py-12 bg-form_bg shadow-2xl`}>
+        <form ref={formRef} className={`authForm py-12 bg-form_bg shadow-2xl`}>
           <h1 className=" text-4xl font-bold text-center mb-4">Register</h1>
           <div className="flex flex-col my-12 gap-8 items-center">
               <Input 

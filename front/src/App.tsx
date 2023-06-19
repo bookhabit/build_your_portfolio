@@ -11,6 +11,7 @@ import AccountPage from './pages/ProfilePage';
 import PostDetail from './pages/PostDetail';
 import ProfilePage from './pages/ProfilePage';
 import UserPostsPage from './pages/UserPostsPage';
+import 'animate.css'
 
 axios.defaults.baseURL = "http://localhost:4000"
 axios.defaults.withCredentials = true;

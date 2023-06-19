@@ -1,17 +1,24 @@
-import {Link, Navigate} from "react-router-dom";
-import {useContext, useState} from "react";
+import { Navigate} from "react-router-dom";
+import {useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import googleSvg from "../assets/google.svg"
 import githubSvg from "../assets/github.svg"
 import { UserContext, UserContextType } from "../UserContext";
 import { Button } from "../elements";
 import Input, { InputChangeEvent } from "../elements/Input";
+import gsap from 'gsap'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
   const { setUser } = useContext<UserContextType>(UserContext);
+
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(formRef.current,{x: 1000}, {x: 0} )
+}, [])
 
   const handleLogin = async (event:React.FormEvent)=>{
     event.preventDefault();
@@ -49,7 +56,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center h-full">
-        <form className="authForm py-12 bg-form_bg shadow-2xl">
+        <form ref={formRef} className="authForm py-12 bg-form_bg shadow-2xl">
           <h1 className=" text-4xl font-bold text-center mb-4">Login</h1>
           <div className="flex flex-col my-12 gap-8 items-center">
                 <Input 
