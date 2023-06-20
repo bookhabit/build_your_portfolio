@@ -1,8 +1,14 @@
 import React from "react";
 import tw from "tailwind-styled-components";
 
-const ResumeTextarea = tw.textarea`
-  bg-yellow
+interface TextareaType{
+  height:string
+}
+
+const ResumeTextarea = tw.textarea<TextareaType>`
+  p-2 text-sm border border-gray-200 
+  shadow-lg outline-none rounded-md
+  ${(props)=>props.height}
 `;
 
 const PortfolioTexarea = tw.textarea`
@@ -10,22 +16,24 @@ const PortfolioTexarea = tw.textarea`
 `;
 
 interface IProps{
-    label :string,
-    placeholder:string,
+    label? :string,
+    placeholder?:string,
+    value:string,
     _onChange:React.ChangeEventHandler<HTMLTextAreaElement>,
     sort:"resumeTextarea"|"portfolioTexarea"
+    height:string,
 }
 
 const Textarea = (props:IProps) => {
-    const {label ,placeholder, _onChange,sort } = props;
+    const {label ,placeholder, _onChange,sort,value,height } = props;
  
   return(
     <React.Fragment>
-    {label}
+      {label}
         {sort==="resumeTextarea"&&
-        <ResumeTextarea placeholder = {placeholder} onChange={_onChange}/>}
+        <ResumeTextarea placeholder = {placeholder} onChange={_onChange} value={value} height={height} />}
         {sort==="portfolioTexarea"&&
-        <PortfolioTexarea placeholder = {placeholder} onChange={_onChange}/>}
+        <PortfolioTexarea placeholder = {placeholder} onChange={_onChange} value={value}/>}
     </React.Fragment>
   )
 };

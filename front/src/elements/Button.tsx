@@ -11,7 +11,7 @@ const SocialButton=tw.button`
 `;
 
 const ResumeButton = tw.button`
-  bg-resume_input w-full text-white font-bold p-3 rounded-lg
+  bg-resume_input w-28  text-white font-bold p-3 rounded-lg
   hover:bg-header_bg
 `;
 
