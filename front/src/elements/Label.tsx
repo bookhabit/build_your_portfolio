@@ -1,28 +1,38 @@
 import React from "react";
 import tw from "tailwind-styled-components";
 
-const ResumeLabel = tw.textarea`
+const ResumeLabel = tw.label`
   bg-yellow
 `;
 
-const PortfolioLabel = tw.textarea`
+const PortfolioLabel = tw.label`
   bg-green
 `;
 
 interface IProps{
-    icon :string,
-    sort:string,
+    icon?:string,
+    alt?:string;
+    sort:"resumeLabel"|"portfolioLabel",
     label:string,
 }
 
 const Label = (props:IProps) => {
-    const {icon,label,sort} = props;
+    const {icon,label,sort,alt} = props;
  
   return(
     <React.Fragment>
-        {icon}
-        {sort==="resumeLabel" && <ResumeLabel value={label} />}
-        {sort==="portfolioLabel" && <PortfolioLabel value={label} />}
+        {sort==="resumeLabel" && 
+        icon ? 
+          <ResumeLabel className="flex w-28 items-center justify-between">
+            <img src={icon} alt={alt} className="items-start"/>
+            <p className="font-bold text-base">{label}</p>
+          </ResumeLabel>
+        : <ResumeLabel className="w-full">
+            <p className="font-bold text-base">{label}</p>
+          </ResumeLabel>
+        }
+        {sort==="portfolioLabel" && 
+          <PortfolioLabel><p>{label}</p></PortfolioLabel>}
     </React.Fragment>
   )
 };

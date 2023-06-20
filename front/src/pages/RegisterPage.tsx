@@ -1,8 +1,8 @@
 import { useNavigate} from "react-router-dom";
 import { useContext, useEffect, useRef, useState} from "react";
-import axios, { AxiosError } from "axios";
-import googleSvg from "../assets/google.svg"
-import githubSvg from "../assets/github.svg"
+import axios from "axios";
+import googleSvg from "../assets/auth/google.svg"
+import githubSvg from "../assets/auth/github.svg"
 import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'

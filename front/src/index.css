@@ -6,3 +6,9 @@
     height: 550px;
     width:500px;
 }
+
+.resumeForm{
+    min-width:60vw;
+    max-width:80vw;
+    min-height:80vh;
+}

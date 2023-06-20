@@ -11,7 +11,12 @@ const SocialButton=tw.button`
 `;
 
 const ResumeButton = tw.button`
-  bg-white-50
+  bg-resume_input w-full text-white font-bold p-3 rounded-lg
+  hover:bg-header_bg
+`;
+
+const ResumePlusButton = tw.button`
+  bg-resume_input w-10 text-white
 `;
 
 const PortfolioButton = tw.button`
@@ -20,8 +25,8 @@ const PortfolioButton = tw.button`
 
 interface IProps{
     text:string
-    _onClick:React.MouseEventHandler<HTMLButtonElement>
-    sort:string
+    _onClick?:React.MouseEventHandler<HTMLButtonElement>
+    sort:"auth"|"social"|"resume"|"plusButton"|"portfolio"
     icon?:string
     alt?:string
 }
@@ -38,9 +43,11 @@ const Button = (props:IProps) => {
         <SocialButton onClick={_onClick} >
           <img src={icon} alt={alt} className="items-start"/>
           {text}
-        </SocialButton>
-        }
-        {sort==="resume" && <ResumeButton onClick={_onClick} >{text}</ResumeButton>}
+        </SocialButton>}
+        {sort==="resume" && 
+        <ResumeButton onClick={_onClick} >{text}</ResumeButton>}
+        {sort==="plusButton" &&
+        <ResumePlusButton onClick={_onClick} >{text}</ResumePlusButton>}
         {sort==="portfolio" && <PortfolioButton onClick={_onClick} >{text}</PortfolioButton>}
     </React.Fragment>
   );

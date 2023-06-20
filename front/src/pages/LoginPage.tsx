@@ -1,8 +1,8 @@
 import { Navigate} from "react-router-dom";
 import {useContext, useEffect, useRef, useState} from "react";
 import axios, { AxiosError } from "axios";
-import googleSvg from "../assets/google.svg"
-import githubSvg from "../assets/github.svg"
+import googleSvg from "../assets/auth/google.svg"
+import githubSvg from "../assets/auth/github.svg"
 import { UserContext, UserContextType } from "../Context/UserContext";
 import { Button } from "../elements";
 import Input, { InputChangeEvent } from "../elements/Input";

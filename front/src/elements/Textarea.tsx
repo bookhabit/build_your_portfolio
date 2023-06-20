@@ -13,7 +13,7 @@ interface IProps{
     label :string,
     placeholder:string,
     _onChange:React.ChangeEventHandler<HTMLTextAreaElement>,
-    sort:string,
+    sort:"resumeTextarea"|"portfolioTexarea"
 }
 
 const Textarea = (props:IProps) => {

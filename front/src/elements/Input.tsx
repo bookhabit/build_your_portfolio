@@ -29,7 +29,7 @@ interface IProps{
     _onChange?: (ev: InputChangeEvent) => void
     name:string;
     type:string;
-    sort:string;
+    sort:"authInput"|"resumeInput"|"portfolioInput"
     isValid:boolean;
     errorMessage:string;
     validateMode:boolean;
@@ -43,10 +43,13 @@ const Input = (props:IProps) => {
             {label}
             {sort==="authInput"&&
             <AuthInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value} isValid={isValid} validateMode={validateMode} />}
+
             {sort==="resumeInput"&&
             <ResumeInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value}/>}
+            
             {sort==="portfolioInput"&&
             <PortfolioInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value}/>}
+            
             {isValid && errorMessage && validateMode && (
               <p className="font text-sm text-error_stroke">{errorMessage}</p>
             )}
