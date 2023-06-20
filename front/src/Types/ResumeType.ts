@@ -21,3 +21,8 @@ export type acitivityType = {
     activityName:string;
     period:string;
 }
+
+export type ChannelType = {
+    channelName:string
+    channelURL:string
+  }

@@ -6,7 +6,7 @@ export default function Header() {
   const { user } = useContext<UserContextType>(UserContext);
   const router = useNavigate();
   return (
-    <header className="flex justify-between h-16 items-center bg-header_bg px-10">
+    <header className="flex justify-between h-16 items-center bg-header_bg px-10 py-3">
       <Link to={'/'} className="flex items-center ">
         <span className="font-bold text-xl text-header_element">My Portfolio</span>
       </Link>
