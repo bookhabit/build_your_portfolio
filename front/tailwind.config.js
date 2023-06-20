@@ -24,7 +24,7 @@ export default {
         portfolio_form_label:'#656262',
         category_select:'#5F9ED9',
         form_bg:'#E7E7E7',
-        border_focus:'#BEFFAD',
+        border_focus:'#58BA74',
       }
     },
     screens: {

@@ -47,7 +47,10 @@ const Button = (props:IProps) => {
         {sort==="resume" && 
         <ResumeButton onClick={_onClick} >{text}</ResumeButton>}
         {sort==="plusButton" &&
-        <ResumePlusButton onClick={_onClick} >{text}</ResumePlusButton>}
+        <ResumePlusButton onClick={_onClick} >
+          <img src={icon} alt={alt}/>
+          {text}
+        </ResumePlusButton>}
         {sort==="portfolio" && <PortfolioButton onClick={_onClick} >{text}</PortfolioButton>}
     </React.Fragment>
   );

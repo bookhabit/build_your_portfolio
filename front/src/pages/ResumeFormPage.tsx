@@ -70,52 +70,86 @@ export default function ResumeFormPage() {
         return <Navigate to={'/'} />
     }
 
+    function formItemClass():string{
+      return "flex items-center gap-4"
+    }
+
     return(
       <div className="flex items-center justify-center h-full">
         <form onSubmit={savePlace} className="relative resumeForm bg-resume_card_BG shadow-2xl py-12 px-16">
           <h1 className=" text-2xl font-bold text-center mb-16">이력서</h1>
           <div className="flex flex-col justify-center items-start gap-7">
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={birthIcon} alt="생년원일 아이콘" sort="resumeLabel" label="생년원일" />
-              {/* <Input/> */}
+              <Input 
+                placeholder="ex) 1998-06-19"
+                value={birth}
+                _onChange={(event)=>setBirth(event.target.value)}
+                name="birt"
+                type="text"
+                sort="resumeInput"
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={UniversityIcon} alt="최종학력 아이콘" sort="resumeLabel" label="최종학력" />
-              {/* <Input/> */}
+              <Input 
+                placeholder="ex) 한서대학교"
+                value={finalEducation}
+                _onChange={(event)=>setFinalEducation(event.target.value)}
+                name="finalEducation"
+                type="text"
+                sort="resumeInput"
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={phoneIcon} alt="전화번호 아이콘" sort="resumeLabel" label="전화번호" />
-              {/* <Input/> */}
+              <Input 
+                placeholder="ex) 010-7607-9182"
+                value={phone}
+                _onChange={(event)=>setPhone(event.target.value)}
+                name="phone"
+                type="text"
+                sort="resumeInput"
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={certificationIcon} alt="자격증 아이콘" sort="resumeLabel" label="자격증" />
               {/* <Input/> */}
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={linkIcon} alt="링크 아이콘" sort="resumeLabel" label="Channel" />
               {/* <Input/> */}
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={techIcon} alt="기술스택 아이콘" sort="resumeLabel" label="기술스택" />
               {/* <Input/> */}
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={careerIcon} alt="경력 아이콘" sort="resumeLabel" label="경력" />
               {/* <Input/> */}
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label icon={CooperationIcon} alt="대외활동 아이콘" sort="resumeLabel" label="대외활동" />
               {/* <Input/> */}
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label sort="resumeLabel" label="자신을 한 문장으로 소개해보세요" />
               {/* <Textarea/> */}
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label sort="resumeLabel" label="개발을 하는 이유" />
               {/* <Textarea/> */}
             </div>
-            <div className="flex items-center">
+            <div className={formItemClass()}>
               <Label sort="resumeLabel" label="자기소개" />
               {/* <Textarea/> */}
             </div>

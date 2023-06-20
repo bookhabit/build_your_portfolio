@@ -12,7 +12,9 @@ const AuthInput = tw.input<ValidateProps>`
 `;
 
 const ResumeInput = tw.input`
-  bg-white-50
+  width: auto;
+  bg-inherit border-b border-black placeholder-black p-1
+  outline-none focus:border-b focus:border-border_focus
 `;
 
 const PortfolioInput = tw.input`
@@ -42,7 +44,11 @@ const Input = (props:IProps) => {
         <React.Fragment>
             {label}
             {sort==="authInput"&&
-            <AuthInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value} isValid={isValid} validateMode={validateMode} />}
+            <AuthInput 
+              placeholder = {placeholder} 
+              onChange={_onChange} 
+              type={type} name={name} value={value} 
+              isValid={isValid} validateMode={validateMode} />}
 
             {sort==="resumeInput"&&
             <ResumeInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value}/>}
