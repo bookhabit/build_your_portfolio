@@ -17,7 +17,7 @@ import { ValidateContext, ValidateContextType } from "../Context/ValidateContext
 import { InputChangeEvent } from "../elements/Input";
 
 export const ShowArray = tw.div`
-  bg-inherit border-b border-black p-1 min-w-full
+  bg-inherit border-b border-border_focus p-1 min-w-full
 `;
 
 type ValidateResume = {
@@ -206,7 +206,6 @@ export default function ResumeFormPage() {
           }
         }));
       }
-      
       setValidateMode(false)
     }
 
@@ -303,7 +302,6 @@ export default function ResumeFormPage() {
 
       return true
     }
-
     // 숙소 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
         ev.preventDefault();
@@ -319,18 +317,18 @@ export default function ResumeFormPage() {
         };
         console.log(resumeForm);
         if(validateResumeForm(resumeForm)){
-          // if (postId) {
-          //     // update
-          //     await axios.put('/resume/update', {
-          //         postId, ...resumeForm
-          //     });
-          //     // setRedirect(true);
-          // } else {
-          //     // new post
-          //     await axios.post('/resume/create', resumeForm);
-          //     // setRedirect(true);
-          // }
-
+          if (postId) {
+              // update
+              await axios.put('/resume/update', {
+                  postId, ...resumeForm
+              });
+              setRedirect(true);
+          } else {
+              // new post
+              await axios.post('/resume/create', resumeForm);
+              alert('이력서 등록 완료')
+              setRedirect(true);
+          }
         }
     }
 
@@ -617,8 +615,18 @@ export default function ResumeFormPage() {
               <Textarea 
                 sort="resumeTextarea" 
                 value={myselfSentence}
-                _onChange={(event)=>{setMyselfSentence(event.target.value)}} 
+                name="myselfSentence"
+                _onChange={(event)=>{
+                  setMyselfSentence(event.target.value)
+                  setErrorMessage((prevState) => ({
+                    ...prevState,
+                    myselfSentence:""
+                  }));
+                }} 
                 height="h-12"
+                isValid={!!errorMessage.myselfSentence}
+                errorMessage={errorMessage.myselfSentence}
+                validateMode={validateMode}
                 />
             </div>
             <div className={formItemClassCol()}>
@@ -626,8 +634,18 @@ export default function ResumeFormPage() {
               <Textarea 
                 sort="resumeTextarea" 
                 value={reasonForCoding}
-                _onChange={(event)=>{setReasonForCoding(event.target.value)}} 
+                name="reasonForCoding"
+                _onChange={(event)=>{
+                  setReasonForCoding(event.target.value)
+                  setErrorMessage((prevState) => ({
+                    ...prevState,
+                    reasonForCoding:""
+                  }));
+                }} 
                 height="h-12"
+                isValid={!!errorMessage.reasonForCoding}
+                errorMessage={errorMessage.reasonForCoding}
+                validateMode={validateMode}
                 />
             </div>
             <div className={formItemClassCol()}>
@@ -635,8 +653,18 @@ export default function ResumeFormPage() {
               <Textarea 
                 sort="resumeTextarea" 
                 value={coverLetter}
-                _onChange={(event)=>{setCoverLetter(event.target.value)}} 
+                name="coverLetter"
+                _onChange={(event)=>{
+                  setCoverLetter(event.target.value)
+                  setErrorMessage((prevState) => ({
+                    ...prevState,
+                    coverLetter:""
+                  }));
+                }} 
                 height="h-24"
+                isValid={!!errorMessage.coverLetter}
+                errorMessage={errorMessage.coverLetter}
+                validateMode={validateMode}
                 />
             </div>
           </div>
