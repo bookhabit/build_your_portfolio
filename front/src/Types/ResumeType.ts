@@ -25,4 +25,4 @@ export type acitivityType = {
 export type ChannelType = {
     channelName:string
     channelURL:string
-  }
+}

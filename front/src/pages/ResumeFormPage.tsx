@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { ChannelType, ResumeType, acitivityType, carrerType } from "../Types/ResumeType";
@@ -13,10 +13,26 @@ import CooperationIcon from "../assets/resume/CooperationIcon.svg"
 import plusIcon from "../assets/resume/plusIcon.svg"
 import { Button, Input, Label, Textarea } from "../elements";
 import tw from "tailwind-styled-components";
+import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
+import { InputChangeEvent } from "../elements/Input";
 
 export const ShowArray = tw.div`
   bg-inherit border-b border-black p-1 min-w-full
 `;
+
+type ValidateResume = {
+    birth:string; // 1998-03-21
+    finalEducation:string;
+    phone:string; // 010-7607-9182
+    certification:string;
+    channel:ChannelType; // https://github.com/bookhabit
+    technology:string;
+    career:carrerType;
+    acitivity:acitivityType;
+    myselfSentence:string;
+    reasonForCoding:string;
+    coverLetter:string;
+}
 
 export default function ResumeFormPage() {
     const {id:postId} = useParams();
@@ -51,8 +67,148 @@ export default function ResumeFormPage() {
     const [careerArr,setCareerArr] = useState<carrerType[]>([]);
     const [acitivityArr,setAcitivityArr] = useState<acitivityType[]>([]);
 
-    const [redirect,setRedirect] = useState(false);
+    const [redirect,setRedirect] = useState<boolean>(false);
 
+    // error handling
+    const [errorMessage,setErrorMessage] = useState<ValidateResume>({
+      birth:"", 
+      finalEducation:"",
+      phone:"", 
+      certification:"",
+      channel:{
+        channelName:"",
+        channelURL:""
+      }, 
+      technology:"",
+      career:{
+        commanyName:"",
+        period:"",
+      },
+      acitivity:{
+        activityName:"",
+        period:"",
+      },
+      myselfSentence:"",
+      reasonForCoding:"",
+      coverLetter:"",
+    })
+    const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
+
+    const onChangeInput = (event:InputChangeEvent)=>{
+      if(event.target.name==="birth"){
+        setBirth(event.target.value)
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          birth: "",
+        }));
+      }else if(event.target.name==="finalEducation"){
+        setFinalEducation(event.target.value)
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          finalEducation: "",
+        }));
+      }else if(event.target.name==="phone"){
+        setPhone(event.target.value)
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          phone: "",
+        }));
+      }
+      else if(event.target.name==="certificationInput"){
+        setCertificationInput(event.target.value)
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          certification: "",
+        }));
+      }
+      else if(event.target.name==="channelName"){
+        setChannelInput((prevState)=>({
+          ...prevState,
+          channelName:event.target.value
+        }))
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          channel: {
+            ...prevState.channel,
+            channelName: ""
+          }
+        }));
+      }
+      else if(event.target.name==="channelURL"){
+        setChannelInput((prevState)=>({
+          ...prevState,
+          channelURL:event.target.value
+        }))
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          channel: {
+            ...prevState.channel,
+            channelURL: ""
+          }
+        }));
+      }
+      else if(event.target.name==="technologyInput"){
+        setTechnologyInput(event.target.value)
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          technology: "",
+        }));
+      }
+      else if(event.target.name==="commanyName"){
+        setCareerInput((prevState)=>({
+          ...prevState,
+          commanyName:event.target.value
+        }))
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          career: {
+            ...prevState.career,
+            commanyName: ""
+          }
+        }));
+      }
+      else if(event.target.name==="careerInput.period"){
+        setCareerInput((prevState)=>({
+          ...prevState,
+          period:event.target.value
+        }))
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          career: {
+            ...prevState.career,
+            period: ""
+          }
+        }));
+      }
+      else if(event.target.name==="activityName"){
+        setAcitivityInput((prevState)=>({
+          ...prevState,
+          activityName:event.target.value
+        }))
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          acitivity: {
+            ...prevState.acitivity,
+            activityName: ""
+          }
+        }));
+      }
+      else if(event.target.name==="acitivityInput.period"){
+        setAcitivityInput((prevState)=>({
+          ...prevState,
+          period:event.target.value
+        }))
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          acitivity: {
+            ...prevState.acitivity,
+            period: ""
+          }
+        }));
+      }
+      
+      setValidateMode(false)
+    }
 
     // 수정 시 api요청해서 form 필드 값 채우기
     // useEffect(() => {
@@ -67,9 +223,91 @@ export default function ResumeFormPage() {
     //   });
     // }, [postId]);
 
+    // validation
+    const validateResumeForm = (resumeForm:ResumeType):boolean=>{
+      // 전체 input validation
+      const {birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity
+      } = resumeForm
+
+      const requiredMsg = "필수입력"
+
+      // 정규식
+      const birthRegex = /^\d{4}-\d{2}-\d{2}$/; // 주민번호
+      const phoneRegex = /^010-\d{4}-\d{4}$/; // 핸드폰
+
+      if(!birth){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          birth:requiredMsg,
+        }))
+        return false
+      }
+      if(!birthRegex.test(birth)){
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          birth: "0000-00-00 으로 작성해주세요",
+        }))
+        return false
+      }
+
+      if(!finalEducation){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          finalEducation:requiredMsg,
+        }))
+        return false
+      }
+      if(!phone){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          phone:requiredMsg,
+        }))
+        return false
+      }
+      
+      if(!phoneRegex.test(phone)){
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          phone: "010-0000-0000 으로 작성해주세요",
+        }))
+        return false
+      }
+      if(!technology){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          technology:requiredMsg,
+        }))
+        return false
+      }
+      if(!myselfSentence){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          myselfSentence:requiredMsg,
+        }))
+        return false
+      }
+      if(!reasonForCoding){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          reasonForCoding:requiredMsg,
+        }))
+        return false
+      }
+      if(!coverLetter){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          coverLetter:requiredMsg,
+        }))
+        return false
+      }
+
+      return true
+    }
+
     // 숙소 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
         ev.preventDefault();
+        setValidateMode(true)
         const resumeForm:ResumeType = {
           birth,finalEducation,phone,
           certification:certificationArr,
@@ -80,16 +318,19 @@ export default function ResumeFormPage() {
           myselfSentence,reasonForCoding,coverLetter,
         };
         console.log(resumeForm);
-        if (postId) {
-            // update
-            await axios.put('/resume/update', {
-                postId, ...resumeForm
-            });
-            // setRedirect(true);
-        } else {
-            // new post
-            await axios.post('/resume/create', resumeForm);
-            // setRedirect(true);
+        if(validateResumeForm(resumeForm)){
+          // if (postId) {
+          //     // update
+          //     await axios.put('/resume/update', {
+          //         postId, ...resumeForm
+          //     });
+          //     // setRedirect(true);
+          // } else {
+          //     // new post
+          //     await axios.post('/resume/create', resumeForm);
+          //     // setRedirect(true);
+          // }
+
         }
     }
 
@@ -115,13 +356,13 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) 1998-06-19"
                 value={birth}
-                _onChange={(event)=>setBirth(event.target.value)}
-                name="birt"
+                _onChange={onChangeInput}
+                name="birth"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.birth}
+                errorMessage={errorMessage.birth}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemClassRow()}>
@@ -129,13 +370,13 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) 한서대학교"
                 value={finalEducation}
-                _onChange={(event)=>setFinalEducation(event.target.value)}
+                _onChange={onChangeInput}
                 name="finalEducation"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.finalEducation}
+                errorMessage={errorMessage.finalEducation}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemClassRow()}>
@@ -143,13 +384,13 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) 010-7607-9182"
                 value={phone}
-                _onChange={(event)=>setPhone(event.target.value)}
+                _onChange={onChangeInput}
                 name="phone"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.phone}
+                errorMessage={errorMessage.phone}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemClassRow()}>
@@ -157,13 +398,13 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) 정보처리기사"
                 value={certificationInput}
-                _onChange={(event)=>setCertificationInput(event.target.value)}
+                _onChange={onChangeInput}
                 name="certificationInput"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.certification}
+                errorMessage={errorMessage.certification}
+                validateMode={validateMode}
               />
               <Button
                 sort="plusButton"
@@ -171,8 +412,10 @@ export default function ResumeFormPage() {
                 alt="+아이콘"
                 _onClick={(event)=>{
                   event.preventDefault()
-                  setCertificationInput("")
-                  setCertificationArr([certificationInput,...certificationArr])
+                  if(certificationInput){
+                    setCertificationInput("")
+                    setCertificationArr([certificationInput,...certificationArr])
+                  }
                 }}
               />
             </div>
@@ -188,30 +431,24 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) 채널명"
                 value={channelInput.channelName}
-                _onChange={(event)=>setChannelInput((prevState)=>({
-                  ...prevState,
-                  channelName:event.target.value
-                }))}
+                _onChange={onChangeInput}
                 name="channelName"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.channel.channelName}
+                errorMessage={errorMessage.channel.channelName}
+                validateMode={validateMode}
               />
               <Input 
                 placeholder="ex) https://github.com/bookhabit"
                 value={channelInput.channelURL}
-                _onChange={(event)=>setChannelInput((prevState)=>({
-                  ...prevState,
-                  channelURL:event.target.value
-                }))}
-                name="channelName"
+                _onChange={onChangeInput}
+                name="channelURL"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.channel.channelURL}
+                errorMessage={errorMessage.channel.channelURL}
+                validateMode={validateMode}
               />
               <Button
                 sort="plusButton"
@@ -219,12 +456,14 @@ export default function ResumeFormPage() {
                 alt="+아이콘"
                 _onClick={(event)=>{
                   event.preventDefault()
-                  setChannelInput((prevState)=>({
-                    ...prevState,
-                    channelName:"",
-                    channelURL:""
-                  }))
-                  setChannelArr([channelInput,...channelArr])
+                  if(channelInput.channelName && channelInput.channelURL){
+                    setChannelInput((prevState)=>({
+                      ...prevState,
+                      channelName:"",
+                      channelURL:""
+                    }))
+                    setChannelArr([channelInput,...channelArr])
+                  }
                 }}
               />
             </div>
@@ -242,13 +481,13 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) React.js "
                 value={technologyInput}
-                _onChange={(event)=>setTechnologyInput(event.target.value)}
+                _onChange={onChangeInput}
                 name="technologyInput"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.technology}
+                errorMessage={errorMessage.technology}
+                validateMode={validateMode}
               />
               <Button
                 sort="plusButton"
@@ -256,8 +495,10 @@ export default function ResumeFormPage() {
                 alt="+아이콘"
                 _onClick={(event)=>{
                   event.preventDefault()
-                  setTechnologyInput("")
-                  setTechnologyArr([technologyInput,...technologyArr])
+                  if(technologyInput){
+                    setTechnologyInput("")
+                    setTechnologyArr([technologyInput,...technologyArr])
+                  }
                 }}
               />
             </div>
@@ -273,16 +514,13 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) 회사명"
                 value={careerInput.commanyName}
-                _onChange={(event)=>setCareerInput((prevState)=>({
-                  ...prevState,
-                  commanyName:event.target.value
-                }))}
+                _onChange={onChangeInput}
                 name="commanyName"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.career.commanyName}
+                errorMessage={errorMessage.career.commanyName}
+                validateMode={validateMode}
               />
               <Input 
                 placeholder="ex) 근무기간 (연,월 단위)"
@@ -291,12 +529,12 @@ export default function ResumeFormPage() {
                   ...prevState,
                   period:event.target.value
                 }))}
-                name="period"
+                name="careerInput.period"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.career.period}
+                errorMessage={errorMessage.career.period}
+                validateMode={validateMode}
               />
               <Button
                 sort="plusButton"
@@ -304,12 +542,14 @@ export default function ResumeFormPage() {
                 alt="+아이콘"
                 _onClick={(event)=>{
                   event.preventDefault()
-                  setCareerInput((prevState)=>({
-                    ...prevState,
-                    commanyName:"",
-                    period:""
-                  }))
-                  setCareerArr([careerInput,...careerArr])
+                  if(careerInput.commanyName&&careerInput.period){
+                    setCareerInput((prevState)=>({
+                      ...prevState,
+                      commanyName:"",
+                      period:""
+                    }))
+                    setCareerArr([careerInput,...careerArr])
+                  }
                 }}
               />
             </div>
@@ -327,30 +567,24 @@ export default function ResumeFormPage() {
               <Input 
                 placeholder="ex) 활동명"
                 value={acitivityInput.activityName}
-                _onChange={(event)=>setAcitivityInput((prevState)=>({
-                  ...prevState,
-                  activityName:event.target.value
-                }))}
+                _onChange={onChangeInput}
                 name="activityName"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.acitivity.activityName}
+                errorMessage={errorMessage.acitivity.activityName}
+                validateMode={validateMode}
               />
               <Input 
                 placeholder="ex) 활동기간 (연,월 단위)"
                 value={acitivityInput.period}
-                _onChange={(event)=>setAcitivityInput((prevState)=>({
-                  ...prevState,
-                  period:event.target.value
-                }))}
-                name="period"
+                _onChange={onChangeInput}
+                name="acitivityInput.period"
                 type="text"
                 sort="resumeInput"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.acitivity.period}
+                errorMessage={errorMessage.acitivity.period}
+                validateMode={validateMode}
               />
               <Button
                 sort="plusButton"
@@ -358,12 +592,14 @@ export default function ResumeFormPage() {
                 alt="+아이콘"
                 _onClick={(event)=>{
                   event.preventDefault()
-                  setAcitivityInput((prevState)=>({
-                    ...prevState,
-                    activityName:"",
-                    period:""
-                  }))
-                  setAcitivityArr([acitivityInput,...acitivityArr])
+                  if(acitivityInput.activityName&&acitivityInput.period){
+                    setAcitivityInput((prevState)=>({
+                      ...prevState,
+                      activityName:"",
+                      period:""
+                    }))
+                    setAcitivityArr([acitivityInput,...acitivityArr])
+                  }
                 }}
               />
             </div>

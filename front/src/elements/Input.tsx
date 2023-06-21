@@ -11,10 +11,11 @@ const AuthInput = tw.input<ValidateProps>`
   ${(props)=>props.isValid && props.validateMode && "bg-error_fill border border-error_stroke"}
 `;
 
-const ResumeInput = tw.input`
+const ResumeInput = tw.input<ValidateProps>`
   width: auto;
   bg-inherit border-b border-black placeholder-black p-1
   outline-none focus:border-b focus:border-border_focus
+  ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
 const PortfolioInput = tw.input`
@@ -51,7 +52,14 @@ const Input = (props:IProps) => {
               isValid={isValid} validateMode={validateMode} />}
 
             {sort==="resumeInput"&&
-            <ResumeInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value}/>}
+            <ResumeInput 
+              placeholder = {placeholder} 
+              onChange={_onChange} 
+              type={type} 
+              name={name} 
+              value={value}
+              isValid={isValid} validateMode={validateMode}
+              />}
             
             {sort==="portfolioInput"&&
             <PortfolioInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value}/>}

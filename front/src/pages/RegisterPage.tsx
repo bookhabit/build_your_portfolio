@@ -57,7 +57,7 @@ export default function ReigsterPage() {
     setValidateMode(false)
   }
 
-  const validateSignUpForm = ()=>{
+  const validateSignUpForm = ():boolean=>{
     // name validation
     // 숫자가 포함되지 않는지 확인하는 정규 표현식
     const nameRegex = /^[^0-9]*$/;
