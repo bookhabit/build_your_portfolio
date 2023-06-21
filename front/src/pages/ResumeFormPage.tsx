@@ -80,17 +80,17 @@ export default function ResumeFormPage() {
           myselfSentence,reasonForCoding,coverLetter,
         };
         console.log(resumeForm);
-        // if (postId) {
-        //     // update
-        //     await axios.put('/resume/update', {
-        //         postId, ...resume
-        //     });
-        //     setRedirect(true);
-        // } else {
-        //     // new post
-        //     await axios.post('/resume/create', resume);
-        //     setRedirect(true);
-        // }
+        if (postId) {
+            // update
+            await axios.put('/resume/update', {
+                postId, ...resumeForm
+            });
+            // setRedirect(true);
+        } else {
+            // new post
+            await axios.post('/resume/create', resumeForm);
+            // setRedirect(true);
+        }
     }
 
     if (redirect) {

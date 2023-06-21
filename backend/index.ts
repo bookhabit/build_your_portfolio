@@ -5,9 +5,10 @@ import cors from "cors";
 import connectToMongoDB from "./models";
 import User from "./models/User";
 import Post from "./models/Post";
+import Resume from "./models/Resume"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { UserDataType, UserType } from "./Types/UserType";
+import { UserTokenDataType, UserType } from "./Types/UserType";
 import cookieParser from "cookie-parser";
 import imageDownloader from "image-downloader"
 import multer from 'multer'
@@ -83,7 +84,7 @@ app.get('/profile', (req:Request,res:Response) => {
   const {token} = req.cookies;
   if (token) {
       jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
-        const userData = userDataCallback as UserDataType
+        const userData = userDataCallback as UserTokenDataType
         if (err) throw err;
        const userDoc = await User.findById(userData.id) as UserType;
        const {name,email,_id} = userDoc;
@@ -129,13 +130,52 @@ app.post('/upload', photosMiddleware.array('photos', 100), (req: Request, res: R
   res.json(uploadFiles);
 });
 
-// 게시글 등록
-app.post('/post/create',(req:Request,res:Response)=>{
+// 이력서 등록
+app.post('/resume/create',(req:Request,res:Response)=>{
+  const {token} = req.cookies;
+  const {birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
+  } = req.body;
+  jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
+    const userData = userDataCallback as UserTokenDataType
+    if (err) throw err;
+    const resumeDoc = await Resume.create({
+      author:userData.id,
+      birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
+    })
+    res.json({resumeDoc})
+  });
+})
+
+// 이력서 수정
+app.put('/resume/update',async (req,res)=>{
+  const {token} = req.cookies;
+  const {postId,title,addedLinkPhotos,description,
+  } = req.body;
+  jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
+    const userData = userDataCallback as UserTokenDataType
+    if(err) throw err;
+    const postDoc = await Post.findById(postId)
+    if(postDoc){
+      if(postDoc.author){
+        if(userData.id === postDoc.author.toString()){
+          postDoc.set({
+            title,photos:addedLinkPhotos,description,
+          })
+          await postDoc.save();
+          res.json(postDoc)
+        }
+      }
+    }
+  });  
+})
+
+// 포트폴리오 등록
+app.post('/portfolio/create',(req:Request,res:Response)=>{
   const {token} = req.cookies;
   const {title,addedLinkPhotos,description,
   } = req.body;
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
-    const userData = userDataCallback as UserDataType
+    const userData = userDataCallback as UserTokenDataType
     if (err) throw err;
     const postDoc = await Post.create({
       author:userData.id,
@@ -145,13 +185,13 @@ app.post('/post/create',(req:Request,res:Response)=>{
   });
 })
 
-// post 수정
-app.put('/post/update',async (req,res)=>{
+// 포트폴리오 수정
+app.put('/portfolio/update',async (req,res)=>{
   const {token} = req.cookies;
   const {postId,title,addedLinkPhotos,description,
   } = req.body;
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
-    const userData = userDataCallback as UserDataType
+    const userData = userDataCallback as UserTokenDataType
     if(err) throw err;
     const postDoc = await Post.findById(postId)
     if(postDoc){
@@ -170,13 +210,12 @@ app.put('/post/update',async (req,res)=>{
 
 
 
-
 // 로그인 유저가 등록한 post 찾기
 app.get('/user-posts', (req,res) => {
   const {token} = req.cookies;
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     if(err) throw err;
-    const userData = userDataCallback as UserDataType
+    const userData = userDataCallback as UserTokenDataType
     const {id} = userData;
     const userPostList = await Post.find({author:id}) 
     

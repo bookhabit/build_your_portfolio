@@ -10,6 +10,11 @@ export type ResumeType = {
     myselfSentence:string;
     reasonForCoding:string;
     coverLetter:string;
+    // 백엔드 추가로직
+    _id :string;
+    author : string;
+    createdAt: Date
+    updatedAt:Date
 }
 
 export type carrerType = {
@@ -25,4 +30,4 @@ export type acitivityType = {
 export type ChannelType = {
     channelName:string
     channelURL:string
-  }
+}

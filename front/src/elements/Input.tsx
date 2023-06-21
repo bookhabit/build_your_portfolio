@@ -27,7 +27,7 @@ export type InputChangeEvent = ChangeEvent<HTMLInputElement>
 interface IProps{
     label? :string;
     placeholder:string;
-    value: InputValue;
+    value?: InputValue;
     _onChange?: (ev: InputChangeEvent) => void
     name:string;
     type:string;
