@@ -19,7 +19,8 @@ const ResumeInput = tw.input<ValidateProps>`
 `;
 
 const PortfolioInput = tw.input`
-  bg-black-50
+  text-center font-bold text-3xl border-b py-3 outline-none 
+  w-1/2 focus:text-gray-400 focus:w-auto
 `;
 
 export type InputValue = string | number
@@ -62,7 +63,13 @@ const Input = (props:IProps) => {
               />}
             
             {sort==="portfolioInput"&&
-            <PortfolioInput placeholder = {placeholder} onChange={_onChange} type={type} name={name} value={value}/>}
+            <PortfolioInput 
+              placeholder = {placeholder} 
+              onChange={_onChange} 
+              type={type} 
+              name={name} 
+              value={value}
+              />}
             
             {isValid && errorMessage && validateMode && (
               <p className="font text-sm text-error_stroke">{errorMessage}</p>

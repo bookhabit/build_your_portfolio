@@ -1,88 +1,159 @@
-import {  useEffect, useState } from "react";
+import {  ChangeEvent, useEffect, useState } from "react";
 import PhotosUploader from "../components/testRestAPI/PhotosUploader";
 import { Navigate, useParams } from "react-router";
 import axios from "axios";
+import { Button, Input, Label, Textarea } from "../elements";
+import { InputChangeEvent } from "../elements/Input";
 // import PhotosUploader from "./PhotosUploader";
 
 export default function PortfolioFormPage() {
     const {id:postId} = useParams();
-    const [title,setTitle] = useState('');
-    const [description,setDescription] = useState('');
+    const [title,setTitle] = useState<string>('');
+    const [purpose,setPurpose] = useState<string>('');
+    const [introduce,setIntroduce] = useState<string>('');
+    const [process,setProcess] = useState<string>('');
+    const [learned,setLearned] = useState<string>('');
     const [addedLinkPhotos,setAddedLinkPhotos] = useState<string[]>([]);
+    const [photos,setPhotos] = useState<string[]>([]);
     const [redirect,setRedirect] = useState(false);
 
-    useEffect(() => {
-      if (!postId) {
-        return;
+    // onChange
+    const onChangeInput = (event:InputChangeEvent)=>{
+      if(event.target.name==="title"){
+        setTitle(event.target.value)
       }
-      axios.get('/post/'+postId).then(response => {
-         const {data} = response;
-         setTitle(data.title);
-         setAddedLinkPhotos(data.photos);
-         setDescription(data.description);
-      });
-    }, [postId]);
+    }
+    const onChangeTextarea = (event:ChangeEvent<HTMLTextAreaElement>)=>{
+      console.log('event',event)
+      if(event.target.name==="purpose"){
+        setPurpose(event.target.value)
+      }else if(event.target.name==="introduce"){
+        setIntroduce(event.target.value)
+      }else if(event.target.name==="process"){
+        setProcess(event.target.value)
+      }else if(event.target.name==="learned"){
+        setLearned(event.target.value)
+      }
+      
+    }
 
-    function inputHeader(text:string):JSX.Element {
-        return (
-          <h2 className="text-2xl mt-4">{text}</h2>
-        );
-      }
-      function inputDescription(text:string):JSX.Element {
-        return (
-          <p className="text-gray-500 text-sm">{text}</p>
-        );
-      }
-      function preInput(header:string,description:string) {
-        return (
-          <>
-            {inputHeader(header)}
-            {inputDescription(description)}
-          </>
-        );
-      }
+    // 수정페이지에서 데이터 채워넣기
+    // useEffect(() => {
+    //   if (!postId) {
+    //     return;
+    //   }
+    //   axios.get('/post/'+postId).then(response => {
+    //      const {data} = response;
+    //      setTitle(data.title);
+    //      setAddedLinkPhotos(data.photos);
+         
+    //   });
+    // }, [postId]);
 
-    // 숙소 등록 및 수정
+    
+
+    // 포트폴리오 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
         ev.preventDefault();
         const post = {
-            title, addedLinkPhotos,description, 
+            title, addedLinkPhotos
         };
-        console.log(post);
-        if (postId) {
-            // update
-            await axios.put('/post/update', {
-                postId, ...post
-            });
-            setRedirect(true);
-        } else {
-            // new post
-            await axios.post('/post/create', post);
-            setRedirect(true);
-        }
-
+        // if (postId) {
+        //     // update
+        //     await axios.put('/post/update', {
+        //         postId, ...post
+        //     });
+        //     setRedirect(true);
+        // } else {
+        //     // new post
+        //     await axios.post('/post/create', post);
+        //     setRedirect(true);
+        // }
     }
 
     if (redirect) {
         return <Navigate to={'/'} />
     }
 
+    function formItemTextareaClass():string{
+      return "flex flex-col mt-6 gap-3"
+    }
+
     return(
-        <form onSubmit={savePlace}>
-            {preInput('제목', '')}
-            <input 
+      <div className="flex items-center justify-center py-12 px-14">
+        <form onSubmit={savePlace} className="portfolioForm">
+            <div className="text-center py-4">
+              <Input 
                 type="text" 
-                value={title} 
-                onChange={ev => setTitle(ev.target.value)} placeholder="제목 입력"/>
-            {preInput('설명', '어떤 글인지 설명해주세요')}
-            <textarea 
-                value={description} 
-                onChange={ev => setDescription(ev.target.value)} />
-            {preInput('이미지', '이미지를 첨부해주세요')}
-            <PhotosUploader
+                placeholder="프로젝트 제목" 
+                sort="portfolioInput"
+                value={title}
+                name="title"
+                _onChange={onChangeInput}
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
+            </div>
+            <div className={formItemTextareaClass()}>
+              <Label label="프로젝트 목적 / 기획" sort="portfolioLabel"/>
+              <Textarea
+                value={purpose}
+                name="purpose"
+                _onChange={onChangeTextarea}
+                sort="portfolioTexarea"
+                height="h-20"
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
+            </div>
+            <div className={formItemTextareaClass()}>
+              <Label label="프로젝트 설명 / 소개" sort="portfolioLabel"/>
+              <Textarea
+                value={introduce}
+                name="introduce"
+                _onChange={onChangeTextarea}
+                sort="portfolioTexarea"
+                height="h-20"
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
+            </div>
+            <div className={formItemTextareaClass()}>
+              <Label label="개발과정 : 프로젝트를 진행하면서 발생한 문제 / 문제를 해결한 과정" sort="portfolioLabel"/>
+              <Textarea
+                value={process}
+                name="process"
+                _onChange={onChangeTextarea}
+                sort="portfolioTexarea"
+                height="h-32"
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
+            </div>
+            <div className={formItemTextareaClass()}>
+              <Label label="배운점 / 느낀점" sort="portfolioLabel"/>
+              <Textarea
+                value={learned}
+                name="learned"
+                _onChange={onChangeTextarea}
+                sort="portfolioTexarea"
+                height="h-32"
+                isValid={false}
+                errorMessage="에러"
+                validateMode={false}
+              />
+            </div>
+            {/* <PhotosUploader
                 addedPhotos={addedLinkPhotos} 
-                onChange={setAddedLinkPhotos} />
-            <button className="primary my-4">등록</button>
+                onChange={setAddedLinkPhotos} /> */}
+            <div className="mt-8 flex justify-end ">
+              <Button sort="portfolio" text="작성완료" _onClick={savePlace} />
+            </div>
         </form>
+      </div>
     )
 }

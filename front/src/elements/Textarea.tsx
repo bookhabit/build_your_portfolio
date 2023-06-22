@@ -15,8 +15,10 @@ const ResumeTextarea = tw.textarea<TextareaType>`
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke bg-error_fill"}
 `;
 
-const PortfolioTexarea = tw.textarea`
-  bg-green
+const PortfolioTexarea = tw.textarea<TextareaType>`
+  border border-black rounded-md w-full p-2 text-sm
+  focus:border-border_focus
+  ${(props)=>props.height}
 `;
 
 interface IProps{
@@ -48,7 +50,15 @@ const Textarea = (props:IProps) => {
           validateMode={validateMode}
           />}
         {sort==="portfolioTexarea"&&
-        <PortfolioTexarea placeholder = {placeholder} onChange={_onChange} value={value}/>}
+        <PortfolioTexarea 
+          placeholder = {placeholder} 
+          onChange={_onChange} 
+          value={value}
+          name={name}
+          height={height} 
+          isValid={isValid}
+          validateMode={validateMode}
+          />}
     </React.Fragment>
   )
 };

@@ -11,3 +11,11 @@
     min-width:60vw;
     max-width:80vw;
 }
+
+.portfolioForm{
+    min-width:60vw;
+}
+
+input:focus::placeholder {
+  opacity: 0;
+}
