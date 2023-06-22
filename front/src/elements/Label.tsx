@@ -6,7 +6,7 @@ const ResumeLabel = tw.label`
 `;
 
 const PortfolioLabel = tw.label`
-  font-bold text-gray-600
+  font-bold text-gray-500
 `;
 
 interface IProps{

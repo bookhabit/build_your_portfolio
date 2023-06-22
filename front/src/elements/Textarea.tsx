@@ -16,7 +16,7 @@ const ResumeTextarea = tw.textarea<TextareaType>`
 `;
 
 const PortfolioTexarea = tw.textarea<TextareaType>`
-  border border-black rounded-md w-full p-2 text-sm
+  border border-gray-500 rounded-md w-full p-2 text-sm
   focus:border-border_focus
   ${(props)=>props.height}
 `;

@@ -14,9 +14,9 @@ export default function PortfolioFormPage() {
     const [process,setProcess] = useState<string>('');
     const [learned,setLearned] = useState<string>('');
     const [addedLinkPhotos,setAddedLinkPhotos] = useState<string[]>([]);
-    const [photos,setPhotos] = useState<string[]>([]);
+    // 기술스택 , 개발기간 , DemoLink , 카테고리 , 포트폴리오 UI
     const [redirect,setRedirect] = useState(false);
-
+    console.log('이미지',addedLinkPhotos)
     // onChange
     const onChangeInput = (event:InputChangeEvent)=>{
       if(event.target.name==="title"){
@@ -147,9 +147,18 @@ export default function PortfolioFormPage() {
                 validateMode={false}
               />
             </div>
-            {/* <PhotosUploader
+            <div className={formItemTextareaClass()}>
+              <Label label="프로젝트 이미지 첨부" sort="portfolioLabel"/>
+              <PhotosUploader
                 addedPhotos={addedLinkPhotos} 
-                onChange={setAddedLinkPhotos} /> */}
+                onChange={setAddedLinkPhotos} />
+            </div>
+            {/* <div className={formItemTextareaClass()}>
+              <Label label="사용한 기술스택" sort="portfolioLabel"/>
+              <PhotosUploader
+                addedPhotos={addedLinkPhotos} 
+                onChange={setAddedLinkPhotos} />
+            </div> */}
             <div className="mt-8 flex justify-end ">
               <Button sort="portfolio" text="작성완료" _onClick={savePlace} />
             </div>
