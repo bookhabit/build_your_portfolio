@@ -8,6 +8,7 @@ import { Button } from "../elements";
 import Input, { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
+import { UserProfileType } from "../Types/userType";
 
 type ValidationLoginForm = {
   email:string,
@@ -88,7 +89,12 @@ export default function LoginPage() {
     if(validateLoginForm()){
       try{
         const {data}  = await axios.post('/login',{email,password})
-        setUser(data)
+        if(data){
+          axios.get('/profile')
+          .then(({data}:{data:UserProfileType}) => {
+            setUser(data);
+          });
+        }
         // 비밀번호 validation
         alert('login successful')
         setRedirect(true)
