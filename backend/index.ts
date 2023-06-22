@@ -8,13 +8,14 @@ import Post from "./models/Post";
 import Resume from "./models/Resume"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { UserTokenDataType, UserType } from "./Types/UserType";
+import { UserProfileType, UserTokenDataType, UserType } from "./Types/UserType";
 import cookieParser from "cookie-parser";
 import imageDownloader from "image-downloader"
 import multer from 'multer'
 import fs from 'fs'
 import pathLB from "path"
 import { Error } from "mongoose";
+import { ResumeType } from "./Types/ResumeType";
 
 dotenv.config();
 const app: Express = express();
@@ -79,16 +80,24 @@ app.post('/logout',(req:Request,res:Response)=>{
   res.cookie('token','').json(true);
 })
 
-// 로그인 유지
+// 로그인 유지 및 유저정보
 app.get('/profile', (req:Request,res:Response) => {
   const {token} = req.cookies;
   if (token) {
       jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
         const userData = userDataCallback as UserTokenDataType
         if (err) throw err;
-       const userDoc = await User.findById(userData.id) as UserType;
-       const {name,email,_id} = userDoc;
-      res.json({name,email,_id});
+        const userDoc = await User.findById(userData.id) as UserType;
+        const userResumeDoc = await Resume.findOne({author:userData.id}) as ResumeType | null
+        
+        const resultUser:UserProfileType = {
+          email:userDoc.email,
+          name:userDoc.name,
+          _id:userDoc._id,
+          userResumeDoc:userResumeDoc
+        }
+        
+        res.json(resultUser);
       });
   } else {
       res.json(null);

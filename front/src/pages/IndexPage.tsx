@@ -15,15 +15,15 @@ export default function IndexPage() {
       setPosts(response.data)
     })
   },[])
-
+  console.log(user)
   // 포트폴리오 작성이 처음이라면 이력서 form페이지로 리다이렉션 시키기
   const handleClick = ()=>{
     // api 요청 : 데이터베이스에 유저의 포트폴리오 정보가 있는지 확인
-    const firstUser = true
-    if(firstUser){
-      router('/resume/create')
-    }else{
+    if(user?.userResumeDoc){
       router('/protfolio/create')
+    }else{
+      alert('아직 이력서가 작성되지 않았습니다\n이력서를 작성해주세요')
+      router('/resume/create')
     }
   }
 

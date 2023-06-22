@@ -1,10 +1,10 @@
 import {createContext, useEffect, useState} from "react";
 import axios from "axios";
-import { UserType } from "../Types/userType";
+import { UserProfileType } from "../Types/userType";
 
 export type UserContextType = {
-  user: UserType | null;
-  setUser: (user: UserType | null) => void;
+  user: UserProfileType | null;
+  setUser: (user: UserProfileType | null) => void;
 };
 
 export const UserContext = createContext<UserContextType>({
@@ -13,11 +13,12 @@ export const UserContext = createContext<UserContextType>({
 });
 
 export function UserContextProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<UserType | null>(null);  
+  const [user, setUser] = useState<UserProfileType | null>(null);  
+  console.log(user)
   useEffect(() => {
     if (!user) {
       axios.get('/profile')
-            .then(({data}:{data:UserType}) => {
+            .then(({data}:{data:UserProfileType}) => {
               setUser(data);
             });
     }
