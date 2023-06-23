@@ -4,10 +4,10 @@ export type PortfolioType = {
     introduce:string;
     process:string; 
     learned:string;
-    photos: [string],
+    photos: string[],
     usedTechnology:string[];
     developPeriod:DevelopPeriodType;
-    DemoLink:DemoLinkType;
+    demoLink:DemoLinkType;
     category:CategoryType;
     selectedUI:SelectedUI
 }

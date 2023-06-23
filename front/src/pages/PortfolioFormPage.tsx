@@ -1,11 +1,12 @@
-import {  ChangeEvent, useEffect, useState } from "react";
+import {  ChangeEvent, useContext, useEffect, useState } from "react";
 import PhotosUploader from "../components/testRestAPI/PhotosUploader";
 import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
-import { CategoryType, DemoLinkType, DevelopPeriodType, SelectedUI } from "../Types/PortfolioType";
+import { CategoryType, DemoLinkType, DevelopPeriodType, PortfolioType, SelectedUI } from "../Types/PortfolioType";
 import { ShowArray } from "./ResumeFormPage";
+import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 
 
 type ValidatePortfolio = {
@@ -48,8 +49,6 @@ export default function PortfolioFormPage() {
     // radio
     const [category,setCategory] = useState<CategoryType>("clone");
     const [selectedUI,setSelectedUI] = useState<SelectedUI>("A");
-    
-    console.log(usedTechnologyInput,developPeriod,demoLink,category,selectedUI)
 
     // error handling
     const [errorMessage,setErrorMessage] = useState<ValidatePortfolio>({
@@ -73,6 +72,7 @@ export default function PortfolioFormPage() {
       category:"",
       selectedUI:"",
     })
+    const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
 
     const [redirect,setRedirect] = useState(false);
     
@@ -80,17 +80,39 @@ export default function PortfolioFormPage() {
     const onChangeInput = (event:InputChangeEvent)=>{
       if(event.target.name==="title"){
         setTitle(event.target.value)
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          title:"",
+        }))
       }else if(event.target.name==="usedTechnologyInput"){
         setUsedTechnologyInput(event.target.value)
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          usedTechnology:"",
+        }))
       }else if(event.target.name==="developPeriodStart"){
         setDevelopPeriod((prevState)=>({
           ...prevState,
           start:event.target.value
         }))
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          developPeriod: {
+            ...prevState.developPeriod,
+            start: "",
+          }
+        }))
       }else if(event.target.name==="developPeriodEnd"){
         setDevelopPeriod((prevState)=>({
           ...prevState,
           end:event.target.value
+        }))
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          developPeriod: {
+            ...prevState.developPeriod,
+            end: "",
+          }
         }))
       }else if(event.target.name==="projectURL"){
         setDemoLink((prevState)=>({
@@ -114,22 +136,137 @@ export default function PortfolioFormPage() {
         }))
       }else if(event.target.name==="category"){
         setCategory(event.target.value as CategoryType);
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          category:"",
+        }))
       }else if(event.target.name==="selectedUI"){
         setSelectedUI(event.target.value as SelectedUI);
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          selectedUI:"",
+        }))
       }
-      
-      
+      setValidateMode(false)
     }
+
     const onChangeTextarea = (event:ChangeEvent<HTMLTextAreaElement>)=>{
       if(event.target.name==="purpose"){
         setPurpose(event.target.value)
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          purpose:"",
+        }))
       }else if(event.target.name==="introduce"){
         setIntroduce(event.target.value)
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          introduce:"",
+        }))
       }else if(event.target.name==="process"){
         setProcess(event.target.value)
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          process:"",
+        }))
       }else if(event.target.name==="learned"){
         setLearned(event.target.value)
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          learned:"",
+        }))
       }
+      setValidateMode(false)
+    }
+
+    // validation
+    const validatePortfolioForm = (portfolioForm:PortfolioType):boolean=>{
+      // 전체 input validation
+      const {title,purpose,
+      introduce, process,learned,usedTechnology,developPeriod,category,selectedUI,
+      } = portfolioForm
+      console.log('유효성검사 props',portfolioForm)
+
+      const requiredMsg = "필수입력"
+
+      if(!title){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          title:requiredMsg,
+        }))
+        return false
+      }
+      if(!purpose){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          purpose:requiredMsg,
+        }))
+        return false
+      }
+      if(!introduce){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          introduce:requiredMsg,
+        }))
+        return false
+      }
+      if(!process){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          process:requiredMsg,
+        }))
+        return false
+      }
+      if(!learned){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          learned:requiredMsg,
+        }))
+        return false
+      }
+      if(!usedTechnology){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          usedTechnology:requiredMsg,
+        }))
+        return false
+      }
+      if(!developPeriod.start){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          developPeriod: {
+            ...prevState.developPeriod,
+            start: requiredMsg,
+          }
+        }))
+        return false
+      }
+      if(!developPeriod.end){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          developPeriod: {
+            ...prevState.developPeriod,
+            end: requiredMsg,
+          }
+        }))
+        return false
+      }
+      if(!category){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          category:requiredMsg,
+        }))
+        return false
+      }
+      if(!selectedUI){
+        setErrorMessage((prevState)=>({
+          ...prevState,
+          selectedUI:requiredMsg,
+        }))
+        return false
+      }
+
+      return true
     }
 
     // 수정페이지에서 데이터 채워넣기
@@ -150,9 +287,25 @@ export default function PortfolioFormPage() {
     // 포트폴리오 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
         ev.preventDefault();
-        const post = {
-            title, addedLinkPhotos
+        setValidateMode(true)
+
+        const portfolioForm:PortfolioType = {
+          title,purpose,
+          introduce, 
+          process,
+          learned,
+          photos:addedLinkPhotos,
+          usedTechnology:usedTechnologyArr,
+          developPeriod,
+          demoLink,
+          category,
+          selectedUI,
         };
+        console.log(portfolioForm)
+        console.log('validation시작')
+        if(validatePortfolioForm(portfolioForm)){
+          console.log('유효성 검사 완료')
+        }
         // if (postId) {
         //     // update
         //     await axios.put('/post/update', {
@@ -185,9 +338,9 @@ export default function PortfolioFormPage() {
                 value={title}
                 name="title"
                 _onChange={onChangeInput}
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.title}
+                errorMessage={errorMessage.title}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemTextareaClass()}>
@@ -198,9 +351,9 @@ export default function PortfolioFormPage() {
                 _onChange={onChangeTextarea}
                 sort="portfolioTexarea"
                 height="h-20"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.purpose}
+                errorMessage={errorMessage.purpose}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemTextareaClass()}>
@@ -211,9 +364,9 @@ export default function PortfolioFormPage() {
                 _onChange={onChangeTextarea}
                 sort="portfolioTexarea"
                 height="h-20"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.introduce}
+                errorMessage={errorMessage.introduce}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemTextareaClass()}>
@@ -224,9 +377,9 @@ export default function PortfolioFormPage() {
                 _onChange={onChangeTextarea}
                 sort="portfolioTexarea"
                 height="h-32"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.process}
+                errorMessage={errorMessage.process}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemTextareaClass()}>
@@ -237,9 +390,9 @@ export default function PortfolioFormPage() {
                 _onChange={onChangeTextarea}
                 sort="portfolioTexarea"
                 height="h-32"
-                isValid={false}
-                errorMessage="에러"
-                validateMode={false}
+                isValid={!!errorMessage.learned}
+                errorMessage={errorMessage.learned}
+                validateMode={validateMode}
               />
             </div>
             <div className={formItemTextareaClass()}>
@@ -248,11 +401,6 @@ export default function PortfolioFormPage() {
                 addedPhotos={addedLinkPhotos} 
                 onChange={setAddedLinkPhotos} />
             </div>
-            <div className={formItemTextareaClass()}>
-              <Label label="사용한 기술스택" sort="portfolioLabel"/>
-              <input type="text" name="usedTechnologyInput" value={usedTechnologyInput} onChange={onChangeInput} />
-              <button>추가</button>
-            </div>
             {usedTechnologyArr.length > 0 && (
               <ShowArray>
                 {usedTechnologyArr.map((tech)=>(
@@ -260,6 +408,17 @@ export default function PortfolioFormPage() {
                 ))}    
               </ShowArray>
             )}
+            <div className={formItemTextareaClass()}>
+              <Label label="사용한 기술스택" sort="portfolioLabel"/>
+              <input type="text" name="usedTechnologyInput" value={usedTechnologyInput} onChange={onChangeInput} />
+              <button onClick={(event)=>{
+                  event.preventDefault()
+                  if(usedTechnologyInput){
+                    setUsedTechnologyInput("")
+                    setUsedTechnologyArr([usedTechnologyInput,...usedTechnologyArr])
+                  }
+                }}>추가</button>
+            </div>
             <div className={formItemTextareaClass()}>
               <Label label="개발기간" sort="portfolioLabel"/>
               <input type="date" name="developPeriodStart" value={developPeriod.start} onChange={onChangeInput}/>

@@ -18,9 +18,10 @@ const ResumeInput = tw.input<ValidateProps>`
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
-const PortfolioInput = tw.input`
+const PortfolioInput = tw.input<ValidateProps>`
   text-center font-bold text-3xl border-b py-3 outline-none 
   w-1/2 focus:text-gray-400 focus:w-auto
+  ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
 export type InputValue = string | number
@@ -69,6 +70,7 @@ const Input = (props:IProps) => {
               type={type} 
               name={name} 
               value={value}
+              isValid={isValid} validateMode={validateMode}
               />}
             
             {isValid && errorMessage && validateMode && (
