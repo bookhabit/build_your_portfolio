@@ -24,6 +24,11 @@ const PortfolioInput = tw.input<ValidateProps>`
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
+const BorderInput = tw.input<ValidateProps>`
+  w-full p-2 border border-gray-500 rounded-lg
+  ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
+`;
+
 export type InputValue = string | number
 export type InputChangeEvent = ChangeEvent<HTMLInputElement>
 
@@ -34,7 +39,7 @@ interface IProps{
     _onChange?: (ev: InputChangeEvent) => void
     name:string;
     type:string;
-    sort:"authInput"|"resumeInput"|"portfolioInput"
+    sort:"authInput"|"resumeInput"|"portfolioInput"|"borderInput"
     isValid:boolean;
     errorMessage:string;
     validateMode:boolean;
@@ -47,31 +52,42 @@ const Input = (props:IProps) => {
         <React.Fragment>
             {label}
             {sort==="authInput"&&
-            <AuthInput 
-              placeholder = {placeholder} 
-              onChange={_onChange} 
-              type={type} name={name} value={value} 
-              isValid={isValid} validateMode={validateMode} />}
+              <AuthInput 
+                placeholder = {placeholder} 
+                onChange={_onChange} 
+                type={type} name={name} value={value} 
+                isValid={isValid} validateMode={validateMode} 
+            />}
 
             {sort==="resumeInput"&&
-            <ResumeInput 
-              placeholder = {placeholder} 
-              onChange={_onChange} 
-              type={type} 
-              name={name} 
-              value={value}
-              isValid={isValid} validateMode={validateMode}
-              />}
+              <ResumeInput 
+                placeholder = {placeholder} 
+                onChange={_onChange} 
+                type={type} 
+                name={name} 
+                value={value}
+                isValid={isValid} validateMode={validateMode}
+            />}
             
             {sort==="portfolioInput"&&
-            <PortfolioInput 
-              placeholder = {placeholder} 
-              onChange={_onChange} 
-              type={type} 
-              name={name} 
-              value={value}
-              isValid={isValid} validateMode={validateMode}
-              />}
+              <PortfolioInput 
+                placeholder = {placeholder} 
+                onChange={_onChange} 
+                type={type} 
+                name={name} 
+                value={value}
+                isValid={isValid} validateMode={validateMode}
+            />}
+
+            {sort==="borderInput"&&
+              <BorderInput 
+                placeholder = {placeholder} 
+                onChange={_onChange} 
+                type={type} 
+                name={name} 
+                value={value}
+                isValid={isValid} validateMode={validateMode}
+            />}
             
             {isValid && errorMessage && validateMode && (
               <p className="font text-sm text-error_stroke">{errorMessage}</p>

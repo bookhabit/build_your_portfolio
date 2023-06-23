@@ -186,6 +186,7 @@ export default function PortfolioFormPage() {
       introduce, process,learned,usedTechnology,developPeriod,category,selectedUI,
       } = portfolioForm
       console.log('유효성검사 props',portfolioForm)
+      console.log(errorMessage)
 
       const requiredMsg = "필수입력"
 
@@ -224,7 +225,7 @@ export default function PortfolioFormPage() {
         }))
         return false
       }
-      if(!usedTechnology){
+      if(usedTechnology.length<=0){
         setErrorMessage((prevState)=>({
           ...prevState,
           usedTechnology:requiredMsg,
@@ -410,7 +411,17 @@ export default function PortfolioFormPage() {
             )}
             <div className={formItemTextareaClass()}>
               <Label label="사용한 기술스택" sort="portfolioLabel"/>
-              <input type="text" name="usedTechnologyInput" value={usedTechnologyInput} onChange={onChangeInput} />
+              <Input 
+                sort="borderInput"
+                type="text" 
+                placeholder="ex) React"
+                name="usedTechnologyInput" 
+                value={usedTechnologyInput} 
+                _onChange={onChangeInput}
+                isValid={!!errorMessage.usedTechnology}
+                errorMessage={errorMessage.usedTechnology}
+                validateMode={validateMode}
+              />
               <button onClick={(event)=>{
                   event.preventDefault()
                   if(usedTechnologyInput){
@@ -421,8 +432,16 @@ export default function PortfolioFormPage() {
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="개발기간" sort="portfolioLabel"/>
-              <input type="date" name="developPeriodStart" value={developPeriod.start} onChange={onChangeInput}/>
-              <input type="date" name="developPeriodEnd" value={developPeriod.end} onChange={onChangeInput}/>
+              <input 
+                type="date" 
+                name="developPeriodStart" 
+                value={developPeriod.start} 
+                onChange={onChangeInput}/>
+              <input 
+                type="date" 
+                name="developPeriodEnd" 
+                value={developPeriod.end} 
+                onChange={onChangeInput}/>
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="DEMO Link (선택)" sort="portfolioLabel"/>
