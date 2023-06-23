@@ -4,7 +4,26 @@ import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
-// import PhotosUploader from "./PhotosUploader";
+import { CategoryType, DemoLinkType, DevelopPeriodType, SelectedUI } from "../Types/PortfolioType";
+import { ShowArray } from "./ResumeFormPage";
+
+
+type ValidatePortfolio = {
+    title:string; 
+    purpose:string;
+    introduce:string;
+    process:string;
+    learned:string;
+    photos:string;
+    usedTechnology:string;
+    developPeriod:{
+      start:string, // 2023-01-25 형식
+      end:string, // 2023-04-25
+   };
+    demoLink:DemoLinkType;
+    category:string;
+    selectedUI:string;
+}
 
 export default function PortfolioFormPage() {
     const {id:postId} = useParams();
@@ -14,17 +33,94 @@ export default function PortfolioFormPage() {
     const [process,setProcess] = useState<string>('');
     const [learned,setLearned] = useState<string>('');
     const [addedLinkPhotos,setAddedLinkPhotos] = useState<string[]>([]);
-    // 기술스택 , 개발기간 , DemoLink , 카테고리 , 포트폴리오 UI
+    const [usedTechnologyInput,setUsedTechnologyInput] = useState<string>('');
+    const [usedTechnologyArr,setUsedTechnologyArr] = useState<string[]>([]);
+    const [developPeriod,setDevelopPeriod] = useState<DevelopPeriodType>({
+      start:"",
+      end:"",
+    });
+    const [demoLink,setDemoLink] = useState<DemoLinkType>({
+      projectURL:"",
+      githubURL:"",
+      designURL:"",
+      documentURL:"",
+    });
+    // radio
+    const [category,setCategory] = useState<CategoryType>("clone");
+    const [selectedUI,setSelectedUI] = useState<SelectedUI>("A");
+    
+    console.log(usedTechnologyInput,developPeriod,demoLink,category,selectedUI)
+
+    // error handling
+    const [errorMessage,setErrorMessage] = useState<ValidatePortfolio>({
+      title:"", 
+      purpose:"",
+      introduce:"", 
+      process:"",
+      learned:"",
+      photos:"",
+      usedTechnology:"",
+      developPeriod:{
+        start:"",
+        end:"",
+      },
+      demoLink:{
+        projectURL:"",
+        githubURL:"",
+        designURL:"",
+        documentURL:"",
+      },
+      category:"",
+      selectedUI:"",
+    })
+
     const [redirect,setRedirect] = useState(false);
-    console.log('이미지',addedLinkPhotos)
+    
     // onChange
     const onChangeInput = (event:InputChangeEvent)=>{
       if(event.target.name==="title"){
         setTitle(event.target.value)
+      }else if(event.target.name==="usedTechnologyInput"){
+        setUsedTechnologyInput(event.target.value)
+      }else if(event.target.name==="developPeriodStart"){
+        setDevelopPeriod((prevState)=>({
+          ...prevState,
+          start:event.target.value
+        }))
+      }else if(event.target.name==="developPeriodEnd"){
+        setDevelopPeriod((prevState)=>({
+          ...prevState,
+          end:event.target.value
+        }))
+      }else if(event.target.name==="projectURL"){
+        setDemoLink((prevState)=>({
+          ...prevState,
+          projectURL:event.target.value
+        }))
+      }else if(event.target.name==="githubURL"){
+        setDemoLink((prevState)=>({
+          ...prevState,
+          githubURL:event.target.value
+        }))
+      }else if(event.target.name==="designURL"){
+        setDemoLink((prevState)=>({
+          ...prevState,
+          designURL:event.target.value
+        }))
+      }else if(event.target.name==="documentURL"){
+        setDemoLink((prevState)=>({
+          ...prevState,
+          documentURL:event.target.value
+        }))
+      }else if(event.target.name==="category"){
+        setCategory(event.target.value as CategoryType);
+      }else if(event.target.name==="selectedUI"){
+        setSelectedUI(event.target.value as SelectedUI);
       }
+      
+      
     }
     const onChangeTextarea = (event:ChangeEvent<HTMLTextAreaElement>)=>{
-      console.log('event',event)
       if(event.target.name==="purpose"){
         setPurpose(event.target.value)
       }else if(event.target.name==="introduce"){
@@ -34,7 +130,6 @@ export default function PortfolioFormPage() {
       }else if(event.target.name==="learned"){
         setLearned(event.target.value)
       }
-      
     }
 
     // 수정페이지에서 데이터 채워넣기
@@ -153,12 +248,112 @@ export default function PortfolioFormPage() {
                 addedPhotos={addedLinkPhotos} 
                 onChange={setAddedLinkPhotos} />
             </div>
-            {/* <div className={formItemTextareaClass()}>
+            <div className={formItemTextareaClass()}>
               <Label label="사용한 기술스택" sort="portfolioLabel"/>
-              <PhotosUploader
-                addedPhotos={addedLinkPhotos} 
-                onChange={setAddedLinkPhotos} />
-            </div> */}
+              <input type="text" name="usedTechnologyInput" value={usedTechnologyInput} onChange={onChangeInput} />
+              <button>추가</button>
+            </div>
+            {usedTechnologyArr.length > 0 && (
+              <ShowArray>
+                {usedTechnologyArr.map((tech)=>(
+                  <span key={tech}>{tech+' '}</span>    
+                ))}    
+              </ShowArray>
+            )}
+            <div className={formItemTextareaClass()}>
+              <Label label="개발기간" sort="portfolioLabel"/>
+              <input type="date" name="developPeriodStart" value={developPeriod.start} onChange={onChangeInput}/>
+              <input type="date" name="developPeriodEnd" value={developPeriod.end} onChange={onChangeInput}/>
+            </div>
+            <div className={formItemTextareaClass()}>
+              <Label label="DEMO Link (선택)" sort="portfolioLabel"/>
+              <div>
+                <label>프로젝트 URL:</label>
+                <input type="text" name="projectURL" value={demoLink.projectURL} onChange={onChangeInput}/>
+              </div>
+              <div>
+                <label>깃허브 URL:</label>
+                <input type="text" name="githubURL" value={demoLink.githubURL} onChange={onChangeInput}/>
+              </div>
+              <div>
+                <label>디자인 URL:</label>
+                <input type="text" name="designURL" value={demoLink.designURL} onChange={onChangeInput}/>
+              </div>
+              <div>
+                <label>문서 URL:</label>
+                <input type="text" name="documentURL" value={demoLink.documentURL} onChange={onChangeInput}/>
+              </div>
+            </div>
+            <div className={formItemTextareaClass()}>
+              <Label label="카테고리" sort="portfolioLabel"/>
+              <label>
+                <input
+                  type="radio"
+                  value="clone"
+                  name="category"
+                  checked={category === "clone"}
+                  onChange={onChangeInput}
+                />
+                클론코딩
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  value="individual"
+                  name="category"
+                  checked={category === "individual"}
+                  onChange={onChangeInput}
+                />
+                개인 프로젝트
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  value="Cooperation"
+                  name="category"
+                  checked={category === "Cooperation"}
+                  onChange={onChangeInput}
+                />
+                협업 프로젝트
+              </label>
+            </div>
+            <div className={formItemTextareaClass()}>
+              <Label label="포트폴리오 UI" sort="portfolioLabel"/>
+              <label>
+                <input
+                  type="radio"
+                  value="A"
+                  name="selectedUI"
+                  checked={selectedUI === "A"}
+                  onChange={onChangeInput}
+                />
+                A
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  value="B"
+                  name="selectedUI"
+                  checked={selectedUI === "B"}
+                  onChange={onChangeInput}
+                />
+                B
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  value="C"
+                  name="selectedUI"
+                  checked={selectedUI === "C"}
+                  onChange={onChangeInput}
+                />
+                C
+              </label>
+            </div>
             <div className="mt-8 flex justify-end ">
               <Button sort="portfolio" text="작성완료" _onClick={savePlace} />
             </div>
