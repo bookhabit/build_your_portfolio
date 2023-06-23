@@ -20,12 +20,12 @@ const ResumeInput = tw.input<ValidateProps>`
 
 const PortfolioInput = tw.input<ValidateProps>`
   text-center font-bold text-3xl border-b py-3 outline-none 
-  w-1/2 focus:text-gray-400 focus:w-auto
+   focus:text-gray-400 focus:w-auto
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
 const BorderInput = tw.input<ValidateProps>`
-  w-full p-2 border border-gray-500 rounded-lg
+  w-1/3 p-2 border border-gray-500 rounded-lg
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
@@ -34,9 +34,9 @@ export type InputChangeEvent = ChangeEvent<HTMLInputElement>
 
 interface IProps{
     label? :string;
-    placeholder:string;
     value?: InputValue;
     _onChange?: (ev: InputChangeEvent) => void
+    placeholder?:string;
     name:string;
     type:string;
     sort:"authInput"|"resumeInput"|"portfolioInput"|"borderInput"

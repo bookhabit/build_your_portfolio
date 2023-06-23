@@ -7,6 +7,7 @@ import { InputChangeEvent } from "../elements/Input";
 import { CategoryType, DemoLinkType, DevelopPeriodType, PortfolioType, SelectedUI } from "../Types/PortfolioType";
 import { ShowArray } from "./ResumeFormPage";
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
+import FormContainer from "../components/FormContainer";
 
 
 type ValidatePortfolio = {
@@ -330,7 +331,7 @@ export default function PortfolioFormPage() {
 
     return(
       <div className="flex items-center justify-center py-12 px-14">
-        <form onSubmit={savePlace} className="portfolioForm">
+        <FormContainer width="" height="" >
             <div className="text-center py-4">
               <Input 
                 type="text" 
@@ -402,46 +403,60 @@ export default function PortfolioFormPage() {
                 addedPhotos={addedLinkPhotos} 
                 onChange={setAddedLinkPhotos} />
             </div>
-            {usedTechnologyArr.length > 0 && (
-              <ShowArray>
-                {usedTechnologyArr.map((tech)=>(
-                  <span key={tech}>{tech+' '}</span>    
-                ))}    
-              </ShowArray>
-            )}
             <div className={formItemTextareaClass()}>
               <Label label="사용한 기술스택" sort="portfolioLabel"/>
-              <Input 
-                sort="borderInput"
-                type="text" 
-                placeholder="ex) React"
-                name="usedTechnologyInput" 
-                value={usedTechnologyInput} 
-                _onChange={onChangeInput}
-                isValid={!!errorMessage.usedTechnology}
-                errorMessage={errorMessage.usedTechnology}
-                validateMode={validateMode}
-              />
-              <button onClick={(event)=>{
-                  event.preventDefault()
-                  if(usedTechnologyInput){
-                    setUsedTechnologyInput("")
-                    setUsedTechnologyArr([usedTechnologyInput,...usedTechnologyArr])
-                  }
-                }}>추가</button>
+              {usedTechnologyArr.length > 0 && (
+                <ShowArray>
+                  {usedTechnologyArr.map((tech)=>(
+                    <span key={tech}>{tech+' '}</span>    
+                  ))}    
+                </ShowArray>
+              )}
+              <div className="flex gap-5 h-10">
+                <Input
+                  sort="borderInput"
+                  type="text" 
+                  placeholder="ex) React"
+                  name="usedTechnologyInput" 
+                  value={usedTechnologyInput} 
+                  _onChange={onChangeInput}
+                  isValid={!!errorMessage.usedTechnology}
+                  errorMessage={errorMessage.usedTechnology}
+                  validateMode={validateMode}
+                />
+                <button className="bg-transparent border border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={(event)=>{
+                    event.preventDefault()
+                    if(usedTechnologyInput){
+                      setUsedTechnologyInput("")
+                      setUsedTechnologyArr([usedTechnologyInput,...usedTechnologyArr])
+                    }
+                  }}>추가</button>
+              </div>
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="개발기간" sort="portfolioLabel"/>
-              <input 
-                type="date" 
-                name="developPeriodStart" 
-                value={developPeriod.start} 
-                onChange={onChangeInput}/>
-              <input 
-                type="date" 
-                name="developPeriodEnd" 
-                value={developPeriod.end} 
-                onChange={onChangeInput}/>
+              <div className="flex gap-5">
+                <Input
+                    sort="borderInput"
+                    type="date" 
+                    name="developPeriodStart" 
+                    value={developPeriod.start} 
+                    _onChange={onChangeInput}
+                    isValid={!!errorMessage.developPeriod.start}
+                    errorMessage={errorMessage.developPeriod.start}
+                    validateMode={validateMode}
+                  />
+                <Input
+                    sort="borderInput"
+                    type="date" 
+                    name="developPeriodEnd" 
+                    value={developPeriod.end} 
+                    _onChange={onChangeInput}
+                    isValid={!!errorMessage.developPeriod.end}
+                    errorMessage={errorMessage.developPeriod.end}
+                    validateMode={validateMode}
+                  />
+              </div>
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="DEMO Link (선택)" sort="portfolioLabel"/>
@@ -535,7 +550,7 @@ export default function PortfolioFormPage() {
             <div className="mt-8 flex justify-end ">
               <Button sort="portfolio" text="작성완료" _onClick={savePlace} />
             </div>
-        </form>
+        </FormContainer>
       </div>
     )
 }
