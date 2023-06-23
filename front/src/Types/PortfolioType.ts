@@ -6,10 +6,7 @@ export type PortfolioType = {
     learned:string;
     photos: [string],
     usedTechnology:string[];
-    developPeriod:{
-        start:string,
-        end:string,
-    };
+    developPeriod:DevelopPeriodType;
     DemoLink:DemoLinkType;
     category:CategoryType;
     selectedUI:SelectedUI
@@ -19,8 +16,13 @@ export type DemoLinkType = {
     projectURL:string;
     githubURL:string;
     designURL:string;
-    document:string;
+    documentURL:string;
 }
 
-export type CategoryType = ["clone","individual","Cooperation"]
-export type SelectedUI = ["A","B","C"]
+export type DevelopPeriodType = {
+    start:string,
+    end:string,
+}
+
+export type CategoryType = "clone"|"individual"|"Cooperation"
+export type SelectedUI = "A"|"B"|"C"
