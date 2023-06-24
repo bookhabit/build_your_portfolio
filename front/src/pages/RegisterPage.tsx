@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import googleSvg from "../assets/auth/google.svg"
 import githubSvg from "../assets/auth/github.svg"
-import { Button, Input, Label, Textarea } from "../elements";
+import { Button, Input } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";

@@ -6,6 +6,7 @@ import connectToMongoDB from "./models";
 import User from "./models/User";
 import Post from "./models/Post";
 import Resume from "./models/Resume"
+import Portfolio from "./models/Portfolio"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserProfileType, UserTokenDataType, UserType } from "./Types/UserType";
@@ -181,16 +182,17 @@ app.put('/resume/update',async (req,res)=>{
 // 포트폴리오 등록
 app.post('/portfolio/create',(req:Request,res:Response)=>{
   const {token} = req.cookies;
-  const {title,addedLinkPhotos,description,
+  const {title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,
   } = req.body;
+  console.log(title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI)
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     const userData = userDataCallback as UserTokenDataType
     if (err) throw err;
-    const postDoc = await Post.create({
+    const portfolioDoc = await Portfolio.create({
       author:userData.id,
-      title,photos:addedLinkPhotos,description,
+      title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,
     })
-    res.json({postDoc,addedLinkPhotos})
+    res.json({portfolioDoc})
   });
 })
 

@@ -14,7 +14,7 @@ import  validatePortfolioForm  from "../components/common/validation/validatePor
 
 
 export default function PortfolioFormPage() {
-    const {id:postId} = useParams();
+    const {id:portfolioId} = useParams();
     const [title,setTitle] = useState<string>('');
     const [purpose,setPurpose] = useState<string>('');
     const [introduce,setIntroduce] = useState<string>('');
@@ -218,16 +218,16 @@ export default function PortfolioFormPage() {
     }
     // 수정페이지에서 데이터 채워넣기
     // useEffect(() => {
-    //   if (!postId) {
+    //   if (!portfolioId) {
     //     return;
     //   }
-    //   axios.get('/post/'+postId).then(response => {
+    //   axios.get('/post/'+portfolioId).then(response => {
     //      const {data} = response;
     //      setTitle(data.title);
     //      setAddedLinkPhotos(data.photos);
          
     //   });
-    // }, [postId]);
+    // }, [portfolioId]);
 
     // 포트폴리오 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
@@ -250,18 +250,19 @@ export default function PortfolioFormPage() {
         
         if(validateForm){
           console.log('유효성 검사 완료')
+          if (portfolioId) {
+              // update
+              await axios.put('/portfolio/update', {
+                  portfolioId, ...portfolioForm
+              });
+              setRedirect(true);
+          } else {
+              // new post
+              await axios.post('/portfolio/create', portfolioForm);
+              alert('포트폴리오 등록 성공!')
+              setRedirect(true);
+          }
         }
-        // if (postId) {
-        //     // update
-        //     await axios.put('/post/update', {
-        //         postId, ...post
-        //     });
-        //     setRedirect(true);
-        // } else {
-        //     // new post
-        //     await axios.post('/post/create', post);
-        //     setRedirect(true);
-        // }
     }
 
     if (redirect) {

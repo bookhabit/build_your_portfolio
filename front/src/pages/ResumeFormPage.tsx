@@ -210,7 +210,7 @@ export default function ResumeFormPage() {
     // }, [postId]);
 
     
-    // 숙소 등록 및 수정
+    // 이력서 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
         ev.preventDefault();
         setValidateMode(true)
