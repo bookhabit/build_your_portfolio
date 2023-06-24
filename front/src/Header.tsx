@@ -15,7 +15,7 @@ export default function Header() {
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 absolute right-2 text-header_bg cursor-pointer">
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
         </svg>
-        <input type="text" className="border bg-gray-50 border-header_bg rounded-xl h-8 w-full px-5 text-header_element"/>
+        <input type="text" className="bg-gray-50 rounded-xl h-8 w-full px-3 text--header_bg focus:outline-none"/>
       </div>
       {user ? (
         <div className="flex items-center gap-2 bg-header_element rounded-full py-2 px-4 cursor-pointer " onClick={()=>router('/account')}>
