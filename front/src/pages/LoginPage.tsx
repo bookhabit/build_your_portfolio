@@ -9,12 +9,7 @@ import Input, { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import { UserProfileType } from "../Types/userType";
-
-type ValidationLoginForm = {
-  email:string,
-  password:string
-}
-
+import validateLoginForm, { ValidationLoginForm } from "../components/common/validation/validateLoginForm";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -48,45 +43,14 @@ export default function LoginPage() {
     }
     setValidateMode(false)
   }
-  
-  const validateLoginForm = ()=>{
-    // 이메일 형식을 검증하는 정규 표현식
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-    // email vaildation
-    if (!email) {
-      setErrorMessage((prevState) => ({
-        ...prevState,
-        email: "이메일을 입력해주세요",
-      }));
-      return false
-    }
-    if(!emailRegex.test(email)){
-      setErrorMessage((prevState) => ({
-        ...prevState,
-        email: "유효한 이메일 형식이 아닙니다",
-      }))
-      return false
-    }
-
-    // password vaildation
-    if (!password) {
-      setErrorMessage((prevState) => ({
-        ...prevState,
-        password: "비밀번호를 입력해주세요",
-      }));
-      return false
-    }
-
-    return true
-  }
 
   const handleLogin = async (event:React.FormEvent)=>{
     event.preventDefault();
     // form요소 유효성 검사
     setValidateMode(true)
 
-    if(validateLoginForm()){
+    const validateForm:boolean = validateLoginForm(email,password,setErrorMessage)
+    if(validateForm){
       try{
         const {data}  = await axios.post('/login',{email,password})
         if(data){

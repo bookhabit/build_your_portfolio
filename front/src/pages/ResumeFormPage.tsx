@@ -1,4 +1,4 @@
-import {  useContext, useEffect, useState } from "react";
+import {  useContext, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { ChannelType, ResumeType, acitivityType, carrerType } from "../Types/ResumeType";
@@ -15,24 +15,11 @@ import { Button, Input, Label, Textarea } from "../elements";
 import tw from "tailwind-styled-components";
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import { InputChangeEvent } from "../elements/Input";
+import validateResumeForm, { ValidateResume } from "../components/common/validation/validateResumeForm";
 
 export const ShowArray = tw.div`
   bg-inherit border-b border-border_focus p-1 min-w-full
 `;
-
-type ValidateResume = {
-    birth:string; // 1998-03-21
-    finalEducation:string;
-    phone:string; // 010-7607-9182
-    certification:string;
-    channel:ChannelType; // https://github.com/bookhabit
-    technology:string;
-    career:carrerType;
-    acitivity:acitivityType;
-    myselfSentence:string;
-    reasonForCoding:string;
-    coverLetter:string;
-}
 
 export default function ResumeFormPage() {
     const {id:postId} = useParams();
@@ -222,86 +209,7 @@ export default function ResumeFormPage() {
     //   });
     // }, [postId]);
 
-    // validation
-    const validateResumeForm = (resumeForm:ResumeType):boolean=>{
-      // 전체 input validation
-      const {birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity
-      } = resumeForm
-
-      const requiredMsg = "필수입력"
-
-      // 정규식
-      const birthRegex = /^\d{4}-\d{2}-\d{2}$/; // 주민번호
-      const phoneRegex = /^010-\d{4}-\d{4}$/; // 핸드폰
-
-      if(!birth){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          birth:requiredMsg,
-        }))
-        return false
-      }
-      if(!birthRegex.test(birth)){
-        setErrorMessage((prevState) => ({
-          ...prevState,
-          birth: "0000-00-00 으로 작성해주세요",
-        }))
-        return false
-      }
-
-      if(!finalEducation){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          finalEducation:requiredMsg,
-        }))
-        return false
-      }
-      if(!phone){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          phone:requiredMsg,
-        }))
-        return false
-      }
-      
-      if(!phoneRegex.test(phone)){
-        setErrorMessage((prevState) => ({
-          ...prevState,
-          phone: "010-0000-0000 으로 작성해주세요",
-        }))
-        return false
-      }
-      if(!technology){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          technology:requiredMsg,
-        }))
-        return false
-      }
-      if(!myselfSentence){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          myselfSentence:requiredMsg,
-        }))
-        return false
-      }
-      if(!reasonForCoding){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          reasonForCoding:requiredMsg,
-        }))
-        return false
-      }
-      if(!coverLetter){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          coverLetter:requiredMsg,
-        }))
-        return false
-      }
-
-      return true
-    }
+    
     // 숙소 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
         ev.preventDefault();
@@ -315,8 +223,9 @@ export default function ResumeFormPage() {
           acitivity:acitivityArr,
           myselfSentence,reasonForCoding,coverLetter,
         };
-        console.log(resumeForm);
-        if(validateResumeForm(resumeForm)){
+        const validateForm:boolean = validateResumeForm(resumeForm,setErrorMessage)
+        
+        if(validateForm){
           if (postId) {
               // update
               await axios.put('/resume/update', {

@@ -9,24 +9,9 @@ import { ShowArray } from "./ResumeFormPage";
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import FormContainer from "../components/FormContainer";
 import PreviewIcon from "../assets/portfolio/imgPreview.svg"
+import { ValidatePortfolio } from "../components/common/validation/validatePortfolioForm";
+import  validatePortfolioForm  from "../components/common/validation/validatePortfolioForm";
 
-
-type ValidatePortfolio = {
-    title:string; 
-    purpose:string;
-    introduce:string;
-    process:string;
-    learned:string;
-    photos:string;
-    usedTechnology:string;
-    developPeriod:{
-      start:string, // 2023-01-25 형식
-      end:string, // 2023-04-25
-   };
-    demoLink:DemoLinkType;
-    category:string;
-    selectedUI:string;
-}
 
 export default function PortfolioFormPage() {
     const {id:postId} = useParams();
@@ -103,6 +88,9 @@ export default function PortfolioFormPage() {
     const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
 
     const [redirect,setRedirect] = useState(false);
+
+    // validateForm
+  
     
     // onChange
     const onChangeInput = (event:InputChangeEvent)=>{
@@ -228,99 +216,6 @@ export default function PortfolioFormPage() {
       </div>
       );
     }
-
-    // validation
-    const validatePortfolioForm = (portfolioForm:PortfolioType):boolean=>{
-      // 전체 input validation
-      const {title,purpose,
-      introduce, process,learned,usedTechnology,developPeriod,category,selectedUI,
-      } = portfolioForm
-      console.log('유효성검사 props',portfolioForm)
-      console.log(errorMessage)
-
-      const requiredMsg = "필수입력"
-
-      if(!title){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          title:requiredMsg,
-        }))
-        return false
-      }
-      if(!purpose){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          purpose:requiredMsg,
-        }))
-        return false
-      }
-      if(!introduce){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          introduce:requiredMsg,
-        }))
-        return false
-      }
-      if(!process){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          process:requiredMsg,
-        }))
-        return false
-      }
-      if(!learned){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          learned:requiredMsg,
-        }))
-        return false
-      }
-      if(usedTechnology.length<=0){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          usedTechnology:requiredMsg,
-        }))
-        return false
-      }
-      if(!developPeriod.start){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          developPeriod: {
-            ...prevState.developPeriod,
-            start: requiredMsg,
-          }
-        }))
-        return false
-      }
-      if(!developPeriod.end){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          developPeriod: {
-            ...prevState.developPeriod,
-            end: requiredMsg,
-          }
-        }))
-        return false
-      }
-      if(!category){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          category:requiredMsg,
-        }))
-        return false
-      }
-      if(!selectedUI){
-        setErrorMessage((prevState)=>({
-          ...prevState,
-          selectedUI:requiredMsg,
-        }))
-        return false
-      }
-
-      return true
-    }
-
-    console.log(selectedUI)
     // 수정페이지에서 데이터 채워넣기
     // useEffect(() => {
     //   if (!postId) {
@@ -351,9 +246,9 @@ export default function PortfolioFormPage() {
           category,
           selectedUI,
         };
-        console.log(portfolioForm)
-        console.log('validation시작')
-        if(validatePortfolioForm(portfolioForm)){
+        const validateForm:boolean = validatePortfolioForm(portfolioForm,setErrorMessage)
+        
+        if(validateForm){
           console.log('유효성 검사 완료')
         }
         // if (postId) {
