@@ -11,6 +11,7 @@ export default {
       },
       colors:{
         primary:'#F5385D',
+        portfolio_gray:"#F5F5F5",
         header_element:'#FFFFFF',
         header_bg:'#000000',
         login_btn:'#000000',

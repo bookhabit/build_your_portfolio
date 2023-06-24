@@ -12,7 +12,6 @@ const AuthInput = tw.input<ValidateProps>`
 `;
 
 const ResumeInput = tw.input<ValidateProps>`
-  width: auto;
   bg-inherit border-b border-black placeholder-black p-1
   outline-none focus:border-b focus:border-border_focus
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
@@ -29,6 +28,12 @@ const BorderInput = tw.input<ValidateProps>`
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
+const URLInput = tw.input<ValidateProps>`
+  w-3/4 bg-inherit border-b border-black placeholder-black p-1
+  outline-none focus:border-b focus:border-border_focus
+  ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
+`;
+
 export type InputValue = string | number
 export type InputChangeEvent = ChangeEvent<HTMLInputElement>
 
@@ -39,7 +44,7 @@ interface IProps{
     placeholder?:string;
     name:string;
     type:string;
-    sort:"authInput"|"resumeInput"|"portfolioInput"|"borderInput"
+    sort:"authInput"|"resumeInput"|"portfolioInput"|"borderInput"|"URLInput"
     isValid:boolean;
     errorMessage:string;
     validateMode:boolean;
@@ -89,6 +94,16 @@ const Input = (props:IProps) => {
                 isValid={isValid} validateMode={validateMode}
             />}
             
+            {sort==="URLInput"&&
+              <URLInput 
+                placeholder = {placeholder} 
+                onChange={_onChange} 
+                type={type} 
+                name={name} 
+                value={value}
+                isValid={isValid} validateMode={validateMode}
+            />}
+
             {isValid && errorMessage && validateMode && (
               <p className="font text-sm text-error_stroke">{errorMessage}</p>
             )}

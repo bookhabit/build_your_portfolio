@@ -9,10 +9,14 @@ const PortfolioLabel = tw.label`
   font-bold text-gray-500
 `;
 
+const LinkLabel = tw.label`
+  p-2 bg-portfolio_gray rounded-md w-32 font-bold
+`;
+
 interface IProps{
     icon?:string,
     alt?:string;
-    sort:"resumeLabel"|"portfolioLabel",
+    sort:"resumeLabel"|"portfolioLabel"|"linkLabel",
     label:string,
 }
 
@@ -36,6 +40,10 @@ const Label = (props:IProps) => {
             <PortfolioLabel>
               <p>{label}</p>
             </PortfolioLabel>}
+          {sort==="linkLabel" && 
+            <LinkLabel>
+              <p>{label}</p>
+            </LinkLabel>}
       </React.Fragment>
     )
 };

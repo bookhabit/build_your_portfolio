@@ -284,8 +284,6 @@ export default function PortfolioFormPage() {
     //   });
     // }, [postId]);
 
-    
-
     // 포트폴리오 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
         ev.preventDefault();
@@ -329,6 +327,9 @@ export default function PortfolioFormPage() {
       return "flex flex-col mt-6 gap-3"
     }
 
+    function demoLinkFlex():string{
+      return "flex gap-4 items-center"
+    }
     return(
       <div className="flex items-center justify-center py-12 px-14">
         <FormContainer width="" height="" >
@@ -460,21 +461,69 @@ export default function PortfolioFormPage() {
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="DEMO Link (선택)" sort="portfolioLabel"/>
-              <div>
-                <label>프로젝트 URL:</label>
-                <input type="text" name="projectURL" value={demoLink.projectURL} onChange={onChangeInput}/>
+              <div className={demoLinkFlex()}>
+                <Label
+                  label="프로젝트 URL :"
+                  sort="linkLabel"
+                />
+                <Input 
+                  type="text" 
+                  name="projectURL" 
+                  value={demoLink.projectURL} 
+                  sort="URLInput"
+                  _onChange={onChangeInput}
+                  isValid={!!errorMessage.demoLink.projectURL}
+                  errorMessage={errorMessage.demoLink.projectURL}
+                  validateMode={validateMode}
+                />
               </div>
-              <div>
-                <label>깃허브 URL:</label>
-                <input type="text" name="githubURL" value={demoLink.githubURL} onChange={onChangeInput}/>
+              <div className={demoLinkFlex()}>
+                <Label
+                    label="깃허브 URL :"
+                    sort="linkLabel"
+                />
+                <Input 
+                  type="text" 
+                  name="githubURL" 
+                  value={demoLink.githubURL} 
+                  sort="URLInput"
+                  _onChange={onChangeInput}
+                  isValid={!!errorMessage.demoLink.githubURL}
+                  errorMessage={errorMessage.demoLink.githubURL}
+                  validateMode={validateMode}
+                />
               </div>
-              <div>
-                <label>디자인 URL:</label>
-                <input type="text" name="designURL" value={demoLink.designURL} onChange={onChangeInput}/>
+              <div className={demoLinkFlex()}>
+                <Label
+                    label="디자인 URL :"
+                    sort="linkLabel"
+                />
+                <Input 
+                  type="text" 
+                  name="designURL" 
+                  value={demoLink.designURL} 
+                  sort="URLInput"
+                  _onChange={onChangeInput}
+                  isValid={!!errorMessage.demoLink.designURL}
+                  errorMessage={errorMessage.demoLink.designURL}
+                  validateMode={validateMode}
+                />
               </div>
-              <div>
-                <label>문서 URL:</label>
-                <input type="text" name="documentURL" value={demoLink.documentURL} onChange={onChangeInput}/>
+              <div className={demoLinkFlex()}>
+                <Label
+                    label="문서 URL:"
+                    sort="linkLabel"
+                />
+                <Input 
+                  type="text" 
+                  name="documentURL" 
+                  value={demoLink.documentURL} 
+                  sort="URLInput"
+                  _onChange={onChangeInput}
+                  isValid={!!errorMessage.demoLink.documentURL}
+                  errorMessage={errorMessage.demoLink.documentURL}
+                  validateMode={validateMode}
+                />
               </div>
             </div>
             <div className={formItemTextareaClass()}>

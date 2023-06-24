@@ -2,7 +2,7 @@ import tw from "tailwind-styled-components";
 
 interface FormContainerProps{
   width:string;
-  height?:string;
+  height:string;
 }
 
 const FormContainerStyle = tw.form<FormContainerProps>`
