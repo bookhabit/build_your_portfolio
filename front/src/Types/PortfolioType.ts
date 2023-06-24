@@ -24,5 +24,5 @@ export type DevelopPeriodType = {
     end:string,
 }
 
-export type CategoryType = "clone"|"individual"|"Cooperation"
+export type CategoryType = "clone"|"individual"|"cooperation"
 export type SelectedUI = "A"|"B"|"C"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 import tw from "tailwind-styled-components";
 
 const ResumeLabel = tw.label`
@@ -12,11 +12,10 @@ const PortfolioLabel = tw.label`
 const LinkLabel = tw.label`
   p-2 bg-portfolio_gray rounded-md w-32 font-bold
 `;
-
 interface IProps{
     icon?:string,
     alt?:string;
-    sort:"resumeLabel"|"portfolioLabel"|"linkLabel",
+    sort:"resumeLabel"|"portfolioLabel"|"linkLabel"
     label:string,
 }
 

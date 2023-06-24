@@ -51,6 +51,19 @@ export default function PortfolioFormPage() {
     const [category,setCategory] = useState<CategoryType>("clone");
     const [selectedUI,setSelectedUI] = useState<SelectedUI>("A");
 
+    // radio name
+    const categoryRadio = ["clone" , "individual" , "cooperation"]
+    const convertName = (name:string)=>{
+      if(name==="clone"){
+        return "클론코딩"
+      }else if(name==="individual"){
+        return "개인 프로젝트"
+      }else if(name==="cooperation"){
+        return "협업 프로젝트"
+      }
+    }
+    
+
     // error handling
     const [errorMessage,setErrorMessage] = useState<ValidatePortfolio>({
       title:"", 
@@ -271,6 +284,7 @@ export default function PortfolioFormPage() {
       return true
     }
 
+    console.log(category)
     // 수정페이지에서 데이터 채워넣기
     // useEffect(() => {
     //   if (!postId) {
@@ -528,38 +542,25 @@ export default function PortfolioFormPage() {
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="카테고리" sort="portfolioLabel"/>
-              <label>
-                <input
-                  type="radio"
-                  value="clone"
-                  name="category"
-                  checked={category === "clone"}
-                  onChange={onChangeInput}
-                />
-                클론코딩
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  value="individual"
-                  name="category"
-                  checked={category === "individual"}
-                  onChange={onChangeInput}
-                />
-                개인 프로젝트
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  value="Cooperation"
-                  name="category"
-                  checked={category === "Cooperation"}
-                  onChange={onChangeInput}
-                />
-                협업 프로젝트
-              </label>
+              <div className="flex gap-8">
+                {categoryRadio.map((kind)=>(
+                  <label
+                  className={`p-2 bg-portfolio_gray rounded-md w-32 font-bold cursor-pointer flex items-center justify-center ${
+                    category === kind ? 'text-category_select' : '' 
+                  }`}
+                >
+                    <input
+                      type="radio"
+                      value={kind}
+                      name="category"
+                      checked={category === kind}
+                      onChange={onChangeInput}
+                      className="hidden"
+                    />
+                    {convertName(kind)}
+                  </label>
+                ))}
+              </div>
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="포트폴리오 UI" sort="portfolioLabel"/>
