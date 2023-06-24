@@ -37,7 +37,7 @@ const Label = (props:IProps) => {
           }
           {sort==="portfolioLabel" && 
             <PortfolioLabel>
-              <p>{label}</p>
+              <p className="text-lg">{label}</p>
             </PortfolioLabel>}
           {sort==="linkLabel" && 
             <LinkLabel>

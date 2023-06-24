@@ -62,6 +62,16 @@ export default function PortfolioFormPage() {
         return "협업 프로젝트"
       }
     }
+    const PortfolioUIradio = [{
+      name:"A",
+      src:"https://file.miricanvas.com/template_thumb/2022/09/19/21/00/k2oejh1gzpx67va3/thumb.jpg"
+    } , {
+      name:"B",
+      src:"https://file.miricanvas.com/template_thumb/2022/10/05/12/10/kchzz44ut2gqscd2/thumb.jpg"
+    } , {
+      name:"C",
+      src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
+    }]
     
 
     // error handling
@@ -284,7 +294,7 @@ export default function PortfolioFormPage() {
       return true
     }
 
-    console.log(category)
+    console.log(selectedUI)
     // 수정페이지에서 데이터 채워넣기
     // useEffect(() => {
     //   if (!postId) {
@@ -564,38 +574,28 @@ export default function PortfolioFormPage() {
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="포트폴리오 UI" sort="portfolioLabel"/>
-              <label>
-                <input
-                  type="radio"
-                  value="A"
-                  name="selectedUI"
-                  checked={selectedUI === "A"}
-                  onChange={onChangeInput}
-                />
-                A
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  value="B"
-                  name="selectedUI"
-                  checked={selectedUI === "B"}
-                  onChange={onChangeInput}
-                />
-                B
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  value="C"
-                  name="selectedUI"
-                  checked={selectedUI === "C"}
-                  onChange={onChangeInput}
-                />
-                C
-              </label>
+              <div className="flex gap-8">
+                {PortfolioUIradio.map((kind)=>(
+                    <label
+                    className={`p-2 font-bold cursor-pointer text-2xl flex flex-col items-center justify-center gap-5 ${
+                      selectedUI === kind.name ? 'text-category_select' : '' 
+                    }`}
+                    >
+                    <input
+                      type="radio"
+                      value={kind.name}
+                      name="selectedUI"
+                      checked={selectedUI === kind.name}
+                      onChange={onChangeInput}
+                      className="hidden"
+                    />
+                    {kind.name}
+                    <div className="w-52 h-52 rounded-full overflow-hidden">
+                      <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
+                    </div>
+                    </label>
+                ))}
+              </div>
             </div>
             <div className="mt-8 flex justify-end ">
               <Button sort="portfolio" text="작성완료" _onClick={savePlace} />
