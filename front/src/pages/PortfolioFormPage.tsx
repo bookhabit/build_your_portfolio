@@ -11,6 +11,7 @@ import FormContainer from "../components/FormContainer";
 import PreviewIcon from "../assets/portfolio/imgPreview.svg"
 import { ValidatePortfolio } from "../components/common/validation/validatePortfolioForm";
 import  validatePortfolioForm  from "../components/common/validation/validatePortfolioForm";
+import TechBorder from "../components/common/TechBorder";
 
 
 export default function PortfolioFormPage() {
@@ -355,7 +356,7 @@ export default function PortfolioFormPage() {
               {usedTechnologyArr.length > 0 && (
                 <ShowArray>
                   {usedTechnologyArr.map((tech)=>(
-                    <span key={tech}>{tech+' '}</span>    
+                    <TechBorder key={tech} techName={tech} sort="portfolio" />
                   ))}    
                 </ShowArray>
               )}

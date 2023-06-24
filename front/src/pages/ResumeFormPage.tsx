@@ -16,9 +16,10 @@ import tw from "tailwind-styled-components";
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import { InputChangeEvent } from "../elements/Input";
 import validateResumeForm, { ValidateResume } from "../components/common/validation/validateResumeForm";
+import TechBorder from "../components/common/TechBorder";
 
 export const ShowArray = tw.div`
-  bg-inherit border-b border-border_focus p-1 min-w-full
+  bg-inherit p-1 min-w-full flex flex-wrap gap-3
 `;
 
 export default function ResumeFormPage() {
@@ -246,7 +247,7 @@ export default function ResumeFormPage() {
     }
 
     function formItemClassRow():string{
-      return "flex items-center gap-4"
+      return "flex items-center gap-4 "
     }
 
     function formItemClassCol():string{
@@ -412,7 +413,7 @@ export default function ResumeFormPage() {
             {technologyArr.length > 0 && (
               <ShowArray>
                 {technologyArr.map((tech)=>(
-                  <span key={tech}>{tech+' '}</span>    
+                  <TechBorder key={tech} techName={tech} sort="resume" />
                 ))}    
               </ShowArray>
             )}
