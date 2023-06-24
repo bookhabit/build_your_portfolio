@@ -21,7 +21,8 @@ const ResumePlusButton = tw.button`
 `;
 
 const PortfolioButton = tw.button`
-  bg-black-50
+  bg-portfolio_form_label text-white w-32 h-12 rounded-lg flex items-center justify-center p-3  font-bold
+  hover:bg-gray-400
 `;
 
 interface IProps{
@@ -39,19 +40,21 @@ const Button = (props:IProps) => {
 
   return (
     <React.Fragment>
-        {sort==="auth" && <AuthButton onClick={_onClick}>{text}</AuthButton>}
+        {sort==="auth" && 
+          <AuthButton onClick={_onClick}>{text}</AuthButton>}
         {sort==="social" && 
         <SocialButton onClick={_onClick} >
           <img src={icon} alt={alt} className="items-start"/>
           {text}
         </SocialButton>}
         {sort==="resume" && 
-        <ResumeButton onClick={_onClick} >{text}</ResumeButton>}
+          <ResumeButton onClick={_onClick} >{text}</ResumeButton>}
         {sort==="plusButton" &&
-        <ResumePlusButton onClick={_onClick} >
+          <ResumePlusButton onClick={_onClick} >
           <img src={icon} alt={alt} className="w-4"/>
         </ResumePlusButton>}
-        {sort==="portfolio" && <PortfolioButton onClick={_onClick} >{text}</PortfolioButton>}
+        {sort==="portfolio" && 
+          <PortfolioButton onClick={_onClick} >{text}</PortfolioButton>}
     </React.Fragment>
   );
 };

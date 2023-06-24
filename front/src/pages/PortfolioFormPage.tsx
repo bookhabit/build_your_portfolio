@@ -8,6 +8,7 @@ import { CategoryType, DemoLinkType, DevelopPeriodType, PortfolioType, SelectedU
 import { ShowArray } from "./ResumeFormPage";
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import FormContainer from "../components/FormContainer";
+import PreviewIcon from "../assets/portfolio/imgPreview.svg"
 
 
 type ValidatePortfolio = {
@@ -554,7 +555,7 @@ export default function PortfolioFormPage() {
               <Label label="카테고리" sort="portfolioLabel"/>
               <div className="flex gap-8">
                 {categoryRadio.map((kind)=>(
-                  <label
+                  <label key={kind}
                   className={`p-2 bg-portfolio_gray rounded-md w-32 font-bold cursor-pointer flex items-center justify-center ${
                     category === kind ? 'text-category_select' : '' 
                   }`}
@@ -574,10 +575,11 @@ export default function PortfolioFormPage() {
             </div>
             <div className={formItemTextareaClass()}>
               <Label label="포트폴리오 UI" sort="portfolioLabel"/>
-              <div className="flex gap-8">
+              <div className="flex flex-col gap-8 justify-evenly md:flex-row">
                 {PortfolioUIradio.map((kind)=>(
                     <label
-                    className={`p-2 font-bold cursor-pointer text-2xl flex flex-col items-center justify-center gap-5 ${
+                      key={kind.name}
+                      className={`relative p-2 font-bold cursor-pointer text-2xl flex flex-col items-center justify-center gap-5 ${
                       selectedUI === kind.name ? 'text-category_select' : '' 
                     }`}
                     >
@@ -593,12 +595,21 @@ export default function PortfolioFormPage() {
                     <div className="w-52 h-52 rounded-full overflow-hidden">
                       <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
                     </div>
+                    <img 
+                      src={PreviewIcon} 
+                      alt="이미지 확대"  
+                      className="absolute right-0 bottom-0"
+                      onClick={()=>console.log('클릭')}
+                      />
                     </label>
                 ))}
               </div>
             </div>
-            <div className="mt-8 flex justify-end ">
-              <Button sort="portfolio" text="작성완료" _onClick={savePlace} />
+            <div className="flex justify-end mt-20">
+              <Button 
+                sort="portfolio" 
+                text="작성완료" 
+                _onClick={savePlace} />
             </div>
         </FormContainer>
       </div>
