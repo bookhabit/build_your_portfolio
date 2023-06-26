@@ -1,3 +1,4 @@
+import { PortfolioType } from "./PortfolioType";
 import { ResumeType } from "./ResumeType";
 
 export type UserType = {
@@ -18,4 +19,5 @@ export type UserProfileType = {
     name:string;
     _id:String;
     userResumeDoc:ResumeType|null
+    userPortfolio:PortfolioType[]|null
 }

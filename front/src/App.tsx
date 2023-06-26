@@ -13,6 +13,7 @@ import 'animate.css'
 import { ValidateContextProvider } from './Context/ValidateContext';
 import PortfolioFormPage from './pages/PortfolioFormPage';
 import ResumeFormPage from './pages/ResumeFormPage';
+import UserPage from './pages/UserPage';
 
 axios.defaults.baseURL = "http://localhost:4000"
 axios.defaults.withCredentials = true;
@@ -31,6 +32,7 @@ function App() {
             <Route path={'/protfolio/create'} element={<PortfolioFormPage/>}/>
             <Route path={'/protfolio/update/:id'} element={<PortfolioFormPage/>}/>
             <Route path={'/post/:id'} element={<PostDetail/>}/>
+            <Route path={'/user/:id'} element={<UserPage/>}/>
             <Route path="/account" element={<ProfilePage />} />
             <Route path="/account/posts" element={<UserPostsPage />} />
           </Route>

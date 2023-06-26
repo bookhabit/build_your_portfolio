@@ -4,6 +4,7 @@ import { UserContext, UserContextType } from "./Context/UserContext";
 
 export default function Header() {
   const { user } = useContext<UserContextType>(UserContext);
+  console.log('user',user)
   const router = useNavigate();
   return (
     <header className="flex justify-between h-16 items-center bg-header_bg px-10 py-3">

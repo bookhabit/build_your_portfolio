@@ -17,6 +17,7 @@ import fs from 'fs'
 import pathLB from "path"
 import { Error } from "mongoose";
 import { ResumeType } from "./Types/ResumeType";
+import { PortfolioType } from "./Types/PortfolioType";
 
 dotenv.config();
 const app: Express = express();
@@ -90,14 +91,15 @@ app.get('/profile', (req:Request,res:Response) => {
         if (err) throw err;
         const userDoc = await User.findById(userData.id) as UserType;
         const userResumeDoc = await Resume.findOne({author:userData.id}) as ResumeType | null
-        
+        const userPortfolioDoc = await Portfolio.find({author:userData.id}) as PortfolioType[] | null
+
         const resultUser:UserProfileType = {
           email:userDoc.email,
           name:userDoc.name,
           _id:userDoc._id,
-          userResumeDoc:userResumeDoc
+          userResumeDoc:userResumeDoc,
+          userPortfolio:userPortfolioDoc,
         }
-        
         res.json(resultUser);
       });
   } else {
@@ -105,7 +107,28 @@ app.get('/profile', (req:Request,res:Response) => {
   }
 });
 
-// REST_API
+// id값으로 유저정보 찾기
+app.get('/user/:id', async (req:Request,res:Response) => {
+  const {id:userId} = req.params;
+  try{
+      const userDoc = await User.findById(userId) as UserType;
+      const userResumeDoc = await Resume.findOne({author:userId}) as ResumeType | null
+      const userPortfolioDoc = await Portfolio.find({author:userId}) as PortfolioType[] | null
+      console.log(userPortfolioDoc)
+
+      const resultUser:UserProfileType = {
+        email:userDoc.email,
+        name:userDoc.name,
+        _id:userDoc._id,
+        userResumeDoc:userResumeDoc,
+        userPortfolio:userPortfolioDoc,
+      }
+      
+      res.json({resultUser});
+  }catch(err){
+    res.json({err})
+  }
+})
 
 // input string(이미지주소)으로 이미지업로드
 app.post('/upload-by-link', async (req: Request, res: Response) => {

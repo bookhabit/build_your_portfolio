@@ -19,6 +19,7 @@ export function UserContextProvider({ children }: { children: React.ReactNode })
     if (user) {
       axios.get('/profile')
             .then(({data}:{data:UserProfileType}) => {
+              console.log(data)
               setUser(data);
             });
     }
