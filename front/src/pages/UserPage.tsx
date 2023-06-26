@@ -3,18 +3,19 @@ import { useParams } from 'react-router';
 import { ResumeType } from '../Types/ResumeType';
 import { PortfolioType } from '../Types/PortfolioType';
 import axios from 'axios';
+import UserInfo from '../components/UserInfo';
 
 export type UserInfoType = {
     email:string;
     name:string;
     _id:String;
     userResumeDoc:ResumeType|null
-    userPortfolio:PortfolioType|null
+    userPortfolio:PortfolioType[]|null
 }
 
 const UserPage = () => {
     const {id:userId} = useParams();
-    const [userInfo,setUserInfo] = useState<UserInfoType|null>();
+    const [userInfo,setUserInfo] = useState<UserInfoType|undefined>();
     useEffect(()=>{
         axios.get(`/user/${userId}`).then((response)=>{
             if(response.status===200){
@@ -23,10 +24,9 @@ const UserPage = () => {
             }
         })
     },[])
-    console.log('userInfo',userInfo)
     return (
-        <div>
-            유저 메인페이지
+        <div className='flex items-center justify-center py-12 px-20 '>
+            <UserInfo user={userInfo} />
         </div>
     );
 };

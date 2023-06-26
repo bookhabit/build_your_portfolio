@@ -16,7 +16,7 @@ export function UserContextProvider({ children }: { children: React.ReactNode })
   const [user, setUser] = useState<UserProfileType | null>(null);  
   
   useEffect(() => {
-    if (user) {
+    if (!user) {
       axios.get('/profile')
             .then(({data}:{data:UserProfileType}) => {
               console.log(data)
