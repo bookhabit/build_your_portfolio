@@ -28,7 +28,8 @@ export default {
         border_focus:'#58BA74',
         UI_user_profile_bg:"#FCFCFC",
         UI_resume_card_bg:"#F4F8F1" ,
-        UI_portfolio_card_bg:"#FAF9FC"
+        UI_portfolio_card_bg:"#FAF9FC",
+        UI_subTitle:"#585858"
       }
     },
     screens: {
