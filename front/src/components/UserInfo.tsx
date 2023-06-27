@@ -30,12 +30,11 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
         <div className="w-full">
             <div className="profile-div w-full bg-UI_user_profile_bg p-6">
                 <div className="profile-card p-5">
-
                     <h2 className={titleCard()}>{user?.name}</h2>
                     <p className="my-5 font-bold text-lg">' {user?.userResumeDoc?.myselfSentence} '</p>
-                    <div className="flex items-center my-6">
+                    <div className="flex items-center my-6 flex-wrap gap-2">
                         <img src={computerIcon} alt="컴퓨터아이콘"/>
-                        <p className={mx2()+" font-bold"}>개발을 하는 이유 :</p>
+                        <p className={" font-bold "}>개발을 하는 이유 :</p>
                         <p className="font-bold text-lg">{user?.userResumeDoc?.reasonForCoding}</p>
                     </div>
                     <div className={subCardBox()}>
@@ -72,7 +71,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                 </div>
             </div>
             <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center mt-8 ">
-                <div className="resume-div w-1/2 bg-UI_resume_card_bg p-5">
+                <div className="resume-div w-full md:w-1/2 bg-UI_resume_card_bg p-5">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>이력서</h2>
                         <span>펼쳐보기</span>
@@ -81,7 +80,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                         내용
                     </div>
                 </div>
-                <div className="coverLetter-div w-1/2 bg-UI_resume_card_bg p-5">
+                <div className="coverLetter-div w-full md:w-1/2 bg-UI_resume_card_bg p-5">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>자기소개서</h2>
                         <span>펼쳐보기</span>
