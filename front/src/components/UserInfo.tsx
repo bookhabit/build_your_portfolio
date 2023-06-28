@@ -9,6 +9,7 @@ import PortfolioImage from "./PortfolioImage"
 import { useState } from "react"
 import ShowModal from "./showModal"
 import { ShowArray } from "../pages/ResumeFormPage";
+import PortfolioCategory from "./PortfolioCategory";
 
 const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
     // state
@@ -37,11 +38,6 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
     function flexRowInfo(){
         return "flex items-center ml-2 my-2"
     }
-    
-    
-    function portfolioCategoryCSS(){
-        return "flex flex-col items-center category-clone gap-16 p-5"
-    }
 
     // show-reumseCard
     if (showResumeCard) {
@@ -59,7 +55,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
         </div>
         );
       }
-      // show-reumseCard
+      // show-coverLetter
     if (showCoverLetter) {
         return (
         <div className="absolute inset-0 bg-black min-h-screen items-center flex flex-col justify-center">
@@ -177,35 +173,13 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                     <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
                     <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
                         {clonePortfolios && clonePortfolios?.length>0 &&
-                            <div className={portfolioCategoryCSS()}>
-                                <p className="text-neutral-500 text-2xl">클론코딩</p>
-                                <div className="flex gap-8 flex-wrap">
-                                    {
-                                    clonePortfolios?.map((portfolio)=>(
-                                        <PortfolioImage portfolio={portfolio}/>
-                                    ))}
-                                </div>
-                            </div>
+                            <PortfolioCategory categoryName="클론코딩" portfolio={clonePortfolios}/>
                         }
                         {individualPortfolios && individualPortfolios?.length>0 &&
-                            <div className={portfolioCategoryCSS()}>
-                                <p className="text-neutral-500 text-2xl">개인프로젝트</p>
-                                <div className="flex gap-8 flex-wrap">
-                                {individualPortfolios?.map((portfolio)=>(
-                                        <PortfolioImage portfolio={portfolio}/>
-                                    ))}
-                                </div>
-                            </div>
+                            <PortfolioCategory categoryName="개인프로젝트" portfolio={individualPortfolios}/>
                         }
                         {cooperationPortfolios && cooperationPortfolios?.length>0 &&
-                            <div className={portfolioCategoryCSS()}>
-                                <p className="text-neutral-500 text-2xl">협업프로젝트</p>
-                                <div className="flex gap-8 flex-wrap">                                
-                                    {cooperationPortfolios?.map((portfolio)=>(
-                                        <PortfolioImage portfolio={portfolio}/>
-                                    ))}
-                                </div>
-                            </div>
+                            <PortfolioCategory categoryName="협업프로젝트" portfolio={cooperationPortfolios}/>
                         }
                     </div>
             </div>

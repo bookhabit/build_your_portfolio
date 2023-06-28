@@ -51,8 +51,8 @@ export default function IndexPage() {
         <PortfolioFormPage/>
       </div>
       {user && (
-        <div className="w-48 fixed bottom-5 right-5">
-          <button className="w-full bg-header_bg text-header_element p-2 rounded-full" onClick={handleClick}>
+        <div className="fixed bottom-5 right-5 w-68">
+          <button className="w-full bg-header_bg text-header_element p-2 rounded-full font-bold text-xl py-5 px-5 hover:bg-gray-400" onClick={handleClick}>
             포트폴리오 등록하기
           </button>
         </div>
