@@ -29,7 +29,8 @@ export default {
         UI_user_profile_bg:"#FCFCFC",
         UI_resume_card_bg:"#F4F8F1" ,
         UI_portfolio_card_bg:"#FAF9FC",
-        UI_subTitle:"#585858"
+        UI_subTitle:"#585858",
+        skill_color:"#A1E1F5"
       }
     },
     screens: {

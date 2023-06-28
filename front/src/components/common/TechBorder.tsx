@@ -8,8 +8,8 @@ const TechBorder = ({techName,sort}:IProps) => {
         <div className={`
         ${sort==="portfolio" && `bg-blue-300`} 
         ${sort==="resume" && `bg-gray-500`} 
-        ${sort==="UI" && `bg-blue-300`} 
-        py-2 px-4 flex items-center justify-center mr-3 text-sm text-white min-w-20 rounded-lg`}>
+        ${sort==="UI" && `bg-skill_color`} 
+        py-2 px-4 flex items-center justify-center mr-3 text-sm text-black font-bold min-w-20 rounded-lg`}>
             <span>{techName}</span>
         </div>
     );
