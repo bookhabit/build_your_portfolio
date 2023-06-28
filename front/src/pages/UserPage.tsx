@@ -4,14 +4,7 @@ import { ResumeType } from '../Types/ResumeType';
 import { PortfolioType } from '../Types/PortfolioType';
 import axios from 'axios';
 import UserInfo from '../components/UserInfo';
-
-export type UserInfoType = {
-    email:string;
-    name:string;
-    _id:String;
-    userResumeDoc:ResumeType|null
-    userPortfolio:PortfolioType[]|null
-}
+import { UserInfoType } from '../Types/userType';
 
 const UserPage = () => {
     const {id:userId} = useParams();
@@ -25,7 +18,7 @@ const UserPage = () => {
         })
     },[])
     return (
-        <div className='flex items-center justify-center py-12 px-0 xl:px-80 '>
+        <div className='flex items-center justify-center px-0 xl:px-80 '>
             <UserInfo user={userInfo} />
         </div>
     );

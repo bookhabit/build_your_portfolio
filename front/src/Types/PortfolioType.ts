@@ -9,7 +9,8 @@ export type PortfolioType = {
     developPeriod:DevelopPeriodType;
     demoLink:DemoLinkType;
     category:CategoryType;
-    selectedUI:SelectedUI
+    selectedUI:SelectedUI;
+    _id:string;
 }
 
 export type DemoLinkType = {

@@ -1,16 +1,34 @@
-import { UserInfoType } from "../pages/UserPage";
+
 import emailIcon from "../assets/email.svg"
 import computerIcon from "../assets/computer.svg"
 import githubIcon from "../assets/auth/github.svg"
 import linkIcon from "../assets/resume/linkIcon.svg"
 import phoneIcon from "../assets/resume/phoneIcon.svg"
+import preView1 from "../assets/portfolio/Naver.png"
+import preView2 from "../assets/portfolio/petfriends.png"
+import preView3 from "../assets/portfolio/번개장터.png"
 import TechBorder from "./common/TechBorder";
 import { ShowArray } from "../pages/ResumeFormPage";
+import { UserInfoType } from "../Types/userType"
+import PortfolioImage from "./PortfolioImage"
 
 const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
     console.log('props ',user)
+    console.log(user?.userPortfolio)
+    // 포트폴리오 카테고리별로 나누기
+    // Filter portfolios by category
+    const clonePortfolios = user?.userPortfolio?.filter(
+        (portfolio) => portfolio.category === 'clone'
+    );
+    const individualPortfolios = user?.userPortfolio?.filter(
+        (portfolio) => portfolio.category === 'individual'
+    );
+    const cooperationPortfolios = user?.userPortfolio?.filter(
+        (portfolio) => portfolio.category === 'cooperation'
+    );
+    
 
-    // css
+    // css ( 굳이 안해도 될것 같으면 하지말고 중복많은 것만 함수화)
     function titleCard(){
         return "font-bold text-2xl"
     }
@@ -25,6 +43,9 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
     }
     function subCardBox(){
         return"my-10"
+    }
+    function portfolioCategoryCSS(){
+        return "flex flex-col items-center category-clone gap-16 p-5"
     }
     return (
         <div className="w-full">
@@ -77,7 +98,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                     </div>
                 </div>
             </div>
-            <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center mt-8 h-80">
+            <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96">
                 <div className="resume-div w-full md:w-1/2 bg-resume_card_BG p-5 min-h-full">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>이력서</h2>
@@ -110,33 +131,54 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                         </div>
                     </div>
                 </div>
-                <div className="coverLetter-div w-full md:w-1/2 bg-resume_card_BG bg-bl p-5 min-h-full">
+                <div className="coverLetter-div w-full md:w-1/2 bg-resume_card_BG bg-bl p-5 h-full">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>자기소개서</h2>
                         <span>펼쳐보기</span>
                     </div>
                     <div className="content py-5">
-                        <p className="text-base">
+                        <p className="text-base leading-10">
+                            {/* 글자수 제한으로 미리보기로 냅두고 펼쳐보기로 전체보여주기 */}
                             {user?.userResumeDoc?.coverLetter}
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero itaque corrupti modi quos, laboriosam tempore nulla aut. Quae dolorem quo laborum officiis perspiciatis, culpa eaque quas facilis voluptatibus, eligendi non!
                         </p>
                     </div>
                 </div>
             </div>
-            <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center mt-8 py-10 px-16 h-full">
+            <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-48 h-full">
                     <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold">Portfolio</h2>
-                    <div className="protfoilo-group flex flex-col items-center justify-center gap-6 md:flex-row mt-12">
-                        <div className="flex flex-col items-center category-clone gap-4">
-                            <p>클론코딩</p>
-                            <div className="bg-black rounded-full w-40 h-40"></div>
-                        </div>
-                        <div className="flex flex-col items-center  category-clone gap-4">
-                            <p>개인프로젝트</p>
-                            <div className="bg-black rounded-full w-40 h-40"></div>
-                        </div>
-                        <div className="flex flex-col items-center  category-clone gap-4">
-                            <p>협업프로젝트</p>
-                            <div className="bg-black rounded-full w-40 h-40"></div>
-                        </div>
+                    <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-12">
+                        {clonePortfolios && clonePortfolios?.length>0 &&
+                            <div className={portfolioCategoryCSS()}>
+                                <p className="text-neutral-500">클론코딩</p>
+                                <div className="flex gap-5 flex-wrap">
+                                    {
+                                    clonePortfolios?.map((portfolio)=>(
+                                        <PortfolioImage portfolio={portfolio}/>
+                                    ))}
+                                </div>
+                            </div>
+                        }
+                        {individualPortfolios && individualPortfolios?.length>0 &&
+                            <div className={portfolioCategoryCSS()}>
+                                <p className="text-neutral-500">개인프로젝트</p>
+                                <div className="flex gap-5 flex-wrap">
+                                {individualPortfolios?.map((portfolio)=>(
+                                        <PortfolioImage portfolio={portfolio}/>
+                                    ))}
+                                </div>
+                            </div>
+                        }
+                        {cooperationPortfolios && cooperationPortfolios?.length>0 &&
+                            <div className={portfolioCategoryCSS()}>
+                                <p className="text-neutral-500">협업프로젝트</p>
+                                <div className="flex gap-5 flex-wrap">                                
+                                    {cooperationPortfolios?.map((portfolio)=>(
+                                        <PortfolioImage portfolio={portfolio}/>
+                                    ))}
+                                </div>
+                            </div>
+                        }
                     </div>
             </div>
         </div>
