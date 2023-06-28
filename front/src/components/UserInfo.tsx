@@ -1,18 +1,14 @@
 
 import emailIcon from "../assets/email.svg"
 import computerIcon from "../assets/computer.svg"
-import githubIcon from "../assets/auth/github.svg"
 import linkIcon from "../assets/resume/linkIcon.svg"
 import phoneIcon from "../assets/resume/phoneIcon.svg"
-import preView1 from "../assets/portfolio/Naver.png"
-import preView2 from "../assets/portfolio/petfriends.png"
-import preView3 from "../assets/portfolio/번개장터.png"
 import TechBorder from "./common/TechBorder";
-import ResumeFormPage, { ShowArray } from "../pages/ResumeFormPage";
 import { UserInfoType } from "../Types/userType"
 import PortfolioImage from "./PortfolioImage"
 import { useState } from "react"
 import ShowModal from "./showModal"
+import { ShowArray } from "../pages/ResumeFormPage";
 
 const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
     // state
@@ -36,17 +32,13 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
         return "font-bold text-2xl"
     }
     function subTitleText(){
-        return "text-UI_subTitle text-xl mb-3"
+        return "text-UI_subTitle text-2xl mb-3"
     }
     function flexRowInfo(){
         return "flex items-center ml-2 my-2"
     }
-    function mx2(){
-        return "mx-2"
-    }
-    function subCardBox(){
-        return"my-10"
-    }
+    
+    
     function portfolioCategoryCSS(){
         return "flex flex-col items-center category-clone gap-16 p-5"
     }
@@ -97,34 +89,34 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                                 <p className="font-bold text-lg">{user?.userResumeDoc?.reasonForCoding}</p>
                             </div>
                         </div>
-                        <div className="relative right-0 top-0 lg:absolute xl:relative 2xl:absolute">
+                        <div className="relative right-0 top-0 lg:absolute">
                             <img src="https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg" alt="테스트"/>
                         </div>
                     </div>
-                    <div className={subCardBox()}>
+                    <div className={"my-10"}>
                         <h3 className={subTitleText()}>Contact</h3>
                         <div className={flexRowInfo()}>
                             <img src={emailIcon} alt="이메일 아이콘"/>
-                            <p className={mx2()}>{"email : "}</p>
+                            <p className={"mx-2"}>{"email : "}</p>
                             <p>{user?.email}</p>
                         </div>
                         <div className={flexRowInfo()}>
                             <img src={phoneIcon} alt="전화번호 아이콘"/>
-                            <p className={mx2()}>{"phone : "}</p>
+                            <p className={"mx-2"}>{"phone : "}</p>
                             <p>{user?.userResumeDoc?.phone}</p>
                         </div>
                     </div>
-                    <div className={subCardBox()}>
+                    <div className={"my-10"}>
                         <h3 className={subTitleText()}>Skills</h3>
                         {user?.userResumeDoc?.channel.map((channel)=>(
                             <div className={flexRowInfo()} key={channel.channelURL}>
                                 <img src={linkIcon} alt="이메일 아이콘"/>
-                                <p className={mx2()}>{channel.channelName} :</p>
+                                <p className={"mx-2"}>{channel.channelName} :</p>
                                 <p>{channel.channelURL}</p>
                             </div>
                         ))}
                     </div>
-                    <div className={subCardBox()}>
+                    <div className={"my-10"}>
                         <h3 className={subTitleText()}>Channel</h3>
                         <ShowArray>
                             {user?.userResumeDoc?.technology.map((skill)=>(
