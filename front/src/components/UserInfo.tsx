@@ -8,14 +8,17 @@ import preView1 from "../assets/portfolio/Naver.png"
 import preView2 from "../assets/portfolio/petfriends.png"
 import preView3 from "../assets/portfolio/번개장터.png"
 import TechBorder from "./common/TechBorder";
-import { ShowArray } from "../pages/ResumeFormPage";
+import ResumeFormPage, { ShowArray } from "../pages/ResumeFormPage";
 import { UserInfoType } from "../Types/userType"
 import PortfolioImage from "./PortfolioImage"
+import { useState } from "react"
+import ShowModal from "./showModal"
 
 const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
-    console.log('props ',user)
-    console.log(user?.userPortfolio)
-    // 포트폴리오 카테고리별로 나누기
+    // state
+    const [showResumeCard,setShowResumeCard] = useState<boolean>(false)
+    const [showCoverLetter,setShowCoverLetter] = useState<boolean>(false)
+    
     // Filter portfolios by category
     const clonePortfolios = user?.userPortfolio?.filter(
         (portfolio) => portfolio.category === 'clone'
@@ -47,6 +50,39 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
     function portfolioCategoryCSS(){
         return "flex flex-col items-center category-clone gap-16 p-5"
     }
+
+    // show-reumseCard
+    if (showResumeCard) {
+        return (
+        <div className="absolute inset-0 bg-black items-center flex flex-col justify-center p-14 h-auto">
+            <ShowModal data={user?.userResumeDoc} sort="resume"/>
+            <div>
+              <button onClick={() => setShowResumeCard(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
+                </svg>
+                Close Preview
+              </button>
+            </div>
+        </div>
+        );
+      }
+      // show-reumseCard
+    if (showCoverLetter) {
+        return (
+        <div className="absolute inset-0 bg-black min-h-screen items-center flex flex-col justify-center">
+            <ShowModal data={user?.userResumeDoc?.coverLetter} sort="coverLetter"/>
+            <div>
+              <button onClick={() => setShowCoverLetter(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
+                </svg>
+                Close Preview
+              </button>
+            </div>
+        </div>
+        );
+      }
     return (
         <div className="w-full">
             <div className="profile-div w-full bg-UI_user_profile_bg px-6 py-16">
@@ -102,7 +138,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                 <div className="resume-div w-full md:w-1/2 bg-resume_card_BG p-5 min-h-full">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>이력서</h2>
-                        <span>펼쳐보기</span>
+                        <span className="cursor-pointer" onClick={()=>setShowResumeCard(true)}>펼쳐보기</span>
                     </div>
                     <div className="content mt-5">
                         <div className={flexRowInfo()+" gap-2"}>
@@ -114,7 +150,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                             <p>{user?.userResumeDoc?.birth}</p>
                         </div>
                         <div className="p-3">
-                            <h3 className="font-bold">자격증</h3>
+                            <p>자격증</p>
                             {user?.userResumeDoc?.certification.map((name,index)=>(
                               <div key={index} className="ml-4 mt-2">
                                 {index+1}. {name}
@@ -122,7 +158,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                             ))}
                         </div>
                         <div className="p-3">
-                            <h3 className="font-bold">대외활동</h3>
+                            <p>대외활동</p>
                             {user?.userResumeDoc?.acitivity.map((activity,index)=>(
                               <div key={index} className="ml-4 mt-2">
                                 {index+1}. {activity.activityName} - {activity.period}
@@ -134,7 +170,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                 <div className="coverLetter-div w-full md:w-1/2 bg-resume_card_BG bg-bl p-5 h-full">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>자기소개서</h2>
-                        <span>펼쳐보기</span>
+                        <span className="cursor-pointer" onClick={()=>setShowCoverLetter(true)}>펼쳐보기</span>
                     </div>
                     <div className="content py-5">
                         <p className="text-base leading-10">
@@ -146,11 +182,11 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                 </div>
             </div>
             <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36 h-full">
-                    <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold">Portfolio</h2>
+                    <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
                     <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
                         {clonePortfolios && clonePortfolios?.length>0 &&
                             <div className={portfolioCategoryCSS()}>
-                                <p className="text-neutral-500">클론코딩</p>
+                                <p className="text-neutral-500 text-2xl">클론코딩</p>
                                 <div className="flex gap-8 flex-wrap">
                                     {
                                     clonePortfolios?.map((portfolio)=>(
@@ -161,7 +197,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                         }
                         {individualPortfolios && individualPortfolios?.length>0 &&
                             <div className={portfolioCategoryCSS()}>
-                                <p className="text-neutral-500">개인프로젝트</p>
+                                <p className="text-neutral-500 text-2xl">개인프로젝트</p>
                                 <div className="flex gap-8 flex-wrap">
                                 {individualPortfolios?.map((portfolio)=>(
                                         <PortfolioImage portfolio={portfolio}/>
@@ -171,7 +207,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                         }
                         {cooperationPortfolios && cooperationPortfolios?.length>0 &&
                             <div className={portfolioCategoryCSS()}>
-                                <p className="text-neutral-500">협업프로젝트</p>
+                                <p className="text-neutral-500 text-2xl">협업프로젝트</p>
                                 <div className="flex gap-8 flex-wrap">                                
                                     {cooperationPortfolios?.map((portfolio)=>(
                                         <PortfolioImage portfolio={portfolio}/>

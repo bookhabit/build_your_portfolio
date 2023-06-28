@@ -28,10 +28,10 @@ const Label = (props:IProps) => {
           icon ? 
             <ResumeLabel className="flex w-28 items-center justify-between">
               <img src={icon} alt={alt} className="items-start"/>
-              <p className="font-bold text-base">{label}</p>
+              <p className="font-bold text-lg">{label}</p>
             </ResumeLabel>
           : <ResumeLabel className="w-full">
-              <p className="font-bold text-base">{label}</p>
+              <p className="font-bold text-lg">{label}</p>
             </ResumeLabel>
           : null
           }

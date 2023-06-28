@@ -7,6 +7,7 @@
     width:500px;
 }
 
+
 input:focus::placeholder {
   opacity: 0;
 }
@@ -14,4 +15,10 @@ input:focus::placeholder {
 p{
   font-weight:600;
   font-size:18px;
+}
+
+.scrollable-container {
+  position: relative;
+  overflow: auto;
+  z-index: 0;
 }

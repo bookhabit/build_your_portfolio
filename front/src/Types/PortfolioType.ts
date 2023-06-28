@@ -10,8 +10,8 @@ export type PortfolioType = {
     demoLink:DemoLinkType;
     category:CategoryType;
     selectedUI:SelectedUI;
-    _id:string;
-    author:string;
+    _id?:string;
+    author?:string;
 }
 
 export type DemoLinkType = {

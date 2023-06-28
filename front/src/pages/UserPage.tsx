@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { ResumeType } from '../Types/ResumeType';
-import { PortfolioType } from '../Types/PortfolioType';
 import axios from 'axios';
 import UserInfo from '../components/UserInfo';
 import { UserInfoType } from '../Types/userType';
