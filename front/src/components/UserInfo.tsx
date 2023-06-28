@@ -49,7 +49,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
     }
     return (
         <div className="w-full">
-            <div className="profile-div w-full bg-UI_user_profile_bg p-6">
+            <div className="profile-div w-full bg-UI_user_profile_bg px-6 py-16">
                 <div className="profile-card p-5">
                     <div className="profile-header relative">
                         <div className="left">
@@ -145,13 +145,13 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                     </div>
                 </div>
             </div>
-            <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-48 h-full">
+            <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36 h-full">
                     <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold">Portfolio</h2>
-                    <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-12">
+                    <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
                         {clonePortfolios && clonePortfolios?.length>0 &&
                             <div className={portfolioCategoryCSS()}>
                                 <p className="text-neutral-500">클론코딩</p>
-                                <div className="flex gap-5 flex-wrap">
+                                <div className="flex gap-8 flex-wrap">
                                     {
                                     clonePortfolios?.map((portfolio)=>(
                                         <PortfolioImage portfolio={portfolio}/>
@@ -162,7 +162,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                         {individualPortfolios && individualPortfolios?.length>0 &&
                             <div className={portfolioCategoryCSS()}>
                                 <p className="text-neutral-500">개인프로젝트</p>
-                                <div className="flex gap-5 flex-wrap">
+                                <div className="flex gap-8 flex-wrap">
                                 {individualPortfolios?.map((portfolio)=>(
                                         <PortfolioImage portfolio={portfolio}/>
                                     ))}
@@ -172,7 +172,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                         {cooperationPortfolios && cooperationPortfolios?.length>0 &&
                             <div className={portfolioCategoryCSS()}>
                                 <p className="text-neutral-500">협업프로젝트</p>
-                                <div className="flex gap-5 flex-wrap">                                
+                                <div className="flex gap-8 flex-wrap">                                
                                     {cooperationPortfolios?.map((portfolio)=>(
                                         <PortfolioImage portfolio={portfolio}/>
                                     ))}

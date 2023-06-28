@@ -11,6 +11,7 @@ export type PortfolioType = {
     category:CategoryType;
     selectedUI:SelectedUI;
     _id:string;
+    author:string;
 }
 
 export type DemoLinkType = {
