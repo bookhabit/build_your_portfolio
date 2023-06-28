@@ -12,6 +12,7 @@ export type ValidatePortfolio = {
       start:string, // 2023-01-25 형식
       end:string, // 2023-04-25
    };
+   important_functionInput:string,
     demoLink:DemoLinkType;
     category:string;
     selectedUI:string;

@@ -4,7 +4,7 @@ import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
-import { CategoryType, DemoLinkType, DevelopPeriodType, PortfolioType, SelectedUI } from "../Types/PortfolioType";
+import { CategoryType, DemoLinkType, DevelopPeriodType, Important_function, PortfolioType, SelectedUI } from "../Types/PortfolioType";
 import { ShowArray } from "./ResumeFormPage";
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import FormContainer from "../components/FormContainer";
@@ -12,7 +12,8 @@ import PreviewIcon from "../assets/portfolio/imgPreview.svg"
 import { ValidatePortfolio } from "../components/common/validation/validatePortfolioForm";
 import  validatePortfolioForm  from "../components/common/validation/validatePortfolioForm";
 import TechBorder from "../components/common/TechBorder";
-
+import plusIcon from "../assets/resume/plusIcon.svg"
+import Image from "../components/testRestAPI/Image";
 
 export default function PortfolioFormPage() {
     const {id:portfolioId} = useParams();
@@ -34,6 +35,9 @@ export default function PortfolioFormPage() {
       designURL:"",
       documentURL:"",
     });
+    const [important_functionInput,setImportant_functionInput] = useState<string>("");
+    const [important_functionPhotos,setImportant_functionPhotos] = useState<string[]>([]);
+    const [important_functionArr,setImportant_functionArr] = useState<Important_function[]>([]);
     // radio
     const [category,setCategory] = useState<CategoryType>("clone");
     const [selectedUI,setSelectedUI] = useState<SelectedUI>("A");
@@ -83,6 +87,7 @@ export default function PortfolioFormPage() {
         designURL:"",
         documentURL:"",
       },
+      important_functionInput:"",
       category:"",
       selectedUI:"",
     })
@@ -193,6 +198,9 @@ export default function PortfolioFormPage() {
           learned:"",
         }))
       }
+      else if(event.target.name==="important_functionInput"){
+        setImportant_functionInput(event.target.value)
+      }
       setValidateMode(false)
     }
 
@@ -246,9 +254,10 @@ export default function PortfolioFormPage() {
           demoLink,
           category,
           selectedUI,
+          important_functions:important_functionArr
         };
         const validateForm:boolean = validatePortfolioForm(portfolioForm,setErrorMessage)
-        
+        console.log(portfolioForm)
         if(validateForm){
           console.log('유효성 검사 완료')
           if (portfolioId) {
@@ -473,6 +482,55 @@ export default function PortfolioFormPage() {
                 />
               </div>
             </div>
+            <div className={formItemTextareaClass()}>
+              <Label sort="portfolioLabel" label="프로젝트의 핵심기능 (선택)"/>
+              <span>핵심기능 설명</span>
+              <Textarea
+                value={important_functionInput}
+                name="important_functionInput"
+                _onChange={onChangeTextarea}
+                sort="portfolioTexarea"
+                height="h-20"
+                isValid={!!errorMessage.important_functionInput}
+                errorMessage={errorMessage.important_functionInput}
+                validateMode={validateMode}
+                />
+                <span>핵심기능의 이미지</span>
+                <PhotosUploader
+                  addedPhotos={important_functionPhotos} 
+                  onChange={setImportant_functionPhotos} />
+                <div className="flex items-center gap-4 justify-end mb-5">
+                  <span>프로젝트의 핵심기능 추가하기</span>
+                  <Button
+                    sort="plusButton"
+                    icon={plusIcon}
+                    alt="+아이콘"
+                    _onClick={(event)=>{
+                      event.preventDefault()
+                      if(important_functionInput&&important_functionPhotos){
+                        const important_data = {
+                          important_function_desc:important_functionInput,
+                          important_function_photo:important_functionPhotos
+                        }
+                        setImportant_functionInput("")
+                        setImportant_functionPhotos([])
+                        setImportant_functionArr([important_data,...important_functionArr])
+                      }
+                  }}/>
+                </div>
+            </div>
+            {important_functionArr.length > 0 && (
+              <ShowArray>
+                {important_functionArr.map((data,index)=>(
+                  <div key={index} className="border border-gray-200 rounded-md w-full p-5">
+                    <p className="mb-3">추가한 핵심기능 {index+1} 설명</p>
+                    {data.important_function_desc}
+                    <p className="my-3">추가한 핵심기능 {index+1} 이미지</p>
+                    <Image className="rounded-2xl w-32 h-32 object-cover" src={data.important_function_photo[0]}/>
+                  </div>
+                ))}    
+              </ShowArray>
+            )}
             <div className={formItemTextareaClass()}>
               <Label label="카테고리" sort="portfolioLabel"/>
               <div className="flex gap-8">

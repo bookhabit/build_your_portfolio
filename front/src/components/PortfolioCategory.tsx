@@ -16,7 +16,7 @@ const PortfolioCategory = ({categoryName,portfolio}:IProps) => {
             <div className="flex gap-8 flex-wrap">
                 {
                 portfolio?.map((portfolio)=>(
-                    <PortfolioImage portfolio={portfolio}/>
+                    <PortfolioImage key={portfolio._id} portfolio={portfolio}/>
                 ))}
             </div>
         </div>

@@ -5,6 +5,7 @@ export type PortfolioType = {
     process:string; 
     learned:string;
     photos: string[],
+    important_functions?:Important_function[],
     usedTechnology:string[];
     developPeriod:DevelopPeriodType;
     demoLink:DemoLinkType;
@@ -24,6 +25,11 @@ export type DemoLinkType = {
 export type DevelopPeriodType = {
     start:string,
     end:string,
+}
+
+export type Important_function = {
+    important_function_desc:string,
+    important_function_photo:string[],
 }
 
 export type CategoryType = "clone"|"individual"|"cooperation"

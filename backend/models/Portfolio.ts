@@ -20,6 +20,10 @@ const PortfolioSchema = new Schema({
         start:String,
         end:String,
     },
+    important_functions:[{
+        important_function_desc:String,
+        important_function_photo:[String],
+    }],
     category:String,
     selectedUI:String,
 },{

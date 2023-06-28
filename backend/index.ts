@@ -205,7 +205,7 @@ app.put('/resume/update',async (req,res)=>{
 // 포트폴리오 등록
 app.post('/portfolio/create',(req:Request,res:Response)=>{
   const {token} = req.cookies;
-  const {title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,
+  const {title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,important_functions
   } = req.body;
   console.log(title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI)
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
@@ -213,7 +213,7 @@ app.post('/portfolio/create',(req:Request,res:Response)=>{
     if (err) throw err;
     const portfolioDoc = await Portfolio.create({
       author:userData.id,
-      title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,
+      title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,important_functions
     })
     res.json({portfolioDoc})
   });
