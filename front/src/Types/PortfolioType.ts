@@ -1,3 +1,8 @@
+export interface PortfolioDetailType {
+    PortfolioDoc:PortfolioType
+    author_name:string
+}
+
 export type PortfolioType = {
     title:string; 
     purpose:string;

@@ -19,7 +19,7 @@ export default function IndexPage() {
 
     const options = {
       root: null, // viewport
-      rootMargin: "20px",
+      rootMargin: "0px",
       threshold: 0.5 // 50%가 viewport에 들어와 있어야 callback 실행
     };
     
@@ -34,19 +34,25 @@ export default function IndexPage() {
     }, options);
 
     // 반복문을 돌려 모든 DOM에 적용
-    const boxList = document.querySelectorAll(".Container");
+    const boxList = document.querySelectorAll(".fadeInContainer");
     boxList.forEach((el) => observer.observe(el));
     
   }, []);
 
   // 포트폴리오 작성이 처음이라면 이력서 form페이지로 리다이렉션 시키기
   const handleClick = ()=>{
-    // api 요청 : 데이터베이스에 유저의 포트폴리오 정보가 있는지 확인
-    if(user?.userResumeDoc){
-      router('/protfolio/create')
+    // user가 로그인했는지 확인 
+    if(!user){
+      alert('로그인 먼저 진행해주세요')
+      router("/register")
     }else{
-      alert('아직 이력서가 작성되지 않았습니다\n이력서를 작성해주세요')
-      router('/resume/create')
+      // api 요청 : 데이터베이스에 유저의 포트폴리오 정보가 있는지 확인
+      if(user?.userResumeDoc){
+        router('/protfolio/create')
+      }else{
+        alert('아직 이력서가 작성되지 않았습니다\n이력서를 작성해주세요')
+        router('/resume/create')
+      }
     }
   }
 
@@ -59,7 +65,7 @@ export default function IndexPage() {
 
   function subTitleCss(text:string):JSX.Element{
     return(
-        <p className="text-xl my-5">{text}</p>
+        <p className="text-xl my-5 text-gray-400">{text}</p>
     )
   }
 
@@ -79,15 +85,15 @@ export default function IndexPage() {
               {imgCss(PrfofileUI, "프로필 이미지")}
             </div>
           </div>
-          <div className="resume-cover Container">
-            {subTitleCss("이력서와 자기소개서를 관리해보세요")}
+          <div className="resume-cover fadeInContainer">
+            {subTitleCss("이력서와 자기소개서를 관리할 수 있어요")}
             <div className="flex flex-col items-center justify-center gap-5 md:flex-row ">
               <img src={ResumeUI} alt="이력서 이미지" className="shadow-scrollUI md:w-1/2" />
               <img src={CoverLetterUI} alt="자기소개서 이미지" className="shadow-scrollUI md:w-1/2" />
             </div>
           </div>
-          <div className="portfoils Container">
-            {subTitleCss("포트폴리오를 직접 관리해보세요")}
+          <div className="portfoils fadeInContainer">
+            {subTitleCss("포트폴리오를 등록할 수 있어요")}
             <div className="user-portfolios">
               {imgCss(PortfolioUI, "포트폴리오 이미지")}
             </div>
@@ -97,20 +103,20 @@ export default function IndexPage() {
 
         {/* 포트폴리오 등록 페이지 */}
         <div className="preView-portfolio-form flex flex-col items-center gap-5">
-          <div className="Container user-portfolio-form1">
+          <div className="fadeInContainer user-portfolio-form1">
             {TitleCss("나만의", "포트폴리오", "를 등록해보세요")}
             {subTitleCss("프로젝트의 설명을 적어주세요")}
             {imgCss(PortfolioForm1, "포트폴리오 폼 이미지")}
           </div>
-          <div className="Container user-portfolio-form2">
+          <div className="fadeInContainer user-portfolio-form2">
             {subTitleCss("프로젝트의 이미지와 기술스택들을 적어주세요")}
             {imgCss(PortfolioForm2, "포트폴리오 폼 이미지")}
           </div>
-          <div className="Container user-portfolio-form3">
+          <div className="fadeInContainer user-portfolio-form3">
             {subTitleCss("프로젝트의 핵심기능들을 적어주세요")}
             {imgCss(PortfolioForm3, "포트폴리오 폼 이미지")}
           </div>
-          <div className="Container user-portfolio-form3">
+          <div className="fadeInContainer user-portfolio-form3">
             {subTitleCss("프로젝트의 카테고리와 원하는 UI를 선택해주세요")}
             {imgCss(PortfolioForm4, "포트폴리오 폼 이미지")}
           </div>
@@ -118,26 +124,26 @@ export default function IndexPage() {
 
         {/* 포트폴리오 상세 페이지 */}
         
-        <div className={'Container'} >
+        <div className={'fadeInContainer'} >
           {TitleCss("선택하신 UI대로", "포트폴리오를", "꾸며줍니다")}
         </div>
         
 
         {/* 포트폴리오 등록하러 가기 버튼 - router */}
         <p
-        className="Container text-3xl py-14 text-center text-orange-500 cursor-pointer"
+        className="fadeInContainer text-3xl py-14 text-center text-orange-500 cursor-pointer" onClick={handleClick}
         >
           포트폴리오 등록하러 가기
         </p>
         
-          {user && (
-            <div className="fixed bottom-5 right-5 w-68">
-              <button className="w-full bg-header_bg text-header_element p-2 rounded-full font-bold text-xl py-5 px-5 hover:bg-gray-400" onClick={handleClick}>
-                포트폴리오 등록하기
-              </button>
-            </div>
-          )}
+        {user && (
+          <div className="fixed bottom-5 right-5 w-68">
+            <button className="w-full bg-header_bg text-header_element p-2 rounded-full font-bold text-xl py-5 px-5 hover:bg-gray-400" onClick={handleClick}>
+              포트폴리오 등록하기
+            </button>
+          </div>
+        )}
         
-        </div>
+      </div>
   )
 }

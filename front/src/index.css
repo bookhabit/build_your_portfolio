@@ -34,9 +34,9 @@ p{
 }
 
 .inView {
-  animation: fadeIn 3s both;
+  animation: fadeIn 2s both;
 }
 
-.Container{
+.fadeInContainer{
   opacity: 0;
 }
