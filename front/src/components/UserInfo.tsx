@@ -7,7 +7,7 @@ import TechBorder from "./common/TechBorder";
 import { UserInfoType } from "../Types/userType"
 import PortfolioImage from "./PortfolioImage"
 import { useState } from "react"
-import ShowModal from "./showModal"
+import ShowModal from "./ShowModal"
 import { ShowArray } from "../pages/ResumeFormPage";
 import PortfolioCategory from "./PortfolioCategory";
 

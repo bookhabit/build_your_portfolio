@@ -114,7 +114,6 @@ app.get('/user/:id', async (req:Request,res:Response) => {
       const userDoc = await User.findById(userId) as UserType;
       const userResumeDoc = await Resume.findOne({author:userId}) as ResumeType | null
       const userPortfolioDoc = await Portfolio.find({author:userId}) as PortfolioType[] | null
-      console.log(userPortfolioDoc)
 
       const resultUser:UserProfileType = {
         email:userDoc.email,
@@ -135,7 +134,7 @@ app.post('/upload-by-link', async (req: Request, res: Response) => {
   const { link }: { link: string } = req.body;
   const newName = 'photo' + Date.now() + '.jpg';
   const uploadPath = pathLB.join(__dirname, 'uploads', newName); // 경로 수정
-  console.log(uploadPath);
+  // console.log(uploadPath);
   await imageDownloader.image({
     url: link,
     dest: uploadPath,
@@ -150,7 +149,6 @@ app.post('/upload', photosMiddleware.array('photos', 100), (req: Request, res: R
 
   if (Array.isArray(req.files)) {
     for (let i = 0; i < req.files.length; i++) {
-      console.log(req.files);
       const { path, originalname } = req.files[i];
       const parts = originalname.split('.');
       const ext = parts[parts.length - 1];
@@ -207,7 +205,7 @@ app.post('/portfolio/create',(req:Request,res:Response)=>{
   const {token} = req.cookies;
   const {title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,important_functions
   } = req.body;
-  console.log(title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI)
+  
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     const userData = userDataCallback as UserTokenDataType
     if (err) throw err;
