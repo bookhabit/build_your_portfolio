@@ -8,6 +8,7 @@ export default {
     extend: {
       boxShadow: {
         '2xl': '0 10px 15px 2px rgba(0, 0, 0, 0.5)',
+        'scrollUI':'0px 10px 20px 2px rgba(0, 0, 0, 0.5)'
       },
       colors:{
         primary:'#F5385D',

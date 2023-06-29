@@ -22,3 +22,21 @@ p{
   overflow: auto;
   z-index: 0;
 }
+
+// 스크롤 fadein
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.inView {
+  animation: fadeIn 3s both;
+}
+
+.Container{
+  opacity: 0;
+}
