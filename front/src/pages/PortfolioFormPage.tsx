@@ -14,8 +14,16 @@ import  validatePortfolioForm  from "../components/common/validation/validatePor
 import TechBorder from "../components/common/TechBorder";
 import plusIcon from "../assets/resume/plusIcon.svg"
 import Image from "../components/testRestAPI/Image";
+import { UserContext } from "../Context/UserContext";
 
 export default function PortfolioFormPage() {
+    // 비로그인자는 리다이렉션시키기
+    const {user,setUser} = useContext(UserContext)
+    const [redirect,setRedirect] = useState(false);
+    if (!user && !redirect) {
+      return <Navigate to={'/login'} />
+    }
+    // state
     const {id:portfolioId} = useParams();
     const [title,setTitle] = useState<string>('');
     const [purpose,setPurpose] = useState<string>('');
@@ -92,8 +100,6 @@ export default function PortfolioFormPage() {
       selectedUI:"",
     })
     const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
-
-    const [redirect,setRedirect] = useState(false);
 
     // validateForm
   

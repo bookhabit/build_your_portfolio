@@ -1,5 +1,5 @@
 import { useContext, useState,useEffect } from "react";
-import { Navigate} from "react-router-dom";
+import { Navigate, useNavigate} from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import axios from "axios";
 import { UserInfoType } from "../Types/userType";
@@ -8,22 +8,13 @@ import UserInfo from "../components/UserInfo";
 export default function ProfilePage() {
     const {user,setUser} = useContext(UserContext)
     const [userData,setUserData] = useState<UserInfoType|undefined>()
-    const [redirect,setRedirect] = useState('');
-
+    const router = useNavigate();
     // 로그아웃
     async function logout(){
         await axios.post('/logout')
         alert('로그아웃')
-        setRedirect('/');
-        setUser(null);
-    }
-
-    if (!user && !redirect) {
-        return <Navigate to={'/login'} />
-    }
-
-    if (redirect) {
-        return <Navigate to={redirect} />
+        setUser(null)
+        router('/')
     }
 
     useEffect(()=>{

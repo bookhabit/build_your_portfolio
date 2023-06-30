@@ -6,12 +6,28 @@ import phoneIcon from "../assets/resume/phoneIcon.svg"
 import TechBorder from "./common/TechBorder";
 import { UserInfoType } from "../Types/userType"
 import PortfolioImage from "./PortfolioImage"
-import { useState } from "react"
+import { useState,useContext,useEffect } from "react"
 import ShowModal from "./ShowModal"
 import { ShowArray } from "../pages/ResumeFormPage";
 import PortfolioCategory from "./PortfolioCategory";
+import { UserContext } from "../Context/UserContext";
 
 const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
+    // 자신의 게시글인지 구분하기
+    const {user:loggedUser,setUser} = useContext(UserContext)
+    const [isAuthor,setIsAuthor]=useState<boolean>(false)
+    console.log('props user',user)
+    console.log('loggedUser',loggedUser)
+    useEffect(()=>{
+        console.log(user?._id,typeof user?._id)
+        console.log(loggedUser?._id,typeof loggedUser?._id)
+        if(user&&loggedUser){
+            if(user?._id===loggedUser?._id){
+                setIsAuthor(true)
+            }
+        }
+    },[])
+    console.log('isAuthor',isAuthor)
     // state
     const [showResumeCard,setShowResumeCard] = useState<boolean>(false)
     const [showCoverLetter,setShowCoverLetter] = useState<boolean>(false)

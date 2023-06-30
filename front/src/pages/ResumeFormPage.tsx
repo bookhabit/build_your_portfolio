@@ -17,12 +17,19 @@ import { ValidateContext, ValidateContextType } from "../Context/ValidateContext
 import { InputChangeEvent } from "../elements/Input";
 import validateResumeForm, { ValidateResume } from "../components/common/validation/validateResumeForm";
 import TechBorder from "../components/common/TechBorder";
+import { UserContext } from "../Context/UserContext";
 
 export const ShowArray = tw.div`
   bg-inherit p-1 min-w-full flex flex-wrap gap-3
 `;
 
 export default function ResumeFormPage() {
+    // 비로그인자는 리다이렉션시키기
+    const {user,setUser} = useContext(UserContext)
+    const [redirect,setRedirect] = useState<boolean>(false);
+    if (!user && !redirect) {
+      return <Navigate to={'/login'} />
+    }
     const {id:postId} = useParams();
     // form field
     const [birth,setBirth] = useState<string>('');
@@ -54,8 +61,6 @@ export default function ResumeFormPage() {
     const [technologyArr,setTechnologyArr] = useState<string[]>([]);
     const [careerArr,setCareerArr] = useState<carrerType[]>([]);
     const [acitivityArr,setAcitivityArr] = useState<acitivityType[]>([]);
-
-    const [redirect,setRedirect] = useState<boolean>(false);
 
     // error handling
     const [errorMessage,setErrorMessage] = useState<ValidateResume>({
