@@ -16,7 +16,7 @@ const UserPage = () => {
         })
     },[])
     return (
-        <div className='flex items-center justify-center px-0 xl:px-80 '>
+        <div className='flex items-center justify-center px-0 xl:px-80 py-20'>
             <UserInfo user={userInfo} />
         </div>
     );

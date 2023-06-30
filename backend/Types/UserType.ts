@@ -18,6 +18,7 @@ export type UserProfileType = {
     email:string;
     name:string;
     _id:String;
-    userResumeDoc:ResumeType|null
-    userPortfolio:PortfolioType[]|null
+    userResumeDoc:ResumeType|null;
+    userPortfolio:PortfolioType[]|null;
+    profileImg?:string;
 }

@@ -169,7 +169,7 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                     </div>
                 </div>
             </div>
-            <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36 h-full">
+            <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36">
                     <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
                     <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
                         {clonePortfolios && clonePortfolios?.length>0 &&

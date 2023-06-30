@@ -21,4 +21,5 @@ export type UserInfoType = {
     _id:String;
     userResumeDoc:ResumeType|null
     userPortfolio:PortfolioType[]|null
+    profileImg?:string;
 }

@@ -129,6 +129,46 @@ app.get('/user/:id', async (req:Request,res:Response) => {
   }
 })
 
+// 프로필 수정 - name과 프로필이미지만
+app.put('/profile', async (req: Request, res: Response) => {
+  const { token } = req.cookies;
+  const { name, profileImg } = req.body;
+  console.log(name,profileImg)
+  
+  if (token) {
+    try {
+      const userData = jwt.verify(token, jwtSecret) as UserTokenDataType;
+      const userDoc = await User.findById(userData.id) ;
+
+      if (userDoc) {
+        if (name && profileImg) {
+          userDoc.name = name;
+          userDoc.profileImg = profileImg;
+          await userDoc.save();
+          res.status(200).json({ message: '프로필이 성공적으로 업데이트되었습니다.' });
+        } else if (name) {
+          userDoc.name = name;
+          await userDoc.save();
+          res.status(200).json({ message: '프로필이 성공적으로 업데이트되었습니다.' });
+        } else if (profileImg) {
+          userDoc.profileImg = profileImg;
+          await userDoc.save();
+          res.status(200).json({ message: '프로필이 성공적으로 업데이트되었습니다.' });
+        }else{
+          res.status(400).json({ message: '전달받은 데이터가 없습니다.' });    
+        }
+      } else {
+        res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
+      }
+    } catch (err) {
+      res.status(500).json({ message: '서버 오류입니다.' });
+    }
+  } else {
+    res.status(401).json({ message: '인증되지 않은 요청입니다.' });
+  }
+});
+
+
 // input string(이미지주소)으로 이미지업로드
 app.post('/upload-by-link', async (req: Request, res: Response) => {
   const { link }: { link: string } = req.body;
