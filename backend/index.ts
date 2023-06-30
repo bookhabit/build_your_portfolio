@@ -240,6 +240,27 @@ app.put('/portfolio/update',async (req,res)=>{
   });  
 })
 
+// id값으로 포트폴리오 찾기
+app.get('/portfolio/:id', async (req:Request,res:Response) => {
+  const {id:portfolioId} = req.params;
+  
+  try{
+      const PortfolioDoc = await Portfolio.findById(portfolioId) as PortfolioType | null
+      if(PortfolioDoc){
+        const userDoc = await User.findById(PortfolioDoc?.author)  as UserType;
+        if(userDoc){
+          const portfolio_detail = {
+            PortfolioDoc,
+           author_name: userDoc.name,
+          }
+          res.json({portfolio_detail});
+        }
+      }
+      
+  }catch(err){
+    res.json({err})
+  }
+})
 
 
 // 로그인 유저가 등록한 post 찾기

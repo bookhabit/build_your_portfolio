@@ -1,4 +1,5 @@
 export type PortfolioType = {
+    author:string;
     title:string; 
     purpose:string;
     introduce:string;
