@@ -11,23 +11,27 @@ import ShowModal from "./ShowModal"
 import { ShowArray } from "../pages/ResumeFormPage";
 import PortfolioCategory from "./PortfolioCategory";
 import { UserContext } from "../Context/UserContext";
+import { useNavigate } from "react-router";
+import { ResumeType } from "../Types/ResumeType";
+import { PortfolioType } from "../Types/PortfolioType";
 
-const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
+const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
     // 자신의 게시글인지 구분하기
     const {user:loggedUser,setUser} = useContext(UserContext)
     const [isAuthor,setIsAuthor]=useState<boolean>(false)
-    console.log('props user',user)
-    console.log('loggedUser',loggedUser)
+    const router = useNavigate();
+    const userResume = user?.userResumeDoc as ResumeType
+    
     useEffect(()=>{
-        console.log(user?._id,typeof user?._id)
-        console.log(loggedUser?._id,typeof loggedUser?._id)
         if(user&&loggedUser){
-            if(user?._id===loggedUser?._id){
+            if(user?._id === loggedUser?._id){
                 setIsAuthor(true)
+            }else if(user?._id !== loggedUser?._id){
+                setIsAuthor(false)
             }
         }
     },[])
-    console.log('isAuthor',isAuthor)
+    console.log(isAuthor ?'이 user정보의 주인입니다' :'이 user정보의 주인이 아닙니다')
     // state
     const [showResumeCard,setShowResumeCard] = useState<boolean>(false)
     const [showCoverLetter,setShowCoverLetter] = useState<boolean>(false)
@@ -101,8 +105,13 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                                 <p className="font-bold text-lg">{user?.userResumeDoc?.reasonForCoding}</p>
                             </div>
                         </div>
-                        <div className="relative right-0 top-0 lg:absolute">
+                        <div className="relative right-0 top-0 lg:absolute flex flex-col gap-3 items-end">
                             <img src="https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg" alt="테스트"/>
+                            {isAuthor?
+                            <p className="cursor-pointer text-md text-gray-400 hover:text-zinc-300">
+                                프로필 수정하기
+                            </p> 
+                            :null}
                         </div>
                     </div>
                     <div className={"my-10"}>
@@ -142,8 +151,15 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                 <div className="resume-div w-full md:w-1/2 bg-resume_card_BG p-5 min-h-full">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>이력서</h2>
-                        <span className="cursor-pointer" onClick={()=>setShowResumeCard(true)}>펼쳐보기</span>
+                        {isAuthor ? 
+                        <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
+                            수정하기
+                        </span> :
+                        <span className="cursor-pointer" onClick={()=>setShowResumeCard(true)}>
+                            펼쳐보기
+                        </span>}
                     </div>
+                    {userResume ? 
                     <div className="content mt-5">
                         <div className={flexRowInfo()+" gap-2"}>
                             <p>학력 :</p>
@@ -156,38 +172,54 @@ const UserInfo = ({user}:{user:UserInfoType|undefined}) => {
                         <div className="p-3">
                             <p>자격증</p>
                             {user?.userResumeDoc?.certification.map((name,index)=>(
-                              <div key={index} className="ml-4 mt-2">
+                            <div key={index} className="ml-4 mt-2">
                                 {index+1}. {name}
-                              </div>  
+                            </div>  
                             ))}
                         </div>
                         <div className="p-3">
                             <p>대외활동</p>
                             {user?.userResumeDoc?.acitivity.map((activity,index)=>(
-                              <div key={index} className="ml-4 mt-2">
+                            <div key={index} className="ml-4 mt-2">
                                 {index+1}. {activity.activityName} - {activity.period}
-                              </div>  
+                            </div>  
                             ))}
                         </div>
                     </div>
+                    :
+                    <p className="mt-10 cursor-pointer text-center" onClick={()=>router("/resume/create")}>
+                        이력서를 작성해주세요
+                    </p>}
                 </div>
                 <div className="coverLetter-div w-full md:w-1/2 bg-resume_card_BG bg-bl p-5 h-full">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>자기소개서</h2>
+                        {isAuthor ? 
+                        <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
+                            수정하기
+                        </span> :
                         <span className="cursor-pointer" onClick={()=>setShowCoverLetter(true)}>펼쳐보기</span>
+                        }
                     </div>
+        
+                    {/* 글자수 제한으로 미리보기로 냅두고 펼쳐보기로 전체보여주기 */}
+                    {user?.userResumeDoc?.coverLetter ? 
                     <div className="content py-5">
-                        <p className="text-base leading-10">
-                            {/* 글자수 제한으로 미리보기로 냅두고 펼쳐보기로 전체보여주기 */}
-                            {user?.userResumeDoc?.coverLetter}
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero itaque corrupti modi quos, laboriosam tempore nulla aut. Quae dolorem quo laborum officiis perspiciatis, culpa eaque quas facilis voluptatibus, eligendi non!
-                        </p>
+                            <p className="text-base leading-10">
+                                {user?.userResumeDoc?.coverLetter}
+                            </p>
                     </div>
+                    :
+                    <p className="mt-10 cursor-pointer text-center" onClick={()=>router("/resume/create")}>
+                        자기소개서를 작성해주세요
+                    </p>
+                    }
                 </div>
             </div>
             <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36">
                     <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
                     <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
+                        {user?.userPortfolio?.length===0 && <p>포트폴리오를 등록해주세요</p>}
                         {clonePortfolios && clonePortfolios?.length>0 &&
                             <PortfolioCategory categoryName="클론코딩" portfolio={clonePortfolios}/>
                         }

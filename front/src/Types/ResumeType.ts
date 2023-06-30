@@ -10,6 +10,8 @@ export type ResumeType = {
     myselfSentence:string;
     reasonForCoding:string;
     coverLetter:string;
+    _id?:string;
+    author?:string;
 }
 
 export type carrerType = {
