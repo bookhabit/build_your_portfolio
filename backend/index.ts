@@ -229,6 +229,12 @@ app.put('/resume/update',async (req,res)=>{
   });  
 })
 
+// 이력서 id값으로 가져오기
+app.get('/resume/:id',async (req,res)=>{
+  const {id} = req.params;
+  res.json(await Resume.findById(id))
+})
+
 // 포트폴리오 등록
 app.post('/portfolio/create',(req:Request,res:Response)=>{
   const {token} = req.cookies;

@@ -1,14 +1,13 @@
-import { useContext, useState,useEffect } from "react";
-import { Navigate, useNavigate} from "react-router-dom";
+import { useContext} from "react";
+import {  useNavigate} from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import axios from "axios";
-import { UserInfoType } from "../Types/userType";
 import UserInfo from "../components/UserInfo";
 
 export default function ProfilePage() {
     const {user,setUser} = useContext(UserContext)
     const router = useNavigate();
-    console.log('profilePage user',user)
+    
     // 로그아웃
     async function logout(){
         await axios.post('/logout')

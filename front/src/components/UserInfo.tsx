@@ -51,6 +51,8 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
     const cooperationPortfolios = user?.userPortfolio?.filter(
         (portfolio) => portfolio.category === 'cooperation'
     );
+
+    // 이미지 onChange이벤트
     function uploadPhoto(ev: ChangeEvent<HTMLInputElement>) {
         const files = ev.target.files;
         if (!files) return;
@@ -66,7 +68,7 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
         });
       }
 
-    // 프로필 이미지 수정하기
+    // 프로필 이미지 수정하기 api
     const updateProfileImg = async ()=>{
         try{
             const response = await axios.put('/profile-image',{

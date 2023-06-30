@@ -1,4 +1,4 @@
-import {  useContext, useState } from "react";
+import {  useContext, useState,useEffect } from "react";
 import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { ChannelType, ResumeType, acitivityType, carrerType } from "../Types/ResumeType";
@@ -24,14 +24,12 @@ export const ShowArray = tw.div`
 `;
 
 export default function ResumeFormPage() {
-    // 비로그인자는 리다이렉션시키기
-    const {user,setUser} = useContext(UserContext)
+    // const {user,setUser} = useContext(UserContext)
     const [redirect,setRedirect] = useState<boolean>(false);
-    if (!user && !redirect) {
-      return <Navigate to={'/login'} />
-    }
-    const {id:postId} = useParams();
+    const [updatePage,setUpdatePage] = useState<boolean>(false);
+    const {id:resumeId} = useParams();
     // form field
+    const [name,setName] = useState<string>('');
     const [birth,setBirth] = useState<string>('');
     const [finalEducation,setFinalEducation] = useState<string>('');
     const [phone,setPhone] = useState<string>('');
@@ -88,6 +86,9 @@ export default function ResumeFormPage() {
     const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
 
     const onChangeInput = (event:InputChangeEvent)=>{
+      if(event.target.name==="name"){
+        setName(event.target.value)
+      }
       if(event.target.name==="birth"){
         setBirth(event.target.value)
         setErrorMessage((prevState) => ({
@@ -203,18 +204,21 @@ export default function ResumeFormPage() {
     }
 
     // 수정 시 api요청해서 form 필드 값 채우기
-    // useEffect(() => {
-    //   if (!postId) {
-    //     return;
-    //   }
-    //   axios.get('/resume/'+postId).then(response => {
-    //      const {data} = response;
-    //      setTitle(data.title);
-    //      setAddedLinkPhotos(data.photos);
-    //      setDescription(data.description);
-    //   });
-    // }, [postId]);
-
+    useEffect(() => {
+      if (!resumeId) {
+        return;
+      }
+      setUpdatePage(true)
+      axios.get('/resume/'+resumeId).then(response => {
+         const {data} = response;
+         console.log(data)
+         // 가져온 id로 데이터 넣어주기
+        //  setTitle(data.title);
+        //  setAddedLinkPhotos(data.photos);
+        //  setDescription(data.description);
+      });
+    }, [resumeId]);
+    console.log(updatePage)
     
     // 이력서 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
@@ -232,10 +236,10 @@ export default function ResumeFormPage() {
         const validateForm:boolean = validateResumeForm(resumeForm,setErrorMessage)
         
         if(validateForm){
-          if (postId) {
+          if (resumeId) {
               // update
               await axios.put('/resume/update', {
-                  postId, ...resumeForm
+                  resumeId, ...resumeForm
               });
               setRedirect(true);
           } else {
@@ -264,6 +268,23 @@ export default function ResumeFormPage() {
         <form className="relative resumeForm bg-resume_card_BG shadow-2xl py-12 px-16 2xl:w-3/5 lg:w-3/5 md:w-4/5 xs:w-full">
           <h1 className=" text-2xl font-bold text-center mb-16">이력서</h1>
           <div className="flex flex-col justify-center items-start gap-7">
+            {/* 업데이트 페이지에만 */}
+            {updatePage && 
+            <div className={formItemClassRow()}>
+              <Label icon={CooperationIcon} alt="이름 아이콘" sort="resumeLabel" label="이름" />
+              <Input 
+                placeholder="ex) 이현진"
+                value={name}
+                _onChange={onChangeInput}
+                name="name"
+                type="text"
+                sort="resumeInput"
+                isValid={!!name}
+                errorMessage={''}
+                validateMode={validateMode}
+              />
+            </div>
+            }
             <div className={formItemClassRow()}>
               <Label icon={birthIcon} alt="생년원일 아이콘" sort="resumeLabel" label="생년원일" />
               <Input 
