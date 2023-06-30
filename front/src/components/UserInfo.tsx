@@ -6,7 +6,7 @@ import phoneIcon from "../assets/resume/phoneIcon.svg"
 import TechBorder from "./common/TechBorder";
 import { UserInfoType } from "../Types/userType"
 import PortfolioImage from "./PortfolioImage"
-import { useState,useContext,useEffect } from "react"
+import { useState,useContext,useEffect,ChangeEvent } from "react"
 import ShowModal from "./ShowModal"
 import { ShowArray } from "../pages/ResumeFormPage";
 import PortfolioCategory from "./PortfolioCategory";
@@ -14,6 +14,9 @@ import { UserContext } from "../Context/UserContext";
 import { useNavigate } from "react-router";
 import { ResumeType } from "../Types/ResumeType";
 import { PortfolioType } from "../Types/PortfolioType";
+import axios from "axios";
+
+const defaultProfileImg = "https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg"
 
 const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
     // 자신의 게시글인지 구분하기
@@ -35,6 +38,8 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
     // state
     const [showResumeCard,setShowResumeCard] = useState<boolean>(false)
     const [showCoverLetter,setShowCoverLetter] = useState<boolean>(false)
+    const [profileImg,setProfileImg] = useState('')
+    const [showUpdateProfile,setShowUpdateProfile] = useState(false)
     
     // Filter portfolios by category
     const clonePortfolios = user?.userPortfolio?.filter(
@@ -46,6 +51,37 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
     const cooperationPortfolios = user?.userPortfolio?.filter(
         (portfolio) => portfolio.category === 'cooperation'
     );
+    function uploadPhoto(ev: ChangeEvent<HTMLInputElement>) {
+        const files = ev.target.files;
+        if (!files) return;
+        const data = new FormData();
+        for (let i = 0; i < files.length; i++) {
+          data.append('photos', files[i]);
+        }
+        axios.post<string[]>('/upload', data, {
+          headers: { 'Content-type': 'multipart/form-data' },
+        }).then(response => {
+          const { data: filenames } = response;
+          setProfileImg(filenames[0])
+        });
+      }
+
+    // 프로필 이미지 수정하기
+    const updateProfileImg = async ()=>{
+        try{
+            const response = await axios.put('/profile-image',{
+                profileImg:profileImg
+            })
+            if(response.status===200){
+                alert("프로필 이미지 수정 완료")
+                setShowUpdateProfile(false)
+                setProfileImg('')
+                router("/account")
+            }
+        }catch(err:any){
+            console.log(err)
+        }
+    }
     
 
     // css ( 굳이 안해도 될것 같으면 하지말고 중복많은 것만 함수화)
@@ -106,12 +142,27 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
                             </div>
                         </div>
                         <div className="relative right-0 top-0 lg:absolute flex flex-col gap-3 items-end">
-                            <img src="https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg" alt="테스트"/>
+                            <img className="w-72 h-72 bg-slate-50" src={user?.profileImg ? 'http://localhost:4000/uploads/'+user.profileImg : defaultProfileImg} alt="테스트"/>
                             {isAuthor?
-                            <p className="cursor-pointer text-md text-gray-400 hover:text-zinc-300">
-                                프로필 수정하기
+                            <p className="cursor-pointer text-md text-gray-400 hover:text-zinc-300" onClick={()=>setShowUpdateProfile(!showUpdateProfile)}>
+                                프로필 이미지 수정하기
                             </p> 
                             :null}
+                            {showUpdateProfile && 
+                            <div className="flex gap-5">
+                                <label className="h-32 cursor-pointer flex items-center gap-1 justify-center border border-gray-500 bg-transparent rounded-2xl p-2 text-2xl text-gray-600 hover:bg-gray-300">
+                                <input onChange={uploadPhoto} type="file" multiple className="hidden" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                                </svg>
+                                    Upload
+                                </label>
+                                {profileImg && 
+                                    <img className="w-32 h-32" src={'http://localhost:4000/uploads/'+profileImg} alt="선택한 이미지"/>
+                                }
+                                <button className="p-3 w-32 h-32 hover:bg-gray-300 bg-slate-100" onClick={updateProfileImg}>수정완료</button>
+                            </div>
+                            }
                         </div>
                     </div>
                     <div className={"my-10"}>
