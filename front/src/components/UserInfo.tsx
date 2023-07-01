@@ -78,7 +78,7 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
                 alert("프로필 이미지 수정 완료")
                 setShowUpdateProfile(false)
                 setProfileImg('')
-                router("/account")
+                window.location.reload();
             }
         }catch(err:any){
             console.log(err)

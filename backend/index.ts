@@ -209,20 +209,20 @@ app.post('/resume/create',(req:Request,res:Response)=>{
 // 이력서 수정
 app.put('/resume/update',async (req,res)=>{
   const {token} = req.cookies;
-  const {postId,title,addedLinkPhotos,description,
+  const {resumeId,name,birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
   } = req.body;
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     const userData = userDataCallback as UserTokenDataType
     if(err) throw err;
-    const postDoc = await Post.findById(postId)
-    if(postDoc){
-      if(postDoc.author){
-        if(userData.id === postDoc.author.toString()){
-          postDoc.set({
-            title,photos:addedLinkPhotos,description,
+    const resumeDoc = await Resume.findById(resumeId)
+    if(resumeDoc){
+      if(resumeDoc.author){
+        if(userData.id === resumeDoc.author.toString()){
+          resumeDoc.set({
+            name,birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
           })
-          await postDoc.save();
-          res.json(postDoc)
+          await resumeDoc.save();
+          res.json(resumeDoc)
         }
       }
     }

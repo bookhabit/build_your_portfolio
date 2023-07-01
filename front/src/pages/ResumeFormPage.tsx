@@ -24,7 +24,7 @@ export const ShowArray = tw.div`
 `;
 
 export default function ResumeFormPage() {
-    // const {user,setUser} = useContext(UserContext)
+    const {user,setUser} = useContext(UserContext)
     const [redirect,setRedirect] = useState<boolean>(false);
     const [updatePage,setUpdatePage] = useState<boolean>(false);
     const {id:resumeId} = useParams();
@@ -210,12 +210,22 @@ export default function ResumeFormPage() {
       }
       setUpdatePage(true)
       axios.get('/resume/'+resumeId).then(response => {
-         const {data} = response;
-         console.log(data)
+         const resumeData = response.data as ResumeType
          // 가져온 id로 데이터 넣어주기
-        //  setTitle(data.title);
-        //  setAddedLinkPhotos(data.photos);
-        //  setDescription(data.description);
+         if(user?.name){
+           setName(user?.name)
+         }
+         setBirth(resumeData.birth)
+         setPhone(resumeData.phone)
+         setFinalEducation(resumeData.finalEducation)
+         setMyselfSentence(resumeData.myselfSentence)
+         setReasonForCoding(resumeData.reasonForCoding)
+         setCoverLetter(resumeData.coverLetter)
+         setCertificationArr(resumeData.certification)
+         setChannelArr(resumeData.channel)
+         setTechnologyArr(resumeData.technology)
+         setCareerArr(resumeData.career)
+         setAcitivityArr(resumeData.acitivity)
       });
     }, [resumeId]);
     console.log(updatePage)
