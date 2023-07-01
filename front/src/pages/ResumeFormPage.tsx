@@ -62,6 +62,7 @@ export default function ResumeFormPage() {
 
     // error handling
     const [errorMessage,setErrorMessage] = useState<ValidateResume>({
+      name:"",
       birth:"", 
       finalEducation:"",
       phone:"", 
@@ -235,7 +236,7 @@ export default function ResumeFormPage() {
         ev.preventDefault();
         setValidateMode(true)
         const resumeForm:ResumeType = {
-          birth,finalEducation,phone,
+          name,birth,finalEducation,phone,
           certification:certificationArr,
           channel:channelArr,
           technology:technologyArr,
@@ -248,10 +249,13 @@ export default function ResumeFormPage() {
         if(validateForm){
           if (resumeId) {
               // update
-              await axios.put('/resume/update', {
+              const response = await axios.put('/resume/update', {
                   resumeId, ...resumeForm
               });
-              setRedirect(true);
+              if(response.status===200){
+                alert("이력서 수정완료")
+                setRedirect(true);
+              }
           } else {
               // new post
               await axios.post('/resume/create', resumeForm);
@@ -289,7 +293,7 @@ export default function ResumeFormPage() {
                 name="name"
                 type="text"
                 sort="resumeInput"
-                isValid={!!name}
+                isValid={!!errorMessage.name}
                 errorMessage={''}
                 validateMode={validateMode}
               />
@@ -615,7 +619,7 @@ export default function ResumeFormPage() {
             </div>
           </div>
           <div className="mt-8 flex justify-end ">
-            <Button sort="resume" text="작성완료" _onClick={savePlace} />
+            <Button sort="resume" text={updatePage?"수정완료":"작성완료"} _onClick={savePlace} />
           </div>
         </form>
       </div> 

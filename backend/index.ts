@@ -211,18 +211,22 @@ app.put('/resume/update',async (req,res)=>{
   const {token} = req.cookies;
   const {resumeId,name,birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
   } = req.body;
+  console.log(name)
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     const userData = userDataCallback as UserTokenDataType
     if(err) throw err;
     const resumeDoc = await Resume.findById(resumeId)
-    if(resumeDoc){
+    const userDoc = await User.findById(userData.id) 
+    if(resumeDoc && userDoc){
       if(resumeDoc.author){
         if(userData.id === resumeDoc.author.toString()){
           resumeDoc.set({
-            name,birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
+            birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
           })
+          userDoc.name = name;
+          await userDoc.save();
           await resumeDoc.save();
-          res.json(resumeDoc)
+          res.json({resumeDoc,userDoc})
         }
       }
     }
