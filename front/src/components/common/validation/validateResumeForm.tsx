@@ -1,6 +1,7 @@
 import { ChannelType, ResumeType, acitivityType, carrerType } from '../../../Types/ResumeType';
 
 export type ValidateResume = {
+    name?:string;
     birth:string; // 1998-03-21
     finalEducation:string;
     phone:string; // 010-7607-9182

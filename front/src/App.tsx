@@ -32,9 +32,9 @@ function App() {
             <Route path={'/resume/update/:id'} element={<ResumeFormPage/>}/>
             <Route path={'/portfolio/create'} element={<PortfolioFormPage/>}/>
             <Route path={'/portfolio/update/:id'} element={<PortfolioFormPage/>}/>
+            <Route path={'/portfolio/:id'} element={<PortfolioPage/>}/>
             <Route path={'/post/:id'} element={<PostDetail/>}/>
             <Route path={'/user/:id'} element={<UserPage/>}/>
-            <Route path={'/portfolio/:id'} element={<PortfolioPage/>}/>
             <Route path="/account" element={<ProfilePage />} />
             <Route path="/account/posts" element={<UserPostsPage />} />
           </Route>

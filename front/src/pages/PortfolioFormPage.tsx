@@ -4,7 +4,7 @@ import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
-import { CategoryType, DemoLinkType, DevelopPeriodType, Important_function, PortfolioType, SelectedUI } from "../Types/PortfolioType";
+import { CategoryType, DemoLinkType, DevelopPeriodType, Important_function, PortfolioDetailType, PortfolioType, SelectedUI } from "../Types/PortfolioType";
 import { ShowArray } from "./ResumeFormPage";
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import FormContainer from "../components/FormContainer";
@@ -20,6 +20,7 @@ export default function PortfolioFormPage() {
     // 비로그인자는 리다이렉션시키기
     const {user,setUser} = useContext(UserContext)
     const [redirect,setRedirect] = useState(false);
+    const [updatePage,setUpdatePage] = useState<boolean>(false);
     if (!user && !redirect) {
       return <Navigate to={'/login'} />
     }
@@ -232,17 +233,29 @@ export default function PortfolioFormPage() {
       );
     }
     // 수정페이지에서 데이터 채워넣기
-    // useEffect(() => {
-    //   if (!portfolioId) {
-    //     return;
-    //   }
-    //   axios.get('/post/'+portfolioId).then(response => {
-    //      const {data} = response;
-    //      setTitle(data.title);
-    //      setAddedLinkPhotos(data.photos);
-         
-    //   });
-    // }, [portfolioId]);
+    useEffect(() => {
+      if (!portfolioId) {
+        return;
+      }
+      setUpdatePage(true)
+      axios.get('/portfolio/'+portfolioId).then(response => {
+        const result = response.data.portfolio_detail.PortfolioDoc as PortfolioType
+        setTitle(result.title)
+        setPurpose(result.purpose)
+        setIntroduce(result.introduce)
+        setProcess(result.process)
+        setLearned(result.learned)
+        setAddedLinkPhotos(result.photos)
+        if(result.important_functions){
+          setImportant_functionArr(result.important_functions)
+        }
+        setUsedTechnologyArr(result.usedTechnology)
+        setDevelopPeriod(result.developPeriod)
+        setDemoLink(result.demoLink)
+        setCategory(result.category)
+        setSelectedUI(result.selectedUI)
+      });
+    }, [portfolioId]);
 
     // 포트폴리오 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
@@ -265,13 +278,15 @@ export default function PortfolioFormPage() {
         const validateForm:boolean = validatePortfolioForm(portfolioForm,setErrorMessage)
         console.log(portfolioForm)
         if(validateForm){
-          console.log('유효성 검사 완료')
           if (portfolioId) {
               // update
-              await axios.put('/portfolio/update', {
+              const response = await axios.put('/portfolio/update', {
                   portfolioId, ...portfolioForm
               });
-              setRedirect(true);
+              if(response.status===200){
+                alert('포트폴리오 수정 성공!')
+                setRedirect(true);
+              }
           } else {
               // new post
               await axios.post('/portfolio/create', portfolioForm);
@@ -602,7 +617,7 @@ export default function PortfolioFormPage() {
             <div className="flex justify-end mt-20">
               <Button 
                 sort="portfolio" 
-                text="작성완료" 
+                text={updatePage?"수정완료":"작성완료"}
                 _onClick={savePlace} />
             </div>
         </FormContainer>

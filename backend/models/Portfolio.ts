@@ -10,13 +10,13 @@ const PortfolioSchema = new Schema({
     learned:String,
     photos:[String],
     usedTechnology:[String],
-    developPeriod:{
+    demoLink:{
         projectURL:String,
         githubURL:String,
         designURL:String,
         documentURL:String,
     },
-    demoLink:{
+    developPeriod:{
         start:String,
         end:String,
     },

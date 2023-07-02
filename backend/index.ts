@@ -259,20 +259,23 @@ app.post('/portfolio/create',(req:Request,res:Response)=>{
 // 포트폴리오 수정
 app.put('/portfolio/update',async (req,res)=>{
   const {token} = req.cookies;
-  const {postId,title,addedLinkPhotos,description,
+  const {portfolioId,title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,important_functions
   } = req.body;
+  
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     const userData = userDataCallback as UserTokenDataType
     if(err) throw err;
-    const postDoc = await Post.findById(postId)
-    if(postDoc){
-      if(postDoc.author){
-        if(userData.id === postDoc.author.toString()){
-          postDoc.set({
-            title,photos:addedLinkPhotos,description,
+    const portfolioDoc = await Portfolio.findById(portfolioId)
+    
+    if(portfolioDoc){
+      if(portfolioDoc.author){
+        if(userData.id === portfolioDoc.author.toString()){
+          portfolioDoc.set({
+            title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,important_functions
           })
-          await postDoc.save();
-          res.json(postDoc)
+          await portfolioDoc.save();
+          console.log(portfolioDoc)
+          res.json({portfolioDoc})
         }
       }
     }

@@ -1,13 +1,18 @@
+import { useNavigate } from "react-router";
 import { PortfolioDetailType, PortfolioType } from "../../Types/PortfolioType";
 
 interface IProps{
     portfolio:PortfolioDetailType
+    userPage:boolean
 }
 
-const Portfolio_B = ({portfolio}:IProps) => {
+const Portfolio_B = ({portfolio,userPage}:IProps) => {
     console.log(portfolio)
+    const router = useNavigate();
     return (
-        <div>
+        <div>{userPage&&"사용자의 id와 일치"}
+        <button onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
+            <p>UI B</p>
             {portfolio.PortfolioDoc.introduce}
         </div>
     );
