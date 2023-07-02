@@ -528,11 +528,16 @@ export default function PortfolioFormPage() {
             {important_functionArr.length > 0 && (
               <ShowArray>
                 {important_functionArr.map((data,index)=>(
-                  <div key={index} className="border border-gray-200 rounded-md w-full p-5">
-                    <p className="mb-3">추가한 핵심기능 {index+1} 설명</p>
+                  <div key={index} className="border border-gray-200 rounded-md w-full p-5 relative">
+                    <p className="mb-3">추가한 핵심기능 {index+1} 설명
+                    </p>
+                    <button className="absolute top-4 right-4 p-2 bg-gray-100 rounded-md hover:bg-gray-50" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
                     {data.important_function_desc}
                     <p className="my-3">추가한 핵심기능 {index+1} 이미지</p>
-                    <Image className="rounded-2xl w-32 h-32 object-cover" src={data.important_function_photo[0]}/>
+                    {data.important_function_photo.length>0 ? 
+                      <Image className="rounded-2xl w-32 h-32 object-cover" src={data.important_function_photo[0]}/>
+                      : "선택한 이미지 없음"
+                    }
                   </div>
                 ))}    
               </ShowArray>

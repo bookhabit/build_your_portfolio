@@ -181,7 +181,7 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
                         </div>
                     </div>
                     <div className={"my-10"}>
-                        <h3 className={subTitleText()}>Skills</h3>
+                        <h3 className={subTitleText()}>Channel</h3>
                         {user?.userResumeDoc?.channel.map((channel)=>(
                             <div className={flexRowInfo()} key={channel.channelURL}>
                                 <img src={linkIcon} alt="이메일 아이콘"/>
@@ -191,7 +191,7 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
                         ))}
                     </div>
                     <div className={"my-10"}>
-                        <h3 className={subTitleText()}>Channel</h3>
+                        <h3 className={subTitleText()}>Skills</h3>
                         <ShowArray>
                             {user?.userResumeDoc?.technology.map((skill)=>(
                                 <TechBorder key={skill} sort="UI" techName={skill}/>

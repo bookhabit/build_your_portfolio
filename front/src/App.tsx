@@ -30,8 +30,8 @@ function App() {
             <Route path="/register" element={<ReigsterPage/>} />
             <Route path={'/resume/create'} element={<ResumeFormPage/>}/>
             <Route path={'/resume/update/:id'} element={<ResumeFormPage/>}/>
-            <Route path={'/protfolio/create'} element={<PortfolioFormPage/>}/>
-            <Route path={'/protfolio/update/:id'} element={<PortfolioFormPage/>}/>
+            <Route path={'/portfolio/create'} element={<PortfolioFormPage/>}/>
+            <Route path={'/portfolio/update/:id'} element={<PortfolioFormPage/>}/>
             <Route path={'/post/:id'} element={<PostDetail/>}/>
             <Route path={'/user/:id'} element={<UserPage/>}/>
             <Route path={'/portfolio/:id'} element={<PortfolioPage/>}/>

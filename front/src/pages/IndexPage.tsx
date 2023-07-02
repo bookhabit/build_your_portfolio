@@ -48,7 +48,7 @@ export default function IndexPage() {
     }else{
       // api 요청 : 데이터베이스에 유저의 포트폴리오 정보가 있는지 확인
       if(user?.userResumeDoc){
-        router('/protfolio/create')
+        router('/portfolio/create')
       }else{
         alert('아직 이력서가 작성되지 않았습니다\n이력서를 작성해주세요')
         router('/resume/create')
