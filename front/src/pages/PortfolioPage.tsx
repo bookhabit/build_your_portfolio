@@ -31,7 +31,6 @@ const PortfolioPage = () => {
 
     return (
         <div>
-            <h2> {portfolio?.author_name} 님의 포트폴리오</h2>
             {portfolio?.PortfolioDoc.selectedUI==="A" 
             && <BasicUI portfolio={portfolio} userPage={userPage}/>}
 

@@ -40,3 +40,12 @@ p{
 .fadeInContainer{
   opacity: 0;
 }
+
+a{
+  font-size:16px;
+  color:gray;
+  &:hover{
+    font-size:18px;
+    color:black;
+  }
+}
