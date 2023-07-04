@@ -18,7 +18,7 @@ import axios from "axios";
 
 const defaultProfileImg = "https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg"
 
-const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
+const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
     // 자신의 게시글인지 구분하기
     const {user:loggedUser,setUser} = useContext(UserContext)
     const [isAuthor,setIsAuthor]=useState<boolean>(false)
@@ -288,4 +288,4 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
     );
 };
 
-export default UserInfo;
+export default UserInfoBasic;

@@ -16,6 +16,9 @@ import plusIcon from "../assets/resume/plusIcon.svg"
 import Image from "../components/testRestAPI/Image";
 import BasicUI from "../components/PortfolioUI/BasicUI";
 import { UserContext, UserContextType } from "../Context/UserContext";
+import ScrollParallaxUI from "../components/PortfolioUI/ScrollParallaxUI";
+import SlideUI from "../components/PortfolioUI/SlideUI";
+import UI_3D from "../components/PortfolioUI/UI_3D";
 
 export default function PortfolioFormPage() {
     const router = useNavigate();
@@ -321,6 +324,12 @@ export default function PortfolioFormPage() {
               </div>
               {previewForm.PortfolioDoc.selectedUI==="A" && 
               <BasicUI portfolio={previewForm} userPage={false}/>}
+              {previewForm.PortfolioDoc.selectedUI==="B" && 
+              <ScrollParallaxUI portfolio={previewForm} userPage={false}/>}
+              {previewForm.PortfolioDoc.selectedUI==="C" && 
+              <SlideUI portfolio={previewForm} userPage={false}/>}
+              {previewForm.PortfolioDoc.selectedUI==="D" && 
+              <UI_3D portfolio={previewForm} userPage={false}/>}
           </div>
         </div> : 
         <FormContainer width="" height="" >

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
-import UserInfo from '../components/UserInfo';
 import { UserInfoType } from '../Types/userType';
+import UserInfoBasic from '../components/UserInfoBasic';
 
 const UserPage = () => {
     const {id:userId} = useParams();
@@ -17,7 +17,7 @@ const UserPage = () => {
     },[])
     return (
         <div className='flex items-center justify-center px-0 xl:px-80 py-20'>
-            <UserInfo user={userInfo} />
+            <UserInfoBasic user={userInfo} />
         </div>
     );
 };
