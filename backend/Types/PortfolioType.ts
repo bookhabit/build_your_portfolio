@@ -26,4 +26,4 @@ export type DevelopPeriodType = {
 }
 
 export type CategoryType = "clone"|"individual"|"cooperation"
-export type SelectedUI = "A"|"B"|"C"
+export type SelectedUI = "A"|"B"|"C"|"D"

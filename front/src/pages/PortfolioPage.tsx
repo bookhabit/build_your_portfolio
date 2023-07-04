@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
-import Portfolio_A from "../components/PortfolioUI/Portfolio_A";
-import Portfolio_B from "../components/PortfolioUI/Portfolio_B";
-import Portfolio_C from "../components/PortfolioUI/Portfolio_C";
+import BasicUI from "../components/PortfolioUI/BasicUI";
+import ScrollParallaxUI from "../components/PortfolioUI/ScrollParallaxUI";
+import SlideUI from "../components/PortfolioUI/SlideUI";
+import UI_3D from "../components/PortfolioUI/UI_3D";
 import { PortfolioDetailType } from "../Types/PortfolioType";
 import { UserContext, UserContextType } from "../Context/UserContext";
 
@@ -31,9 +32,17 @@ const PortfolioPage = () => {
     return (
         <div>
             <h2> {portfolio?.author_name} 님의 포트폴리오</h2>
-            {portfolio?.PortfolioDoc.selectedUI==="A" && <Portfolio_A portfolio={portfolio} userPage={userPage}/>}
-            {portfolio?.PortfolioDoc.selectedUI==="B" && <Portfolio_B portfolio={portfolio} userPage={userPage}/>}
-            {portfolio?.PortfolioDoc.selectedUI==="C" && <Portfolio_C portfolio={portfolio} userPage={userPage}/>}
+            {portfolio?.PortfolioDoc.selectedUI==="A" 
+            && <BasicUI portfolio={portfolio} userPage={userPage}/>}
+
+            {portfolio?.PortfolioDoc.selectedUI==="B" 
+            && <ScrollParallaxUI portfolio={portfolio} userPage={userPage}/>}
+
+            {portfolio?.PortfolioDoc.selectedUI==="C" 
+            && <SlideUI portfolio={portfolio} userPage={userPage}/>}
+
+            {/* {portfolio?.PortfolioDoc.selectedUI==="D" 
+            && <UI_3D portfolio={portfolio} userPage={userPage}/>} */}
         </div>
     );
 };

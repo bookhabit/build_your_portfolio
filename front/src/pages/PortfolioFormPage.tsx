@@ -14,16 +14,12 @@ import  validatePortfolioForm  from "../components/common/validation/validatePor
 import TechBorder from "../components/common/TechBorder";
 import plusIcon from "../assets/resume/plusIcon.svg"
 import Image from "../components/testRestAPI/Image";
-import { UserContext } from "../Context/UserContext";
+import BasicUI from "../components/PortfolioUI/BasicUI";
 
 export default function PortfolioFormPage() {
-    // 비로그인자는 리다이렉션시키기
-    const {user,setUser} = useContext(UserContext)
     const [redirect,setRedirect] = useState(false);
     const [updatePage,setUpdatePage] = useState<boolean>(false);
-    if (!user && !redirect) {
-      return <Navigate to={'/login'} />
-    }
+
     // state
     const {id:portfolioId} = useParams();
     const [title,setTitle] = useState<string>('');
@@ -64,12 +60,19 @@ export default function PortfolioFormPage() {
     }
     const PortfolioUIradio = [{
       name:"A",
+      desc:"Basic",
       src:"https://file.miricanvas.com/template_thumb/2022/09/19/21/00/k2oejh1gzpx67va3/thumb.jpg"
     } , {
       name:"B",
+      desc:"Scroll Parallax",
       src:"https://file.miricanvas.com/template_thumb/2022/10/05/12/10/kchzz44ut2gqscd2/thumb.jpg"
     } , {
       name:"C",
+      desc:"Slide-UI",
+      src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
+    },{
+      name:"D",
+      desc:"3D-UI",
       src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
     }]
 
@@ -211,26 +214,46 @@ export default function PortfolioFormPage() {
       setValidateMode(false)
     }
 
-    // image-view
-    if (showPreview&&showPreviewSrc) {
-      return (
-      <div className="absolute inset-0 bg-black text-white min-h-screen">
-        <div className="bg-black p-8 grid gap-4">
-          <div>
-            <button onClick={() => setShowPreview(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
-              </svg>
-              Close Preview
-            </button>
+    // image-view 전체보기
+    if (showPreview&&showPreviewSrc!=="") {
+      // 포트폴리오의 form에 채워진 데이터를 UI에 넘겨준다
+      const portfolioForm:PortfolioDetailType = {
+        PortfolioDoc:{
+          title,purpose,
+          introduce, 
+          process,
+          learned,
+          photos:addedLinkPhotos,
+          usedTechnology:usedTechnologyArr,
+          developPeriod,
+          demoLink,
+          category,
+          selectedUI,
+          important_functions:important_functionArr},
+          author_name:"홍길동"
+      };
+      // UI를 직접 보여주거나 이미지를 보여주거나 ( 우선 오류 해결 )
+      if(selectedUI==="A"){
+        return (
+          <div className="absolute inset-0 bg-black text-white min-h-screen">
+          <div className="bg-black p-8 grid gap-4">
+            <div>
+              <button onClick={() => setShowPreview(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
+                </svg>
+                Close Preview
+              </button>
+            </div>
+            {/* <BasicUI portfolio={portfolioForm} userPage={false}/> */}
+            <img 
+              src={showPreviewSrc} 
+              alt="이미지 미리보기"  
+              />
           </div>
-          <img 
-            src={showPreviewSrc} 
-            alt="이미지 미리보기"  
-            />
         </div>
-      </div>
-      );
+        );
+      }
     }
     // 수정페이지에서 데이터 채워넣기
     useEffect(() => {
@@ -604,12 +627,13 @@ export default function PortfolioFormPage() {
                     <img 
                       src={PreviewIcon} 
                       alt="이미지 확대"  
-                      className="absolute right-0 bottom-0"
+                      className="absolute right-0 bottom-12"
                       onClick={()=>{
                         setShowPreview(true)
                         setShowPreviewSrc(kind.src)
                       }}
                       />
+                      {kind.desc}
                     </label>
                 ))}
               </div>

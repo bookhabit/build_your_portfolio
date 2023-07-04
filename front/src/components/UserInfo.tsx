@@ -200,8 +200,8 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
                     </div>
                 </div>
             </div>
-            <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96">
-                <div className="resume-div w-full md:w-1/2 bg-resume_card_BG p-5 min-h-full">
+            <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96 md:gap-0">
+                <div className="resume-div w-full bg-resume_card_BG p-5 min-h-full border-r-2">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>이력서</h2>
                         {isAuthor ? 
@@ -244,7 +244,7 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
                         이력서를 작성해주세요
                     </p>}
                 </div>
-                <div className="coverLetter-div w-full md:w-1/2 bg-resume_card_BG bg-bl p-5 h-full">
+                <div className="coverLetter-div w-full bg-resume_card_BG bg-bl p-5 h-full">
                     <div className="flex justify-between">
                         <h2 className={titleCard()}>자기소개서</h2>
                         {isAuthor ? 
