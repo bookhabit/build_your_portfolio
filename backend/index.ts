@@ -11,7 +11,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserProfileType, UserTokenDataType, UserType } from "./Types/UserType";
 import cookieParser from "cookie-parser";
-import imageDownloader from "image-downloader"
+import imageDownloader from "image-downloader";
 import multer from 'multer'
 import fs from 'fs'
 import pathLB from "path"
