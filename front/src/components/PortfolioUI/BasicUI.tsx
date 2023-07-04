@@ -3,6 +3,7 @@ import { PortfolioDetailType, PortfolioType } from "../../Types/PortfolioType";
 import ImageUI from "../common/ImageUI";
 import convertCategory from "../common/convertCategory";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 interface IProps{
     portfolio:PortfolioDetailType
@@ -12,6 +13,31 @@ interface IProps{
 const BasicUI = ({portfolio,userPage}:IProps) => {
     const router = useNavigate();
     console.log(portfolio)
+
+    // image-view-state
+    const [showPreview,setShowPreview] = useState<boolean>(false)
+    const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
+
+    // image-view 전체보기
+    if (showPreview&&showPreviewSrc!=="") {
+        // 포트폴리오의 form에 채워진 데이터를 UI에 넘겨준다
+          return (
+            <div className="absolute inset-0 bg-black text-white min-h-screen">
+            <div className="bg-black p-8 grid justify-center gap-4">
+              <div>
+                <button onClick={() => setShowPreview(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
+                  </svg>
+                  Close Preview
+                </button>
+              </div>
+              <ImageUI src={showPreviewSrc} />
+            </div>
+          </div>
+          );
+    }
+      
 
     return (
         <div className="px-0 xl:px-60 py-20 bg-gray-50">
@@ -65,8 +91,12 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                     <div className="flex flex-col gap-3 my-12 border shadow-xl p-10">
                         <h1 className="text-2xl text-cyan-500 font-bold text-center mb-10">프로젝트의 핵심기능 {index+1}</h1>
                         <div className="flex flex-col gap-10 lg:flex-row">
-                            <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg">
-                                <ImageUI className=" h-80 object-fill" src={importantData.important_function_photo[0]}/>
+                            <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" 
+                            onClick={()=>{
+                                setShowPreview(true)
+                                setShowPreviewSrc(importantData.important_function_photo[0])
+                            }}>
+                                <ImageUI className=" h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
                             </div>
                             <div className="w-full lg:w-2/3">
                                 <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>
@@ -114,8 +144,11 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                     </div>
                     <div className=" w-2/3 grid grid-cols-3 gap-5">
                         {portfolio.PortfolioDoc.photos.length>1 && portfolio.PortfolioDoc.photos.slice(1).map((photo)=>(
-                            <div key={photo} className="w-full">
-                                <ImageUI className="h-full object-cover border shadow-lg"  src={photo}/>
+                            <div key={photo} className="w-full" onClick={()=>{
+                                setShowPreview(true)
+                                setShowPreviewSrc(photo)
+                            }}>
+                                <ImageUI className="h-full object-cover border shadow-lg cursor-pointer hover:shadow-2xl"  src={photo}  />
                             </div>
                         ))}
                     </div>
