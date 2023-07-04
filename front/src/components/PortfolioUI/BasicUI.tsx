@@ -15,8 +15,11 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
 
     return (
         <div className="px-0 xl:px-60 py-20 bg-gray-50">
-            <div className="flex flex-col">
-                <h2 className="border-b p-3 mb-10 text-md"><span className="text-xl text-cyan-500 ">{portfolio?.author_name}</span> 님의 포트폴리오</h2>
+            <div className="flex justify-between items-center border-b mb-10  p-3 ">
+                <h2 className="text-md w-full"><span className="text-xl text-cyan-500 ">{portfolio?.author_name}</span> 님의 포트폴리오</h2>
+                {userPage &&
+                <button className="bg-gray-100 hover:bg-cyan-100 w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
+                }
             </div>
             <div className="p-10 min-h-screen">
                 <div className="flex flex-col lg:flex-row gap-20 mb-12">
@@ -59,15 +62,16 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                 </div>
                 {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&
                 portfolio.PortfolioDoc.important_functions.map((importantData,index)=>(
-                    <div className="flex flex-col gap-3 my-12 border shadow-xl p-5">
+                    <div className="flex flex-col gap-3 my-12 border shadow-xl p-10">
                         <h1 className="text-2xl text-cyan-500 font-bold text-center mb-10">프로젝트의 핵심기능 {index+1}</h1>
                         <div className="flex flex-col gap-10 lg:flex-row">
-                            <div className="w-full lg:w-1/3 p-2">
+                            <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg">
+                                <ImageUI className=" h-80 object-fill" src={importantData.important_function_photo[0]}/>
+                            </div>
+                            <div className="w-full lg:w-2/3">
                                 <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>
                             </div>
-                            <div className="w-full lg:w-2/3 border border-gray-200 shadow-sm">
-                                <ImageUI src={importantData.important_function_photo[0]}/>
-                            </div>
+                            
                         </div>
                     </div>
                 ))
@@ -111,14 +115,11 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                     <div className=" w-2/3 grid grid-cols-3 gap-5">
                         {portfolio.PortfolioDoc.photos.length>1 && portfolio.PortfolioDoc.photos.slice(1).map((photo)=>(
                             <div key={photo} className="w-full">
-                                <ImageUI className="h-full object-cover"  src={photo}/>
+                                <ImageUI className="h-full object-cover border shadow-lg"  src={photo}/>
                             </div>
                         ))}
                     </div>
                 </div>
-            {userPage &&
-                <button className="bg-gray-200 p-3 rounded-md" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
-            }
             </div>
         </div>
     );

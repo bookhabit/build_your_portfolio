@@ -143,7 +143,7 @@ const UserInfo = ({user}:{user:UserInfoType|null|undefined}) => {
                                 <p className="font-bold text-lg">{user?.userResumeDoc?.reasonForCoding}</p>
                             </div>
                         </div>
-                        <div className="relative right-0 top-0 lg:absolute flex flex-col gap-3 items-end">
+                        <div className="relative right-0 top-0 lg:absolute flex flex-col gap-3 items-center">
                             <img className="w-72 h-72 bg-slate-50" src={user?.profileImg ? 'http://localhost:4000/uploads/'+user.profileImg : defaultProfileImg} alt="테스트"/>
                             {isAuthor?
                             <p className="cursor-pointer text-md text-gray-400 hover:text-zinc-300" onClick={()=>setShowUpdateProfile(!showUpdateProfile)}>
