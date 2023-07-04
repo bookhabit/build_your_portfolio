@@ -11,7 +11,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserProfileType, UserTokenDataType, UserType } from "./Types/UserType";
 import cookieParser from "cookie-parser";
-import imageDownloader from "image-downloader";
+import imageDownloader from "image-downloader"
 import multer from 'multer'
 import fs from 'fs'
 import pathLB from "path"
@@ -94,6 +94,7 @@ app.get('/profile', (req:Request,res:Response) => {
         const userPortfolioDoc = await Portfolio.find({author:userData.id}) as PortfolioType[] | null
 
         const resultUser:UserProfileType = {
+          selectedUserUI:userDoc.selectedUserUI,
           email:userDoc.email,
           name:userDoc.name,
           _id:userDoc._id,
@@ -112,11 +113,12 @@ app.get('/profile', (req:Request,res:Response) => {
 app.get('/user/:id', async (req:Request,res:Response) => {
   const {id:userId} = req.params;
   try{
-      const userDoc = await User.findById(userId) as UserType;
+      const userDoc = await User.findById(userId) as UserProfileType;
       const userResumeDoc = await Resume.findOne({author:userId}) as ResumeType | null
       const userPortfolioDoc = await Portfolio.find({author:userId}) as PortfolioType[] | null
 
       const resultUser:UserProfileType = {
+        selectedUserUI:userDoc.selectedUserUI,
         email:userDoc.email,
         name:userDoc.name,
         _id:userDoc._id,
@@ -157,6 +159,33 @@ app.put('/profile-image', async (req: Request, res: Response) => {
   }
 });
 
+// user-UI 선택 api
+app.put('/user-ui', async (req: Request, res: Response) => {
+  const { token } = req.cookies;
+  const { selectedUserUI } = req.body;
+  console.log(selectedUserUI)
+  if (token) {
+    try {
+      jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
+        const userData = userDataCallback as UserTokenDataType
+        if (err) throw err;
+        const userDoc = await User.findById(userData.id)
+        if (userDoc) {
+          userDoc.selectedUserUI = selectedUserUI
+          await userDoc.save();
+          res.status(200).json(userDoc);
+        } else {
+          res.json({ message: '사용자를 찾을 수 없습니다.' });
+        }
+      })   
+    } catch (err) {
+      res.status(500).json({ message: '서버 오류입니다.' });
+    }
+  } else {
+    res.status(401).json({ message: '인증되지 않은 요청입니다.' });
+  }
+
+})
 
 // input string(이미지주소)으로 이미지업로드
 app.post('/upload-by-link', async (req: Request, res: Response) => {

@@ -1,25 +1,30 @@
-import { useContext, useState} from "react";
+import { useContext, useEffect, useState} from "react";
 import {  useNavigate} from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import axios from "axios";
 import { SelectedUI } from "../Types/PortfolioType";
-import UserInfoBasic from "../components/UserInfoBasic";
+import UserInfoBasic from "../components/UserInfoUI/UserInfoBasic";
 import { InputChangeEvent } from "../elements/Input";
 import PreviewIcon from "../assets/portfolio/imgPreview.svg"
+import UserScrollParallaxUI from "../components/UserInfoUI/UserScrollParallaxUI";
+import UserSlideUI from "../components/UserInfoUI/UserSlideUI";
+import UserUI_3D from "../components/UserInfoUI/UserUI_3D";
 // import ImageUI from "../components/common/ImageUI";
 
 export default function ProfilePage() {
     const {user,setUser} = useContext(UserContext)
     const router = useNavigate();
-    const [selectedUserUI,setSelectedUserUI] = useState<SelectedUI>("A");
-    console.log(selectedUserUI)
+    const [selectedUserUI,setSelectedUserUI] = useState<SelectedUI>(user?.selectedUserUI ? user.selectedUserUI : "A" );
+    
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
 
-    const onChangeInput = (event:InputChangeEvent)=>{
+    const onChangeInput = async (event:InputChangeEvent)=>{
         if(event.target.name==="selectedUI"){
             setSelectedUserUI(event.target.value as SelectedUI);
+            const {data} = await axios.put('/user-ui',{selectedUserUI:event.target.value})
+            console.log(data)
           }
     }
 
@@ -72,7 +77,11 @@ export default function ProfilePage() {
 
     return (
         <div className='flex flex-col items-center justify-center px-0 xl:px-80 py-20 '>
-            <UserInfoBasic user={user}  />
+            {/* user가 선택한 UI 대로 user페이지 렌더링 - 기본값 A  */}
+            {user?.selectedUserUI==="A" && <UserInfoBasic user={user}  />}
+            {user?.selectedUserUI==="B" && <UserScrollParallaxUI user={user}  />}
+            {user?.selectedUserUI==="C" && <UserSlideUI user={user}  />}
+            {user?.selectedUserUI==="D" && <UserUI_3D user={user}  />}
             {/* user UI 변경하는 section */}
             <h1 className="text-2xl text-gray-500 mt-20">메인페이지 UI 선택</h1>
             <section className="flex flex-col gap-8 justify-evenly md:flex-row h-full my-20">

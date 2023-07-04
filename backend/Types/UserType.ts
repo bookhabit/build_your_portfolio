@@ -1,4 +1,4 @@
-import { PortfolioType } from "./PortfolioType";
+import { PortfolioType, SelectedUI } from "./PortfolioType";
 import { ResumeType } from "./ResumeType";
 
 export type UserType = {
@@ -15,6 +15,7 @@ export type UserTokenDataType = {
 }
 
 export type UserProfileType = {
+    selectedUserUI:SelectedUI
     email:string;
     name:string;
     _id:String;

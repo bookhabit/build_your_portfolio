@@ -1,19 +1,17 @@
 
-import emailIcon from "../assets/email.svg"
-import computerIcon from "../assets/computer.svg"
-import linkIcon from "../assets/resume/linkIcon.svg"
-import phoneIcon from "../assets/resume/phoneIcon.svg"
-import TechBorder from "./common/TechBorder";
-import { UserInfoType } from "../Types/userType"
-import PortfolioImage from "./PortfolioImage"
+import emailIcon from "../../assets/email.svg"
+import computerIcon from "../../assets/computer.svg"
+import linkIcon from "../../assets/resume/linkIcon.svg"
+import phoneIcon from "../../assets/resume/phoneIcon.svg"
+import TechBorder from "../common/TechBorder";
+import { UserInfoType } from "../../Types/userType"
 import { useState,useContext,useEffect,ChangeEvent } from "react"
-import ShowModal from "./ShowModal"
-import { ShowArray } from "../pages/ResumeFormPage";
-import PortfolioCategory from "./PortfolioCategory";
-import { UserContext } from "../Context/UserContext";
+import ShowModal from "../ShowModal"
+import { ShowArray } from "../../pages/ResumeFormPage";
+import PortfolioCategory from "../PortfolioCategory";
+import { UserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router";
-import { ResumeType } from "../Types/ResumeType";
-import { PortfolioType } from "../Types/PortfolioType";
+import { ResumeType } from "../../Types/ResumeType";
 import axios from "axios";
 
 const defaultProfileImg = "https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg"
