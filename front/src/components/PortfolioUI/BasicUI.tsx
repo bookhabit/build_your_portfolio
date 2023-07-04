@@ -88,7 +88,7 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                 </div>
                 {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&
                 portfolio.PortfolioDoc.important_functions.map((importantData,index)=>(
-                    <div className="flex flex-col gap-3 my-12 border shadow-xl p-10">
+                    <div className="flex flex-col gap-3 my-12 border shadow-xl p-10" key={importantData.important_function_photo[0]}>
                         <h1 className="text-2xl text-cyan-500 font-bold text-center mb-10">프로젝트의 핵심기능 {index+1}</h1>
                         <div className="flex flex-col gap-10 lg:flex-row">
                             <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" 
