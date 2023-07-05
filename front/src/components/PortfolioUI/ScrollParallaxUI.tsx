@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router";
-import { PortfolioDetailType, PortfolioType } from "../../Types/PortfolioType";
+import { PortfolioDetailType } from "../../Types/PortfolioType";
 import ImageUI from "../common/ImageUI";
 import convertCategory from "../common/convertCategory";
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { gsap } from "gsap";
-import { useIntersection } from 'react-use';
 
 interface IProps{
     portfolio:PortfolioDetailType
@@ -184,39 +183,40 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
 
     return (
         <div className="">
-            <div className="flex flex-col gap-10 justify-center items-center bg-gray-400 h-screen">
-                <h2 className="text-xl w-full text-center text-white fadeInContainer">
-                    <span className="textContainer text-3xl font-bold">
+            <div className="flex flex-col lg:flex-row gap-10 justify-between items-center bg-slate-50 h-screen">
+                <h2 className="text-xl lg:text-3xl w-full text-center text-black ml-20 mt-20 lg:ml-0 lg:mt-0
+                leftMoveContainer">
+                    <span className="textContainer text-3xl lg:text-6xl font-bold">
                     {portfolio?.author_name}</span> 님의 포트폴리오
                 </h2>
                 {userPage &&
-                <button className="hover:bg-cyan-100 hover:text-black text-white w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
+                <button className="hover:bg-cyan-100 text-black w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
                 }
-            </div>
-            <div className="flex justify-center w-full h-full md:h-screen bg-gray-400">
+                <div className="flex justify-center items-center w-full">
                 {portfolio?.PortfolioDoc.photos.length > 0 && 
-                    <ImageUI className="h-42 w-42 md:h-96 md:w-96 shadow-xl mb-20  md:mb-0 aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
+                    <ImageUI className="h-42 w-42 md:h-96 md:w-96 shadow-2xl mb-20  md:mb-0 aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
                 }
+                </div>
             </div>
-            <div className="p-10 h-full w-full flex flex-col gap-20 justify-around bg-gray-300 px-20">
-                <h1 className="text-5xl mt-14 text-gray-50 font-bold text-center fadeInContainer">{portfolio.PortfolioDoc.title}</h1>
+            <div className="p-10 h-full w-full flex flex-col gap-20 justify-around  px-20">
+                <h1 className="text-5xl mt-14 text-Scroll_UI_SubTitle font-bold text-center fadeInContainer">{portfolio.PortfolioDoc.title}</h1>
                 <div className="flex flex-col justify-evenly lg:flex-row gap-8">
                     <div className="flex flex-col gap-10 w-full lg:w-1/2">
                         <div className="flex flex-col gap-3">
-                            <p className=" text-gray-50 textContainer">프로젝트 소개</p>
+                            <p className=" text-Scroll_UI_SubTitle textContainer">프로젝트 소개</p>
                             <p className="text-lg leading-10 font-light">{portfolio.PortfolioDoc.introduce}</p>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <p className=" text-gray-50 textContainer">프로젝트 목적</p>
+                            <p className=" text-Scroll_UI_SubTitle textContainer">프로젝트 목적</p>
                             <p className="text-lg leading-10 font-light">{portfolio.PortfolioDoc.purpose}</p>
                         </div>
                         <div className="w-full text-end h-full">
                             <div className="flex items-center gap-3 h-16 fadeInContainer">
-                                <p className="text-gray-50">Category</p>
+                                <p className="text-Scroll_UI_SubTitle">Category</p>
                                 <p className="text-gray-400 px-5">{convertCategory(portfolio.PortfolioDoc.category)}</p>
                             </div>
                             <div className="flex items-center gap-3 h-16 fadeInContainer">
-                                <p className="text-gray-50">Date</p>
+                                <p className="text-Scroll_UI_SubTitle">Date</p>
                                 <div className="flex gap-3 text-gray-400 font-bold px-5">
                                     <span>{portfolio.PortfolioDoc.developPeriod.start}</span>
                                     <span>{"~"}</span>
@@ -225,7 +225,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                             </div>
                             <ul className="flex items-center 
                             xs:items-start gap-3 h-16 mb-20 fadeInContainer">
-                                <p className="text-gray-50">Skills</p>
+                                <p className="text-Scroll_UI_SubTitle">Skills</p>
                                 <div className="flex flex-wrap gap-3 text-gray-400 px-5 justify-start items-center">
                                     {portfolio.PortfolioDoc.usedTechnology.map((skill)=>(
                                         <li className="bg-cyan-300 p-2 rounded-xl text-white shadow-lg hover:bg-cyan-200" key={skill}>{skill}</li>
@@ -246,11 +246,11 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     </div>
                 </div>
             </div>
-            <div className="px-0 xl:px-60 flex flex-col gap-10">
+            <div className="px-0 xl:px-60 flex flex-col gap-10 bg-slate-100">
                 {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&
                 portfolio.PortfolioDoc.important_functions.map((importantData,index)=>(
                     <div className="flex flex-col gap-3 mt-20 border shadow-xl p-10 fadeInContainer opacity-0" key={importantData.important_function_photo[0]}>
-                        <h1 className="text-2xl text-gray-400 font-bold text-center mb-10 textContainer">프로젝트의 핵심기능 {index+1}</h1>
+                        <h1 className="text-2xl text-Scroll_UI_SubTitle font-bold text-center mb-10 textContainer">프로젝트의 핵심기능 {index+1}</h1>
                         <div className="flex flex-col gap-10 lg:flex-row">
                             <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" 
                             onClick={()=>{
@@ -269,17 +269,17 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                 }
                 <div className="flex flex-col lg:flex-row gap-10">
                     <div className="flex flex-col gap-3 border shadow-md p-5  text-black w-full lg:w-1/2">
-                        <p className="text-gray-400  mb-10 textContainer">개발과정</p>
+                        <p className="text-Scroll_UI_SubTitle  mb-10 textContainer">개발과정</p>
                         <p className="text-md font-light leading-10 fadeInContainer">{portfolio.PortfolioDoc.process}</p>
                     </div>
                     <div className="flex flex-col gap-3 border shadow-md p-5  text-black w-full lg:w-1/2">
-                        <p className="text-gray-400  mb-10 textContainer">배운점</p>
+                        <p className="text-Scroll_UI_SubTitle  mb-10 textContainer">배운점</p>
                         <p className="text-md font-light leading-10 fadeInContainer">{portfolio.PortfolioDoc.learned}</p>
                     </div>
                 </div>
                 
                 <div className="flex flex-col px-10 lg:px-0 gap-10 text-sm text-gray-400 w-full mb-40 text-center lg:text-start">
-                    <p className="text-gray-400  mb-10 textContainer">Demo Link</p>
+                    <p className="text-Scroll_UI_SubTitle  mb-10 textContainer">Demo Link</p>
                     {portfolio.PortfolioDoc.demoLink.projectURL&&
                         <div className="flex gap-3 w-full items-center fadeInContainer">
                             <p>Project : </p>
