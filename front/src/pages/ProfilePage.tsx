@@ -82,7 +82,9 @@ export default function ProfilePage() {
             {user?.selectedUserUI==="C" && <UserSlideUI user={user}  />}
             {user?.selectedUserUI==="D" && <UserUI_3D user={user}  />}
             {/* user UI 변경하는 section */}
-            <h1 className="text-2xl text-gray-500 mt-20">메인페이지 UI 선택</h1>
+            <div className="border-t-2 w-full pt-20 mt-20 text-center">
+              <h1 className="text-2xl text-gray-400">메인페이지 UI 변경하기</h1>
+            </div>
             <section className="flex flex-col gap-8 justify-evenly md:flex-row h-full my-20">
                 {userUIradio.map((kind)=>(
                     <label

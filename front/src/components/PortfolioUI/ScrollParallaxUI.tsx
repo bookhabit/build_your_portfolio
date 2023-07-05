@@ -14,30 +14,6 @@ interface IProps{
 const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     console.log(portfolio)
     const router = useNavigate();
-    // image-view-state
-    const [showPreview,setShowPreview] = useState<boolean>(false)
-    const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
-
-
-    // image-view 전체보기
-    if (showPreview&&showPreviewSrc!=="") {
-        // 포트폴리오의 form에 채워진 데이터를 UI에 넘겨준다
-          return (
-            <div className="absolute inset-0 bg-black text-white min-h-screen">
-            <div className="bg-black p-8 grid justify-center gap-4">
-              <div>
-                <button onClick={() => setShowPreview(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                    <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
-                  </svg>
-                  Close Preview
-                </button>
-              </div>
-              <ImageUI src={showPreviewSrc} />
-            </div>
-          </div>
-          );
-    }
 
     const fadeIn = (element:Element) =>{
         gsap.to(element,1,{
@@ -189,9 +165,6 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     <span className="textContainer text-3xl lg:text-6xl font-bold">
                     {portfolio?.author_name}</span> 님의 포트폴리오
                 </h2>
-                {userPage &&
-                <button className="hover:bg-cyan-100 text-black w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
-                }
                 <div className="flex justify-center items-center w-full">
                 {portfolio?.PortfolioDoc.photos.length > 0 && 
                     <ImageUI className="h-42 w-42 md:h-96 md:w-96 shadow-2xl mb-20  md:mb-0 aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
@@ -236,10 +209,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     </div>
                     <div className=" flex flex-col items-center gap-5">
                         {portfolio.PortfolioDoc.photos.length>1 && portfolio.PortfolioDoc.photos.slice(1).map((photo)=>(
-                            <div key={photo} className="w-full" onClick={()=>{
-                                setShowPreview(true)
-                                setShowPreviewSrc(photo)
-                            }}>
+                            <div key={photo} className="w-full">
                                 <ImageUI className="w-96 h-96 md:x-42 md:h-42 object-fill border shadow-lg cursor-pointer hover:shadow-2xl fadeInContainer"  src={photo}  />
                             </div>
                         ))}
@@ -252,11 +222,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     <div className="flex flex-col gap-3 mt-20 border shadow-xl p-10 fadeInContainer opacity-0" key={importantData.important_function_photo[0]}>
                         <h1 className="text-2xl text-Scroll_UI_SubTitle font-bold text-center mb-10 textContainer">프로젝트의 핵심기능 {index+1}</h1>
                         <div className="flex flex-col gap-10 lg:flex-row">
-                            <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" 
-                            onClick={()=>{
-                                setShowPreview(true)
-                                setShowPreviewSrc(importantData.important_function_photo[0])
-                            }}>
+                            <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" >
                                 <ImageUI className="w-full h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
                             </div>
                             <div className="w-full lg:w-2/3">
@@ -304,9 +270,12 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                             <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.designURL}>디자인 관련 URL</Link>
                         </div>
                     }
+                    
+                    {userPage &&
+                        <button className="bg-cyan-200 hover:bg-cyan-100 text-black w-56 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>
+                    }
+                    
                 </div>
-                
-
             </div>
         </div>
     );

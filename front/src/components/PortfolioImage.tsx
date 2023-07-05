@@ -17,7 +17,7 @@ const PortfolioImage = ({portfolio}:{portfolio:PortfolioType}) => {
     return (
         <div className="flex flex-col items-center justify-center gap-5 " key={portfolio._id} onClick={()=>router(`/portfolio/${portfolio._id}`)}>
             {portfolio.photos[0] ? 
-            <img src={`http://localhost:4000/uploads/${portfolio.photos[0]}`} alt="이미지" className="aspect-square cursor-pointer object-cover rounded-full w-40 h-40" /> : <div className="bg-blue-200 aspect-square cursor-pointer object-cover rounded-full w-40 h-40" />}
+            <img src={`http://localhost:4000/uploads/${portfolio.photos[0]}`} alt="이미지" className="aspect-square cursor-pointer object-cover rounded-full w-40 h-40 hover:shadow-2xl" /> : <div className="bg-blue-200 aspect-square cursor-pointer object-cover rounded-full w-40 h-40 hover:shadow-2xl" />}
             
             <p className="text-gray-400">{portfolio.title}</p>
         </div>
