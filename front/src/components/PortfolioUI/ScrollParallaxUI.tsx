@@ -18,9 +18,6 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
-    const leftRef = useRef(null);
-    const rightRef = useRef(null);
-    const fadeRef = useRef(null);
 
 
     // image-view 전체보기
@@ -46,31 +43,25 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     const fadeIn = (element:Element) =>{
         gsap.to(element,1,{
             opacity:1,
-            y:-10,
+            y:-20,
             ease:"power4.out",
             stagger:{
-                amount:0.3
+                amount:0.4
             }
         })
     }
-    const fadeOut = (element:Element)=>{
-        gsap.to(element,1,{
-            opacity:0,
-            y:-5,
-            ease:"power4.out",
-        })
-    }
+    
     const moveToLeft = (element:Element, distance:number) => {
-        // gsap.fromTo(element,{x:1000},{x:0})
+        gsap.fromTo(element,{x:-1000},{x:0})
       };
     
     const moveToRight = (element:Element, distance:number) => {
-        // gsap.fromTo(element,{x:10},{x:100})
+        gsap.fromTo(element,{x:1000},{x:0})
     };
     
     const increaseTextSize = (element:Element, size:number) => {
     gsap.to(element, {
-        fontSize: `+=${size}px`,
+        fontSize: `${size}px`,
         duration: 1,
         ease: "power4.out",
     });
@@ -78,7 +69,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     
     const increaseImageSize = (element:Element, scale:number) => {
     gsap.to(element, {
-        scale: `+=${scale}`,
+        scale: `${scale}`,
         duration: 1,
         ease: "power4.out",
     });
@@ -92,70 +83,110 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
             threshold: 0.5,
         };
 
-        const fadeObserver = new IntersectionObserver((entries:IntersectionObserverEntry[],observer) => {
+        const translateOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.1,
+        };
+
+        const increaseOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 1,
+        };
+
+        const fadeObserver = new IntersectionObserver((entries:IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) {
                     return
                 }
                 if (entry.isIntersecting) {
                     fadeIn(entry.target);
-                    // observer.unobserve(entry.target)
+                    fadeObserver.unobserve(entry.target)
                 }
             });
         }, options);
 
-        const leftObserver = new IntersectionObserver((entries:IntersectionObserverEntry[],observer) => {
+        const leftObserver = new IntersectionObserver((entries:IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) {
                     return
                 }
                 if (entry.isIntersecting) {
                     moveToLeft(entry.target,100);
-                    // observer.unobserve(entry.target)
+                    leftObserver.unobserve(entry.target)
                 }
             });
-        }, options);
+        }, translateOptions);
 
-        const rightObserver = new IntersectionObserver((entries:IntersectionObserverEntry[],observer) => {
+        const rightObserver = new IntersectionObserver((entries:IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) {
                     return
                 }
                 if (entry.isIntersecting) {
                     moveToRight(entry.target,100);
-                    // observer.unobserve(entry.target)
+                    rightObserver.unobserve(entry.target)
                 }
             });
-        }, options)
+        }, translateOptions)
+
+        const textObserver = new IntersectionObserver((entries:IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return
+                }
+                if (entry.isIntersecting) {
+                    increaseTextSize(entry.target,20)
+                    textObserver.unobserve(entry.target)
+                }
+            });
+        }, increaseOptions)
+
+        const imageObserver = new IntersectionObserver((entries:IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return
+                }
+                if (entry.isIntersecting) {
+                    increaseImageSize(entry.target,1.1)
+                    imageObserver.unobserve(entry.target)
+                }
+            });
+        }, increaseOptions)
 
         // 반복문을 돌려 모든 DOM에 적용
         const fadeList = document.querySelectorAll(".fadeInContainer");
         const leftList = document.querySelectorAll(".leftMoveContainer");
         const rightList = document.querySelectorAll(".rightMoveContainer");
+        const textList = document.querySelectorAll(".textContainer");
+        const imageList = document.querySelectorAll(".imageContainer");
         fadeList.forEach((el) => fadeObserver.observe(el));
         leftList.forEach((el) => leftObserver.observe(el));
         rightList.forEach((el) => rightObserver.observe(el));
+        textList.forEach((el) => textObserver.observe(el));
+        imageList.forEach((el) => imageObserver.observe(el));
 
     },[])
 
     return (
         <div className="px-0 xl:px-60 py-20 bg-gray-50">
         <div className="flex justify-between items-center border-b mb-10  p-3 h-screen fadeInContainer">
-            <h2 className="text-md w-full"><span className="text-xl text-cyan-500 ">{portfolio?.author_name}</span> 님의 포트폴리오</h2>
+            <h2 className="text-md w-full"><span className="textContainer text-cyan-500">{portfolio?.author_name}</span> 님의 포트폴리오</h2>
             {userPage &&
             <button className="bg-gray-100 hover:bg-cyan-100 w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
             }
         </div>
         <div className="p-10">
             <div className="flex flex-col lg:flex-row gap-20 mb-12 ">
-                <div ref={fadeRef} className="w-full lg:w-1/2 flex flex-col gap-5 justify-around h-screen fadeInContainer">
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 justify-around h-screen fadeInContainer">
                     <h1 className="text-4xl text-cyan-400 font-bold mb-5">{portfolio.PortfolioDoc.title}</h1>
                     <div className="flex flex-col gap-3">
-                        <p className=" text-cyan-400">프로젝트 목적</p>
+                        <p className=" text-cyan-400 textContainer">프로젝트 목적</p>
                         <p className="text-md leading-8 font-light">{portfolio.PortfolioDoc.purpose}</p>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <p className=" text-cyan-400">프로젝트 소개</p>
+                        <p className=" text-cyan-400 textContainer">프로젝트 소개</p>
                         <p className="text-md leading-8 font-light">{portfolio.PortfolioDoc.introduce}</p>
                     </div>
                     <div className="flex items-center gap-3 w-full justify-between">
@@ -179,9 +210,9 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                         </div>
                     </ul>
                 </div>
-                <div ref={fadeRef} className="w-full lg:w-1/2 shadow-xl h-screen fadeInContainer">
+                <div className="w-full lg:w-1/2 shadow-xl h-screen fadeInContainer">
                     {portfolio?.PortfolioDoc.photos.length > 0 && 
-                        <ImageUI className="w-full aspect-square object-fill" src={portfolio?.PortfolioDoc.photos[0]}/>
+                        <ImageUI className="w-full aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
                     }
                 </div>
             </div>
