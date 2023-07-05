@@ -9,6 +9,7 @@ import PreviewIcon from "../assets/portfolio/imgPreview.svg"
 import UserScrollParallaxUI from "../components/UserInfoUI/UserScrollParallaxUI";
 import UserSlideUI from "../components/UserInfoUI/UserSlideUI";
 import UserUI_3D from "../components/UserInfoUI/UserUI_3D";
+import { UserInfoType } from "../Types/userType";
 // import ImageUI from "../components/common/ImageUI";
 
 export default function ProfilePage() {
@@ -23,7 +24,14 @@ export default function ProfilePage() {
     const onChangeInput = async (event:InputChangeEvent)=>{
         if(event.target.name==="selectedUI"){
             setSelectedUserUI(event.target.value as SelectedUI);
-            await axios.put('/user-ui',{selectedUserUI:event.target.value})
+            const response = await axios.put('/user-ui',{selectedUserUI:event.target.value})
+            if(response.status===200){
+              axios.get('/profile')
+              .then(({data}:{data:UserInfoType}) => {
+                setUser(data);
+              });
+            }
+            
           }
     }
 
@@ -88,22 +96,22 @@ export default function ProfilePage() {
             <section className="flex flex-col gap-8 justify-evenly md:flex-row h-full my-20">
                 {userUIradio.map((kind)=>(
                     <label
-                    key={kind.name}
-                    className={`relative p-2 font-bold cursor-pointer text-2xl flex flex-col items-center justify-center gap-5 ${
-                        selectedUserUI === kind.name ? 'text-category_select' : '' 
-                    }`}
+                      key={kind.name}
+                      className={`relative p-2 font-bold cursor-pointer text-2xl flex flex-col items-center justify-center gap-5 ${
+                          selectedUserUI === kind.name ? 'text-category_select' : '' 
+                      }`}
                     >
                     <input
-                    type="radio"
-                    value={kind.name}
-                    name="selectedUI"
-                    checked={selectedUserUI === kind.name}
-                    onChange={onChangeInput}
-                    className="hidden"
+                      type="radio"
+                      value={kind.name}
+                      name="selectedUI"
+                      checked={selectedUserUI === kind.name}
+                      onChange={onChangeInput}
+                      className="hidden"
                     />
                     {kind.name}
                     <div className="w-52 h-52 rounded-full overflow-hidden">
-                    <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
+                      <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
                     </div>
                     <img 
                     src={PreviewIcon} 
