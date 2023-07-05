@@ -45,9 +45,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
             opacity:1,
             y:-30,
             ease:"power4.out",
-            stagger:{
-                amount:2
-            }
+            duration:5,
         })
     }
     
@@ -195,15 +193,15 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
             </div>
             <div className="p-10 h-full w-full flex flex-col gap-20 justify-around bg-gray-300 px-20">
                 <h1 className="text-5xl mt-14 text-gray-50 font-bold text-center fadeInContainer">{portfolio.PortfolioDoc.title}</h1>
-                <div className="flex flex-col justify-between lg:flex-row gap-8">
+                <div className="flex flex-col justify-evenly lg:flex-row gap-8">
                     <div className="flex flex-col gap-10 w-1/2">
                         <div className="flex flex-col gap-3">
                             <p className=" text-gray-50 textContainer">프로젝트 소개</p>
-                            <p className="text-lg leading-8 font-light">{portfolio.PortfolioDoc.introduce}</p>
+                            <p className="text-lg leading-10 font-light">{portfolio.PortfolioDoc.introduce}</p>
                         </div>
                         <div className="flex flex-col gap-3">
                             <p className=" text-gray-50 textContainer">프로젝트 목적</p>
-                            <p className="text-lg leading-8 font-light">{portfolio.PortfolioDoc.purpose}</p>
+                            <p className="text-lg leading-10 font-light">{portfolio.PortfolioDoc.purpose}</p>
                         </div>
                         <div className="w-full text-end h-full">
                             <div className="flex items-center gap-3 h-16 fadeInContainer">
@@ -240,62 +238,67 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     </div>
                 </div>
             </div>
-            {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&
-            portfolio.PortfolioDoc.important_functions.map((importantData,index)=>(
-                <div className="flex flex-col gap-3 my-12 border shadow-xl p-10 h-screen leftMoveContainer" key={importantData.important_function_photo[0]}>
-                    <h1 className="text-2xl text-cyan-500 font-bold text-center mb-10">프로젝트의 핵심기능 {index+1}</h1>
-                    <div className="flex flex-col gap-10 lg:flex-row">
-                        <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" 
-                        onClick={()=>{
-                            setShowPreview(true)
-                            setShowPreviewSrc(importantData.important_function_photo[0])
-                        }}>
-                            <ImageUI className=" h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
+            <div className="px-0 xl:px-60 flex flex-col gap-10">
+                {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&
+                portfolio.PortfolioDoc.important_functions.map((importantData,index)=>(
+                    <div className="flex flex-col gap-3 mt-20 border shadow-xl p-10 fadeInContainer opacity-0" key={importantData.important_function_photo[0]}>
+                        <h1 className="text-2xl text-gray-400 font-bold text-center mb-10 textContainer">프로젝트의 핵심기능 {index+1}</h1>
+                        <div className="flex flex-col gap-10 lg:flex-row">
+                            <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" 
+                            onClick={()=>{
+                                setShowPreview(true)
+                                setShowPreviewSrc(importantData.important_function_photo[0])
+                            }}>
+                                <ImageUI className=" h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
+                            </div>
+                            <div className="w-full lg:w-2/3">
+                                <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>
+                            </div>
+                            
                         </div>
-                        <div className="w-full lg:w-2/3">
-                            <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>
-                        </div>
-                        
+                    </div>
+                ))
+                }
+                <div className="flex flex-col lg:flex-row gap-10">
+                    <div className="flex flex-col gap-3 border shadow-md p-5  text-black w-full lg:w-1/2">
+                        <p className="text-gray-400  mb-10 textContainer">개발과정</p>
+                        <p className="text-md font-light leading-10 fadeInContainer">{portfolio.PortfolioDoc.process}</p>
+                    </div>
+                    <div className="flex flex-col gap-3 border shadow-md p-5  text-black w-full lg:w-1/2">
+                        <p className="text-gray-400  mb-10 textContainer">배운점</p>
+                        <p className="text-md font-light leading-10 fadeInContainer">{portfolio.PortfolioDoc.learned}</p>
                     </div>
                 </div>
-            ))
-            }
-            <div className="flex flex-col gap-3 mb-5 border shadow-md p-5  text-black fadeIn h-screen leftMoveContainer">
-                <p className="text-cyan-400">개발과정</p>
-                <p className="text-md font-light leading-10">{portfolio.PortfolioDoc.process}</p>
-            </div>
-            <div className="flex flex-col gap-3 mb-10 border shadow-md p-5  text-black fadeIn h-screen rightMoveContainer">
-                <p className="text-cyan-400">배운점</p>
-                <p className="text-md font-light leading-10">{portfolio.PortfolioDoc.learned}</p>
-            </div>
-            <div className="flex flex-col items-center md:flex-row gap-20 w-full border shadow-md p-5 fadeIn h-screen rightMoveContainer">
-                <div className="flex flex-col gap-5 text-sm text-gray-400  w-full  md:w-1/3">
-                    <p className="text-cyan-400">Demo Link</p>
+                
+                <div className="flex flex-col gap-5 text-sm text-gray-400 w-full mb-40">
+                    <p className="text-gray-400  mb-10 textContainer">Demo Link</p>
                     {portfolio.PortfolioDoc.demoLink.projectURL&&
-                        <div className="flex gap-3 w-full items-center">
+                        <div className="flex gap-3 w-full items-center fadeInContainer">
                             <p>Project : </p>
                             <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.projectURL}>프로젝트 URL</Link>
                         </div>
                     }
                     {portfolio.PortfolioDoc.demoLink.githubURL&&
-                        <div className="flex gap-3 w-full items-center">
+                        <div className="flex gap-3 w-full items-center fadeInContainer">
                             <p>Github : </p>
                             <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.githubURL}>깃허브 URL</Link>
                         </div>
                     }
                     {portfolio.PortfolioDoc.demoLink.documentURL&&
-                        <div className="flex gap-3 w-full items-center">
+                        <div className="flex gap-3 w-full items-center fadeInContainer">
                             <p>Document : </p>
                             <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.documentURL}>관련 문서 URL</Link>
                         </div>
                     }
                     {portfolio.PortfolioDoc.demoLink.designURL&&
-                        <div className="flex gap-3 w-full items-center">
+                        <div className="flex gap-3 w-full items-center fadeInContainer">
                             <p>Design : </p>
                             <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.designURL}>디자인 관련 URL</Link>
                         </div>
                     }
                 </div>
+                
+
             </div>
         </div>
     );
