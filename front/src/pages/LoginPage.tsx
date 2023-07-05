@@ -8,7 +8,7 @@ import { Button } from "../elements";
 import Input, { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
 import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
-import { UserProfileType } from "../Types/userType";
+import { UserInfoType, UserProfileType } from "../Types/userType";
 import validateLoginForm, { ValidationLoginForm } from "../components/common/validation/validateLoginForm";
 
 export default function LoginPage() {
@@ -55,7 +55,7 @@ export default function LoginPage() {
         const {data}  = await axios.post('/login',{email,password})
         if(data){
           axios.get('/profile')
-          .then(({data}:{data:UserProfileType}) => {
+          .then(({data}:{data:UserInfoType}) => {
             setUser(data);
           });
         }

@@ -40,8 +40,8 @@ const PortfolioPage = () => {
             {portfolio?.PortfolioDoc.selectedUI==="C" 
             && <SlideUI portfolio={portfolio} userPage={userPage}/>}
 
-            {/* {portfolio?.PortfolioDoc.selectedUI==="D" 
-            && <UI_3D portfolio={portfolio} userPage={userPage}/>} */}
+            {portfolio?.PortfolioDoc.selectedUI==="D" 
+            && <UI_3D portfolio={portfolio} userPage={userPage}/>}
         </div>
     );
 };

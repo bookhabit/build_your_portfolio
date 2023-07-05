@@ -23,8 +23,7 @@ export default function ProfilePage() {
     const onChangeInput = async (event:InputChangeEvent)=>{
         if(event.target.name==="selectedUI"){
             setSelectedUserUI(event.target.value as SelectedUI);
-            const {data} = await axios.put('/user-ui',{selectedUserUI:event.target.value})
-            console.log(data)
+            await axios.put('/user-ui',{selectedUserUI:event.target.value})
           }
     }
 
