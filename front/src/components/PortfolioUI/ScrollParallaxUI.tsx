@@ -70,14 +70,21 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
             duration: 1,
             ease: "power4.out",
         });
-        };
+    };
     
     const increaseImageSize = (element:Element, scale:number) => {
-    gsap.to(element, {
-        scale: `${scale}`,
-        duration: 1,
-        ease: "power4.out",
-    });
+        gsap.to(element, {
+            scale: `${scale}`,
+            duration: 1,
+            ease: "power4.out",
+        });
+    };
+    const decreaseImageSize = (element:Element, scale:number) => {
+        gsap.to(element, {
+            scale: `${scale}`,
+            duration: 1,
+            ease: "power4.out",
+        });
     };
 
     useEffect(()=>{
@@ -152,10 +159,10 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
         const imageObserver = new IntersectionObserver((entries:IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) {
-                    return
+                    decreaseImageSize(entry.target,1.5)
                 }
                 if (entry.isIntersecting) {
-                    increaseImageSize(entry.target,2)
+                    increaseImageSize(entry.target,1.5)
                     imageObserver.unobserve(entry.target)
                 }
             });
@@ -186,15 +193,15 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                 <button className="hover:bg-cyan-100 hover:text-black text-white w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
                 }
             </div>
-            <div className="flex justify-center w-full h-screen bg-gray-400">
+            <div className="flex justify-center w-full h-full md:h-screen bg-gray-400">
                 {portfolio?.PortfolioDoc.photos.length > 0 && 
-                    <ImageUI className="w-96 h-96 shadow-xl aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
+                    <ImageUI className="h-42 w-42 md:h-96 md:w-96 shadow-xl mb-20  md:mb-0 aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
                 }
             </div>
             <div className="p-10 h-full w-full flex flex-col gap-20 justify-around bg-gray-300 px-20">
                 <h1 className="text-5xl mt-14 text-gray-50 font-bold text-center fadeInContainer">{portfolio.PortfolioDoc.title}</h1>
                 <div className="flex flex-col justify-evenly lg:flex-row gap-8">
-                    <div className="flex flex-col gap-10 w-1/2">
+                    <div className="flex flex-col gap-10 w-full lg:w-1/2">
                         <div className="flex flex-col gap-3">
                             <p className=" text-gray-50 textContainer">프로젝트 소개</p>
                             <p className="text-lg leading-10 font-light">{portfolio.PortfolioDoc.introduce}</p>
@@ -216,7 +223,8 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                                     <span>{portfolio.PortfolioDoc.developPeriod.end}</span>
                                 </div>
                             </div>
-                            <ul className="flex items-center gap-3 h-16 fadeInContainer">
+                            <ul className="flex items-center 
+                            xs:items-start gap-3 h-16 mb-20 fadeInContainer">
                                 <p className="text-gray-50">Skills</p>
                                 <div className="flex flex-wrap gap-3 text-gray-400 px-5 justify-start items-center">
                                     {portfolio.PortfolioDoc.usedTechnology.map((skill)=>(
@@ -232,7 +240,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                                 setShowPreview(true)
                                 setShowPreviewSrc(photo)
                             }}>
-                                <ImageUI className="w-96 h-96 object-fill border shadow-lg cursor-pointer hover:shadow-2xl fadeInContainer"  src={photo}  />
+                                <ImageUI className="w-96 h-96 md:x-42 md:h-42 object-fill border shadow-lg cursor-pointer hover:shadow-2xl fadeInContainer"  src={photo}  />
                             </div>
                         ))}
                     </div>
@@ -249,7 +257,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                                 setShowPreview(true)
                                 setShowPreviewSrc(importantData.important_function_photo[0])
                             }}>
-                                <ImageUI className=" h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
+                                <ImageUI className="w-full h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
                             </div>
                             <div className="w-full lg:w-2/3">
                                 <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>
@@ -270,7 +278,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     </div>
                 </div>
                 
-                <div className="flex flex-col gap-5 text-sm text-gray-400 w-full mb-40">
+                <div className="flex flex-col px-10 lg:px-0 gap-10 text-sm text-gray-400 w-full mb-40 text-center lg:text-start">
                     <p className="text-gray-400  mb-10 textContainer">Demo Link</p>
                     {portfolio.PortfolioDoc.demoLink.projectURL&&
                         <div className="flex gap-3 w-full items-center fadeInContainer">
