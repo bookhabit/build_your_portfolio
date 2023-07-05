@@ -27,7 +27,6 @@ const PortfolioPage = () => {
         })
     },[])
 
-    // 받아온 portfolio.selectedUI에 따라서 UI가 다른 컴포넌트 연결
 
     return (
         <div>

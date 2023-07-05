@@ -43,29 +43,36 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     const fadeIn = (element:Element) =>{
         gsap.to(element,1,{
             opacity:1,
-            y:-20,
+            y:-30,
             ease:"power4.out",
             stagger:{
-                amount:0.4
+                amount:2
             }
         })
     }
     
     const moveToLeft = (element:Element, distance:number) => {
-        gsap.fromTo(element,{x:-1000},{x:0})
+        gsap.fromTo(element,{x:0},{x:-100})
       };
     
     const moveToRight = (element:Element, distance:number) => {
-        gsap.fromTo(element,{x:1000},{x:0})
+        gsap.fromTo(element,{x:0},{x:100})
     };
     
     const increaseTextSize = (element:Element, size:number) => {
     gsap.to(element, {
-        fontSize: `${size}px`,
+        fontSize: `+=${size}px`,
         duration: 1,
         ease: "power4.out",
     });
     };
+    const decreaseTextSize = (element:Element, size:number) => {
+        gsap.to(element, {
+            fontSize: `-=${size}px`,
+            duration: 1,
+            ease: "power4.out",
+        });
+        };
     
     const increaseImageSize = (element:Element, scale:number) => {
     gsap.to(element, {
@@ -80,7 +87,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
         const options = {
             root: null,
             rootMargin: "0px",
-            threshold: 0.5,
+            threshold: 0.8,
         };
 
         const translateOptions = {
@@ -134,10 +141,11 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
         const textObserver = new IntersectionObserver((entries:IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) {
+                    decreaseTextSize(entry.target,25)
                     return
                 }
                 if (entry.isIntersecting) {
-                    increaseTextSize(entry.target,20)
+                    increaseTextSize(entry.target,25)
                     textObserver.unobserve(entry.target)
                 }
             });
@@ -149,7 +157,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     return
                 }
                 if (entry.isIntersecting) {
-                    increaseImageSize(entry.target,1.1)
+                    increaseImageSize(entry.target,2)
                     imageObserver.unobserve(entry.target)
                 }
             });
@@ -170,50 +178,66 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     },[])
 
     return (
-        <div className="px-0 xl:px-60 py-20 bg-gray-50">
-        <div className="flex justify-between items-center border-b mb-10  p-3 h-screen fadeInContainer">
-            <h2 className="text-md w-full"><span className="textContainer text-cyan-500">{portfolio?.author_name}</span> 님의 포트폴리오</h2>
-            {userPage &&
-            <button className="bg-gray-100 hover:bg-cyan-100 w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
-            }
-        </div>
-        <div className="p-10">
-            <div className="flex flex-col lg:flex-row gap-20 mb-12 ">
-                <div className="w-full lg:w-1/2 flex flex-col gap-5 justify-around h-screen fadeInContainer">
-                    <h1 className="text-4xl text-cyan-400 font-bold mb-5">{portfolio.PortfolioDoc.title}</h1>
-                    <div className="flex flex-col gap-3">
-                        <p className=" text-cyan-400 textContainer">프로젝트 목적</p>
-                        <p className="text-md leading-8 font-light">{portfolio.PortfolioDoc.purpose}</p>
-                    </div>
-                    <div className="flex flex-col gap-3">
-                        <p className=" text-cyan-400 textContainer">프로젝트 소개</p>
-                        <p className="text-md leading-8 font-light">{portfolio.PortfolioDoc.introduce}</p>
-                    </div>
-                    <div className="flex items-center gap-3 w-full justify-between">
-                        <p className="text-gray-400">Category</p>
-                        <p className="text-gray-400 px-5">{convertCategory(portfolio.PortfolioDoc.category)}</p>
-                    </div>
-                    <div className="flex items-center gap-3 w-full justify-between">
-                        <p className="text-gray-400">Date</p>
-                        <div className="flex gap-3 text-gray-400 px-5">
-                            <span>{portfolio.PortfolioDoc.developPeriod.start}</span>
-                            <span>{"~"}</span>
-                            <span>{portfolio.PortfolioDoc.developPeriod.end}</span>
+        <div className="">
+            <div className="flex flex-col gap-10 justify-center items-center bg-gray-400 h-screen">
+                <h2 className="text-xl w-full text-center text-white fadeInContainer">
+                    <span className="textContainer text-3xl font-bold">
+                    {portfolio?.author_name}</span> 님의 포트폴리오
+                </h2>
+                {userPage &&
+                <button className="hover:bg-cyan-100 hover:text-black text-white w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
+                }
+            </div>
+            <div className="flex justify-center w-full h-screen bg-gray-400">
+                {portfolio?.PortfolioDoc.photos.length > 0 && 
+                    <ImageUI className="w-96 h-96 shadow-xl aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
+                }
+            </div>
+            <div className="p-10 h-full w-full flex flex-col gap-20 justify-around bg-gray-300 px-20">
+                <h1 className="text-5xl mt-14 text-gray-50 font-bold text-center fadeInContainer">{portfolio.PortfolioDoc.title}</h1>
+                <div className="flex flex-col justify-between lg:flex-row gap-8">
+                    <div className="flex flex-col gap-10 w-1/2">
+                        <div className="flex flex-col gap-3">
+                            <p className=" text-gray-50 textContainer">프로젝트 소개</p>
+                            <p className="text-lg leading-8 font-light">{portfolio.PortfolioDoc.introduce}</p>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <p className=" text-gray-50 textContainer">프로젝트 목적</p>
+                            <p className="text-lg leading-8 font-light">{portfolio.PortfolioDoc.purpose}</p>
+                        </div>
+                        <div className="w-full text-end h-full">
+                            <div className="flex items-center gap-3 h-16 fadeInContainer">
+                                <p className="text-gray-50">Category</p>
+                                <p className="text-gray-400 px-5">{convertCategory(portfolio.PortfolioDoc.category)}</p>
+                            </div>
+                            <div className="flex items-center gap-3 h-16 fadeInContainer">
+                                <p className="text-gray-50">Date</p>
+                                <div className="flex gap-3 text-gray-400 font-bold px-5">
+                                    <span>{portfolio.PortfolioDoc.developPeriod.start}</span>
+                                    <span>{"~"}</span>
+                                    <span>{portfolio.PortfolioDoc.developPeriod.end}</span>
+                                </div>
+                            </div>
+                            <ul className="flex items-center gap-3 h-16 fadeInContainer">
+                                <p className="text-gray-50">Skills</p>
+                                <div className="flex flex-wrap gap-3 text-gray-400 px-5 justify-start items-center">
+                                    {portfolio.PortfolioDoc.usedTechnology.map((skill)=>(
+                                        <li className="bg-cyan-300 p-2 rounded-xl text-white shadow-lg hover:bg-cyan-200" key={skill}>{skill}</li>
+                                    ))}
+                                </div>
+                            </ul>
                         </div>
                     </div>
-                    <ul className="flex items-center gap-3 w-full justify-between">
-                        <p className="text-gray-400">Skills</p>
-                        <div className="flex flex-wrap gap-3 text-gray-400 px-5 justify-start ">
-                            {portfolio.PortfolioDoc.usedTechnology.map((skill)=>(
-                                <li className="bg-cyan-300 p-2 rounded-xl text-white shadow-lg hover:bg-cyan-200" key={skill}>{skill}</li>
-                            ))}
-                        </div>
-                    </ul>
-                </div>
-                <div className="w-full lg:w-1/2 shadow-xl h-screen fadeInContainer">
-                    {portfolio?.PortfolioDoc.photos.length > 0 && 
-                        <ImageUI className="w-full aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
-                    }
+                    <div className=" flex flex-col items-center gap-5">
+                        {portfolio.PortfolioDoc.photos.length>1 && portfolio.PortfolioDoc.photos.slice(1).map((photo)=>(
+                            <div key={photo} className="w-full" onClick={()=>{
+                                setShowPreview(true)
+                                setShowPreviewSrc(photo)
+                            }}>
+                                <ImageUI className="w-96 h-96 object-fill border shadow-lg cursor-pointer hover:shadow-2xl fadeInContainer"  src={photo}  />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&
@@ -272,19 +296,8 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                         </div>
                     }
                 </div>
-                <div className=" w-2/3 grid grid-cols-3 gap-5 ">
-                    {portfolio.PortfolioDoc.photos.length>1 && portfolio.PortfolioDoc.photos.slice(1).map((photo)=>(
-                        <div key={photo} className="w-full" onClick={()=>{
-                            setShowPreview(true)
-                            setShowPreviewSrc(photo)
-                        }}>
-                            <ImageUI className="h-full object-cover border shadow-lg cursor-pointer hover:shadow-2xl"  src={photo}  />
-                        </div>
-                    ))}
-                </div>
             </div>
         </div>
-    </div>
     );
 };
 
