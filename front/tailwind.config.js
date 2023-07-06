@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage:{
+        'codingMan':"url('/public/coding.jpg')",
+        'code':"url('/public/code.webp')",
+      },
       boxShadow: {
         '2xl': '0 10px 15px 2px rgba(0, 0, 0, 0.5)',
         'scrollUI':'0px 10px 20px 2px rgba(0, 0, 0, 0.5)'

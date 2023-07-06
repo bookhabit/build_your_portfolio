@@ -67,23 +67,19 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
         </div>
     )
     const slide5 = (
-        <div className="w-full h-full flex flex-col gap-5">
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
-                <h2 className="text-3xl font-bold">개발과정</h2>
-            </div>
-            <div className="w-full h-3/4 mt-10 px-20 leading-10">
-                <p>{portfolio.PortfolioDoc.introduce}</p>
-            </div>
+        <div className="w-full h-full bg-codingMan text-white ">
+                <div className="h-full flex flex-col gap-10 items-center justify-center px-5 sm:px-40 bg-black/70">
+                    <h2 className="text-3xl font-bold">개발과정 또는 문제해결과정</h2>
+                    <p className="w-full leading-10">{portfolio.PortfolioDoc.introduce}</p>
+                </div>
         </div>
     )
     const slide6 = (
-        <div className="w-full h-full flex flex-col gap-5">
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
-                <h2 className="text-3xl font-bold">배운 점</h2>
-            </div>
-            <div className="w-full h-3/4 mt-10 px-20 leading-10">
-                <p>{portfolio.PortfolioDoc.introduce}</p>
-            </div>
+        <div className="w-full h-full bg-code text-white ">
+                <div className="h-full flex flex-col gap-10 items-center justify-center px-5 sm:px-40 bg-black/70">
+                    <h2 className="text-3xl font-bold">프로젝트를 통해 배운 점</h2>
+                    <p className="w-full leading-10">{portfolio.PortfolioDoc.learned}</p>
+                </div>
         </div>
     )
     const slide7 = (
