@@ -21,7 +21,7 @@ export type ValidatePortfolio = {
 function validatePortfolioForm(portfolioForm:PortfolioType,setErrorMessage:React.Dispatch<React.SetStateAction<ValidatePortfolio>>):boolean {
   // 전체 input validation
   const {title,purpose,
-    introduce, process,learned,usedTechnology,developPeriod,category,selectedUI,
+    introduce, process,learned,usedTechnology,developPeriod,category,selectedUI,important_functions
     } = portfolioForm
     console.log('유효성검사 props',portfolioForm)
 
@@ -100,6 +100,13 @@ function validatePortfolioForm(portfolioForm:PortfolioType,setErrorMessage:React
       setErrorMessage((prevState)=>({
         ...prevState,
         selectedUI:requiredMsg,
+      }))
+      return false
+    }
+    if(important_functions.length===0){
+      setErrorMessage((prevState)=>({
+        ...prevState,
+        important_functionInput:requiredMsg
       }))
       return false
     }

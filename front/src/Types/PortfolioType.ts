@@ -10,7 +10,7 @@ export type PortfolioType = {
     process:string; 
     learned:string;
     photos: string[],
-    important_functions?:Important_function[],
+    important_functions:Important_function[],
     usedTechnology:string[];
     developPeriod:DevelopPeriodType;
     demoLink:DemoLinkType;

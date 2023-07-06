@@ -527,7 +527,7 @@ export default function PortfolioFormPage() {
           </div>
         </div>
         <div className={formItemTextareaClass()}>
-          <Label sort="portfolioLabel" label="프로젝트의 핵심기능 (선택)"/>
+          <Label sort="portfolioLabel" label="프로젝트의 핵심기능"/>
           <span>핵심기능 설명</span>
           <Textarea
             value={important_functionInput}
@@ -543,8 +543,8 @@ export default function PortfolioFormPage() {
             <PhotosUploader
               addedPhotos={important_functionPhotos} 
               onChange={setImportant_functionPhotos} />
-            <div className="flex items-center gap-4 justify-end mb-5">
-              <span>프로젝트의 핵심기능 추가하기</span>
+            <div className="flex items-center gap-4 justify-end mb-5 ">
+              <span className="bg-slate-200 p-2 rounded-lg">프로젝트의 핵심기능 추가하기</span>
               <Button
                 sort="plusButton"
                 icon={plusIcon}
