@@ -25,12 +25,12 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
     )
     const slide2 = (
         <div className="w-full h-full flex flex-col gap-5">
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
+            <div className="w-full flex items-center justify-center lg:justify-start px-20 py-10 h-20 mt-10">
                 <h2 className="text-3xl font-bold">프로젝트 목적/기획</h2>
             </div>
-            <div className="w-full flex gap-5 mb-10 px-20 h-full">
-                <p className="leading-10 pr-10 w-1/2">{portfolio.PortfolioDoc.purpose}</p>
-                <div className="w-1/2">
+            <div className="w-full flex flex-col lg:flex-row gap-5 justify-center items-center mb-10 px-20 h-full">
+                <p className="leading-10 pr-10 w-full lg:w-1/2">{portfolio.PortfolioDoc.purpose}</p>
+                <div className="w-full sm:w-1/2">
                     {portfolio.PortfolioDoc.photos[1] && <ImageUI className="border shadow-2xl h-full object-fill aspect-square" src={portfolio.PortfolioDoc.photos[1]} />}
                 </div>
             </div>
@@ -38,40 +38,32 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
     )
     const slide3 = (
         <div className="w-full h-full flex flex-col gap-5">
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
+            <div className="w-full flex items-center justify-center lg:justify-start px-20 py-10 h-20 mt-10">
                 <h2 className="text-3xl font-bold">프로젝트 소개/설명</h2>
             </div>
-            <div className="w-full flex gap-5 mb-10 px-20 h-full">
-                <p className="leading-10 pr-10 w-full md:w-1/2">{portfolio.PortfolioDoc.introduce}</p>
-                <div className="w-full md:w-1/2">
+            <div className="w-full flex flex-col lg:flex-row gap-5 justify-center items-center mb-10 px-20 h-full">
+                <p className="leading-10 pr-10 w-full lg:w-1/2">{portfolio.PortfolioDoc.introduce}</p>
+                <div className="w-full sm:w-1/2">
                     {portfolio.PortfolioDoc.photos[2] && <ImageUI className="border shadow-2xl h-full object-fill aspect-square" src={portfolio.PortfolioDoc.photos[2]} />}
                 </div>
             </div>
         </div>
     )
     const slide4 = (
-        <div className="w-full h-full flex flex-col gap-5">
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
-                <h2 className="text-3xl font-bold">프로젝트 주요기능</h2>
-            </div>
-            <div className="w-full h-full mt-10 px-20 leading-10">
-            {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&
-                portfolio.PortfolioDoc.important_functions.map((importantData,index)=>(
-                    <div className="flex flex-col p-10" key={index}>
-                        <h1 className="text-4xl text-cyan-500 font-bold text-center mb-20">프로젝트의 핵심기능 {index+1}</h1>
-                        <div className="flex flex-col gap-10 lg:flex-row">
-                            <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg">
-                                <ImageUI className=" h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
-                            </div>
-                            <div className="w-full lg:w-2/3">
-                                <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>
-                            </div>
-                            
-                        </div>
+            <div className="w-full h-full flex flex-col gap-5">
+                {portfolio.PortfolioDoc.important_functions && portfolio.PortfolioDoc.important_functions.length > 0 &&portfolio.PortfolioDoc.important_functions.map((importantData,index)=>(
+                <div className="w-full h-full flex flex-col gap-5" key={index}>
+                    <div className="w-full flex items-center justify-center lg:justify-start px-20 py-10 h-20 mt-10">
+                        <h2 className="text-3xl font-bold">프로젝트 핵심기능 {index+1}</h2>
                     </div>
-                ))
-                }
-            </div>
+                    <div className="w-full flex flex-col lg:flex-row gap-5 justify-evenly items-center mb-10 px-20 h-full">
+                        <div className="w-full sm:w-1/3">
+                            {portfolio.PortfolioDoc.photos[2] && <ImageUI className="border shadow-2xl h-full w-full object-fill aspect-square" src={importantData.important_function_photo[0]} />}
+                        </div>
+                        <p className="leading-10 pr-10 w-full lg:w-1/2">{importantData.important_function_desc}</p>    
+                    </div>
+                </div>
+                ))}
         </div>
     )
     const slide5 = (
