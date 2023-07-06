@@ -26,12 +26,12 @@ const Slideshow: React.FC<SlideshowProps> = ({ slides }) => {
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={` h-3/4 w-full relative bg-green-50 rounded-lg ${index === currentSlide ? 'active' : 'hidden'}`}
+          className={` h-full w-full relative border-0 bg-slate-50 shadow-2xl md:border rounded-lg ${index === currentSlide ? 'active' : 'hidden'}`}
         >
           {/* 슬라이드 내용 */}
             {slide}
-            <button className='hover:bg-slate-50 p-5 absolute left-0 top-1/2' onClick={prevSlide}><img src={leftArrow} alt='오른쪽 방향 아이콘'/></button>
-            <button className='hover:bg-slate-50 p-5 absolute right-0 top-1/2'  onClick={nextSlide}><img src={rightArrow} alt='오른쪽 방향 아이콘'/></button>
+            <button className='hover:bg-slate-200 p-5 absolute left-0 top-1/2' onClick={prevSlide}><img src={leftArrow} alt='오른쪽 방향 아이콘'/></button>
+            <button className='hover:bg-slate-200 p-5 absolute right-0 top-1/2'  onClick={nextSlide}><img src={rightArrow} alt='오른쪽 방향 아이콘'/></button>
             
         </div>
       ))}

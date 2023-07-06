@@ -11,7 +11,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserProfileType, UserTokenDataType, UserType } from "./Types/UserType";
 import cookieParser from "cookie-parser";
-import imageDownloader from "image-downloader"
+import imageDownloader from "image-downloader";
 import multer from 'multer'
 import fs from 'fs'
 import pathLB from "path"
@@ -192,7 +192,7 @@ app.post('/upload-by-link', async (req: Request, res: Response) => {
   const { link }: { link: string } = req.body;
   const newName = 'photo' + Date.now() + '.jpg';
   const uploadPath = pathLB.join(__dirname, 'uploads', newName); // 경로 수정
-  // console.log(uploadPath);
+  console.log(uploadPath);
   await imageDownloader.image({
     url: link,
     dest: uploadPath,

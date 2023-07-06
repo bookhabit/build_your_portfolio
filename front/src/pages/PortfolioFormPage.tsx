@@ -551,7 +551,7 @@ export default function PortfolioFormPage() {
                 alt="+아이콘"
                 _onClick={(event)=>{
                   event.preventDefault()
-                  if(important_functionInput&&important_functionPhotos){
+                  if(important_functionInput&&important_functionPhotos.length>0){
                     const important_data = {
                       important_function_desc:important_functionInput,
                       important_function_photo:important_functionPhotos
@@ -570,9 +570,7 @@ export default function PortfolioFormPage() {
                 <div className="flex flex-col justify-evenly w-2/3">
                   <p className="mb-3">핵심기능 {index+1} 설명
                   </p>
-                  <button className="absolute top-4 right-4 p-2 bg-gray-100 rounded-md hover:bg-gray-50" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
                   {data.important_function_desc}
-
                 </div>
                 <div className="flex flex-col w-1/3">
                   <p className="my-3">핵심기능 {index+1} 이미지</p>
@@ -581,6 +579,7 @@ export default function PortfolioFormPage() {
                     : "선택한 이미지 없음"
                   }
                 </div>
+                <button className=" w-24 bg-gray-100 rounded-md hover:bg-gray-50" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
               </div>
             ))}    
           </ShowArray>
