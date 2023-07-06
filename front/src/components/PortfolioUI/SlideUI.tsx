@@ -13,12 +13,12 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
     console.log(portfolio,userPage)
     const router = useNavigate();
     const slide1 = (
-        <div className="w-full h-full flex flex-col items-center justify-center">
-            <div className="w-full flex justify-between items-center px-40 h-20">
+        <div className="w-full h-full flex flex-col items-center justify-between gap-5 py-40 sm:py-10">
+            <div className="w-full flex flex-col sm:flex-row gap-5 justify-between items-center px-0 lg:px-40 h-20">
                 <h2 className="text-2xl"><span className="text-3xl font-bold">{portfolio.author_name}</span> 님의 포트폴리오</h2>
                 <h2 className="text-3xl font-bold">{portfolio.PortfolioDoc.title}</h2>
             </div>
-            <div className="w-full px-40 h-3/4 mt-10">
+            <div className="w-full px-0 lg:px-40 h-3/4 mt-10">
                 {portfolio.PortfolioDoc.photos[0] && <ImageUI className="border shadow-2xl" src={portfolio.PortfolioDoc.photos[0]} />}
             </div>
         </div>
@@ -130,10 +130,11 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
     return (
         <div className="px-0 xl:px-80 h-screen">
             <Slideshow slides={[slide1,slide2,slide3,slide4,slide5,slide6,slide7]}/>
-            <div className="pb-20">
+            
                 {userPage&&
-                    <button className="bg-black text-white p-3 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>}
-            </div>
+                <div className="pb-20">
+                    <button className="bg-black text-white p-3 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>
+                </div>}
         </div>
     );
 };
