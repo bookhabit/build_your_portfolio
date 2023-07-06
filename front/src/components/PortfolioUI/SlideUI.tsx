@@ -3,6 +3,7 @@ import { PortfolioDetailType, PortfolioType } from "../../Types/PortfolioType";
 import Slideshow from "./slideUI/SlideShow";
 import ImageUI from "../common/ImageUI";
 import { Link } from "react-router-dom";
+import convertCategory from "../common/convertCategory";
 
 interface IProps{
     portfolio:PortfolioDetailType
@@ -83,22 +84,33 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
         </div>
     )
     const slide7 = (
-        <div className="w-full h-full flex flex-col gap-5">
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
+        <div className="w-full h-full grid grid-cols-1 gap-10 md:grid-cols-2 p-40 bg-stone-100">
+            <div className="flex flex-col gap-5">
                 <h4 className="text-3xl font-bold">Category</h4>
+                <p className="text-gray-500">{convertCategory(portfolio.PortfolioDoc.category)}</p>
             </div>
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
+            <div className="flex flex-col gap-5">
                 <h4 className="text-3xl font-bold">Date</h4>
+                <div className="flex gap-3 text-gray-500">
+                    <p>{portfolio.PortfolioDoc.developPeriod.start}</p>
+                    <p>{"~"}</p>
+                    <p>{portfolio.PortfolioDoc.developPeriod.end}</p>
+                </div>
             </div>
-            <div className="w-full flex items-center px-20 py-10 h-20 mt-10">
+            <div className="flex flex-col gap-5">
                 <h4 className="text-3xl font-bold">Used Skills</h4>
+                <ul className="flex flex-wrap gap-3 text-gray-400 justify-start">
+                    {portfolio.PortfolioDoc.usedTechnology.map((skill)=>(
+                        <li className="bg-black/50 p-2 rounded-xl text-white shadow-lg hover:bg-black/20" key={skill}>{skill}</li>
+                    ))}
+                </ul>
             </div>
-            <div className="flex flex-col gap-5 text-sm text-gray-400  w-full  md:w-1/3">
+            <div className="flex flex-col gap-3">
                         { 
                         !!portfolio.PortfolioDoc.demoLink.designURL 
                         || !!portfolio.PortfolioDoc.demoLink.projectURL 
                         || !!portfolio.PortfolioDoc.demoLink.documentURL 
-                        || !!portfolio.PortfolioDoc.demoLink.githubURL  ? <p className="">Demo Link</p>:null}
+                        || !!portfolio.PortfolioDoc.demoLink.githubURL  ? <h4 className="text-3xl font-bold text-black mb-3">Demo Link</h4>:null}
                         
                         {portfolio.PortfolioDoc.demoLink.projectURL&&
                             <div className="flex gap-3 w-full items-center">
@@ -124,17 +136,16 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
                                 <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.designURL}>디자인 관련 URL</Link>
                             </div>
                         }
-                    </div>
+            </div>
         </div>
     )
     return (
         <div className="px-0 xl:px-80 h-screen">
             <Slideshow slides={[slide1,slide2,slide3,slide4,slide5,slide6,slide7]}/>
-            
-                {userPage&&
-                <div className="pb-20">
-                    <button className="bg-black text-white p-3 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>
-                </div>}
+            {userPage&&
+            <div className="pb-20">
+                <button className="bg-black text-white p-3 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>
+            </div>}
         </div>
     );
 };
