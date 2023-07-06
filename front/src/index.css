@@ -50,3 +50,8 @@ a{
   }
 }
 
+// slide css
+
+.slide-item.active {
+  display: block;
+}
