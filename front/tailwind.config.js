@@ -37,7 +37,8 @@ export default {
         UI_portfolio_card_bg:"#FAF9FC",
         UI_subTitle:"#585858",
         skill_color:"#A1E1F5",
-        Scroll_UI_SubTitle:"#ada9a8"
+        Scroll_UI_SubTitle:"#ada9a8",
+        tertiary: "#151030",
       }
     },
     screens: {
