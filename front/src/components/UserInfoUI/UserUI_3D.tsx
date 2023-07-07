@@ -5,6 +5,7 @@ import ComputersCanvas from "../canvas/Computers";
 import About from "./user3d/About";
 import { motion } from 'framer-motion';
 import { staggerContainer } from "../utils/motion";
+import Experience from "./user3d/Experience";
 
 export const styles = {
     paddingX: "sm:px-16 px-6",
@@ -61,13 +62,15 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 viewport={{ once: true, amount: 0.25 }}
                 className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
             >
-                 {/* 페이지2 -Testimonials>> 학력,생년월일 
-                      자기소개  */}
+                {/* 페이지2 -Testimonials>> 학력,생년월일 
+                    자기소개  */}
 
                 {/* 페이지3 -work Timeline >> 자격증,대외활동,경력  */}
-
-                {/* 페이지4 -about >> 기술스택  */}
-                {user?.userResumeDoc?.technology && <About skills={user?.userResumeDoc?.technology} />}
+                <Experience careers={user?.userResumeDoc?.career} activities={user?.userResumeDoc?.acitivity} />
+                
+                {/* 페이지4 -about >> 기술스택 + 자격증 */}
+                {user?.userResumeDoc?.technology && <About skills={user?.userResumeDoc?.technology} title={"Skills"} />}
+                {user?.userResumeDoc?.certification && <About skills={user?.userResumeDoc?.certification} title={"Certification"} />}
 
                 {/* 페이지5 -projects >> 포트폴리오 소개 카드  */}
 

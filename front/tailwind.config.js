@@ -39,6 +39,7 @@ export default {
         skill_color:"#A1E1F5",
         Scroll_UI_SubTitle:"#ada9a8",
         tertiary: "#151030",
+        secondary: "#aaa6c3",
       }
     },
     screens: {

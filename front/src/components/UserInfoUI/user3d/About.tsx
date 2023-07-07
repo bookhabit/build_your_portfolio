@@ -28,13 +28,14 @@ const ServiceCard = ({ index, title }:ServiceCardType) => (
 
 type AboutProps = {
   skills: string[] | undefined;
+  title:string;
 };
 
-const About = ({ skills }: AboutProps) => {
+const About = ({ skills,title }: AboutProps) => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <h2 className={styles.sectionHeadText}>Skills</h2>
+        <h2 className={styles.sectionHeadText}>{title}</h2>
       </motion.div>
 
       <motion.p
@@ -43,7 +44,7 @@ const About = ({ skills }: AboutProps) => {
       >
       </motion.p>
 
-      <div className='my-20 flex flex-wrap justify-center gap-10'>
+      <div className='my-20 flex flex-wrap justify-center md:justify-start gap-10'>
         {skills?.map((skill, index) => (
           <ServiceCard key={skill} index={index} title={skill}/>
         ))}
