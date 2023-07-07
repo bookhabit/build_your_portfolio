@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@react-spring/parallax": "^9.7.3",
+    "@react-three/drei": "^9.78.1",
+    "@react-three/fiber": "^8.13.4",
     "@types/react-router-dom": "^5.3.3",
+    "@types/three": "^0.153.0",
     "axios": "^1.4.0",
     "gsap": "^3.12.1",
     "react": "^18.2.0",
@@ -19,7 +22,8 @@
     "react-router-dom": "^6.12.1",
     "react-scroll": "^1.8.9",
     "react-use": "^17.4.0",
-    "tailwind-styled-components": "^2.2.0"
+    "tailwind-styled-components": "^2.2.0",
+    "three": "^0.154.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
