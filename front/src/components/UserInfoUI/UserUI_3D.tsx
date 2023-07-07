@@ -6,6 +6,7 @@ import About from "./user3d/About";
 import { motion } from 'framer-motion';
 import { staggerContainer } from "../utils/motion";
 import Experience from "./user3d/Experience";
+import Projects from "./user3d/Projects";
 
 export const styles = {
     paddingX: "sm:px-16 px-6",
@@ -69,12 +70,15 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 <Experience careers={user?.userResumeDoc?.career} activities={user?.userResumeDoc?.acitivity} />
                 
                 {/* 페이지4 -about >> 기술스택 + 자격증 */}
-                {user?.userResumeDoc?.technology && <About skills={user?.userResumeDoc?.technology} title={"Skills"} />}
+                {user?.userResumeDoc?.technology 
+                && <About skills={user?.userResumeDoc?.technology} title={"Skills"} />}
+                
                 {user?.userResumeDoc?.certification && <About skills={user?.userResumeDoc?.certification} title={"Certification"} />}
 
                 {/* 페이지5 -projects >> 포트폴리오 소개 카드  */}
+                <Projects portfolios={user?.userPortfolio}/>
 
-                {/* Contack >> 연락처  */}
+                {/* Contact >> 연락처  */}
             </motion.section>
         </div>
     );
