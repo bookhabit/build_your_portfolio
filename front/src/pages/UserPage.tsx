@@ -20,12 +20,12 @@ const UserPage = () => {
     },[])
     console.log('user',userInfo)
     return (
-        <div className='flex items-center justify-center px-0 xl:px-80 py-20'>
+        <section>
             {userInfo?.selectedUserUI==="A" && <UserInfoBasic user={userInfo}  />}
             {userInfo?.selectedUserUI==="B" && <UserScrollParallaxUI user={userInfo}  />}
             {userInfo?.selectedUserUI==="C" && <UserSlideUI user={userInfo}  />}
             {userInfo?.selectedUserUI==="D" && <UserUI_3D user={userInfo}  />}
-        </div>
+        </section>
     );
 };
 

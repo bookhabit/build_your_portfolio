@@ -21,6 +21,10 @@ export default function ProfilePage() {
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
 
+    useEffect(()=>{
+      setSelectedUserUI(user?.selectedUserUI as SelectedUI)
+    },[])
+
     const onChangeInput = async (event:InputChangeEvent)=>{
         if(event.target.name==="selectedUI"){
             setSelectedUserUI(event.target.value as SelectedUI);
@@ -83,56 +87,58 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className='flex flex-col items-center justify-center px-0 xl:px-80 py-20 '>
+        <div>
             {/* user가 선택한 UI 대로 user페이지 렌더링 - 기본값 A  */}
             {user?.selectedUserUI==="A" && <UserInfoBasic user={user}  />}
             {user?.selectedUserUI==="B" && <UserScrollParallaxUI user={user}  />}
             {user?.selectedUserUI==="C" && <UserSlideUI user={user}  />}
             {user?.selectedUserUI==="D" && <UserUI_3D user={user}  />}
             {/* user UI 변경하는 section */}
-            <div className="border-t-2 w-full pt-20 mt-20 text-center">
-              <h1 className="text-2xl text-gray-400">메인페이지 UI 변경하기</h1>
-            </div>
-            <section className="flex flex-col gap-8 justify-evenly md:flex-row h-full my-20">
-                {userUIradio.map((kind)=>(
-                    <label
-                      key={kind.name}
-                      className={`relative p-2 font-bold cursor-pointer text-2xl flex flex-col items-center justify-center gap-5 ${
-                          selectedUserUI === kind.name ? 'text-category_select' : '' 
-                      }`}
-                    >
-                    <input
-                      type="radio"
-                      value={kind.name}
-                      name="selectedUI"
-                      checked={selectedUserUI === kind.name}
-                      onChange={onChangeInput}
-                      className="hidden"
-                    />
-                    {kind.name}
-                    <div className="w-52 h-52 rounded-full overflow-hidden">
-                      <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
-                    </div>
-                    <img 
-                    src={PreviewIcon} 
-                    alt="이미지 확대"  
-                    className="absolute right-0 bottom-12"
-                    onClick={()=>{
-                        setShowPreview(true)
-                        setShowPreviewSrc(kind.src)
-                    }}
-                    />
-                    {kind.desc}
-                    </label>
-                ))}
-            </section>
-            <div className="flex w-full justify-between my-8">
-                <button className="bg-blue-200 w-52 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100">
-                    포트폴리오 등록하러 가기
-                </button>
-                <button onClick={logout} className="bg-blue-200 w-28 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100">
-                    로그아웃
-                </button>
+            <div className="flex flex-col items-center justify-center px-0 xl:px-80 py-20 ">
+              <div className="border-t-2 w-full pt-20 mt-20 text-center">
+                <h1 className="text-2xl text-gray-400">메인페이지 UI 변경하기</h1>
+              </div>
+              <section className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 gap-8 justify-evenly h-full my-20">
+                  {userUIradio.map((kind)=>(
+                      <label
+                        key={kind.name}
+                        className={`relative p-2 font-bold cursor-pointer text-2xl flex flex-col items-center justify-center gap-5 ${
+                            selectedUserUI === kind.name ? 'text-category_select' : '' 
+                        }`}
+                      >
+                      <input
+                        type="radio"
+                        value={kind.name}
+                        name="selectedUI"
+                        checked={selectedUserUI === kind.name}
+                        onChange={onChangeInput}
+                        className="hidden"
+                      />
+                      {kind.name}
+                      <div className="w-52 h-52 rounded-full overflow-hidden">
+                        <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
+                      </div>
+                      <img 
+                      src={PreviewIcon} 
+                      alt="이미지 확대"  
+                      className="absolute right-0 bottom-12"
+                      onClick={()=>{
+                          setShowPreview(true)
+                          setShowPreviewSrc(kind.src)
+                      }}
+                      />
+                      {kind.desc}
+                      </label>
+                  ))}
+              </section>
+              <div className="flex w-full justify-between my-8">
+                  <button className="bg-blue-200 w-52 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100">
+                      포트폴리오 등록하러 가기
+                  </button>
+                  <button onClick={logout} className="bg-blue-200 w-28 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100">
+                      로그아웃
+                  </button>
+              </div>
             </div>
         </div>
   );

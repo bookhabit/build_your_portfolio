@@ -128,159 +128,161 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
         );
       }
     return (
-        <div className="w-full">
-            <div className="profile-div w-full bg-UI_user_profile_bg px-6 py-16">
-                <div className="profile-card p-5">
-                    <div className="profile-header relative">
-                        <div className="left">
-                            <h2 className={titleCard()}>{user?.name}</h2>
-                            <p className="my-5 w-2/3 font-bold text-2xl">'{user?.userResumeDoc?.myselfSentence}'</p>
-                            <div className="flex items-center my-6 flex-wrap gap-2">
-                                <img src={computerIcon} alt="컴퓨터아이콘"/>
-                                <p className={" font-bold "}>개발을 하는 이유 :</p>
-                                <p className="font-bold text-lg">{user?.userResumeDoc?.reasonForCoding}</p>
+        <div className="flex flex-col items-center justify-center px-0 xl:px-80 py-20 ">
+            <div className="w-full">
+                <div className="profile-div w-full bg-UI_user_profile_bg px-6 py-16">
+                    <div className="profile-card p-5">
+                        <div className="profile-header relative">
+                            <div className="left">
+                                <h2 className={titleCard()}>{user?.name}</h2>
+                                <p className="my-5 w-2/3 font-bold text-2xl">'{user?.userResumeDoc?.myselfSentence}'</p>
+                                <div className="flex items-center my-6 flex-wrap gap-2">
+                                    <img src={computerIcon} alt="컴퓨터아이콘"/>
+                                    <p className={" font-bold "}>개발을 하는 이유 :</p>
+                                    <p className="font-bold text-lg">{user?.userResumeDoc?.reasonForCoding}</p>
+                                </div>
+                            </div>
+                            <div className="relative right-0 top-0 lg:absolute flex flex-col gap-3 items-center">
+                                <img className="w-72 h-72 bg-slate-50" src={user?.profileImg ? 'http://localhost:4000/uploads/'+user.profileImg : defaultProfileImg} alt="테스트"/>
+                                {isAuthor?
+                                <p className="cursor-pointer text-md text-gray-400 hover:text-zinc-300" onClick={()=>setShowUpdateProfile(!showUpdateProfile)}>
+                                    프로필 이미지 수정하기
+                                </p> 
+                                :null}
+                                {showUpdateProfile && 
+                                <div className="flex gap-5">
+                                    <label className="h-32 cursor-pointer flex items-center gap-1 justify-center border border-gray-500 bg-transparent rounded-2xl p-2 text-2xl text-gray-600 hover:bg-gray-300">
+                                    <input onChange={uploadPhoto} type="file" multiple className="hidden" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                                    </svg>
+                                        Upload
+                                    </label>
+                                    {profileImg && 
+                                        <img className="w-32 h-32" src={'http://localhost:4000/uploads/'+profileImg} alt="선택한 이미지"/>
+                                    }
+                                    <button className="p-3 w-32 h-32 hover:bg-gray-300 bg-slate-100" onClick={updateProfileImg}>수정완료</button>
+                                </div>
+                                }
                             </div>
                         </div>
-                        <div className="relative right-0 top-0 lg:absolute flex flex-col gap-3 items-center">
-                            <img className="w-72 h-72 bg-slate-50" src={user?.profileImg ? 'http://localhost:4000/uploads/'+user.profileImg : defaultProfileImg} alt="테스트"/>
-                            {isAuthor?
-                            <p className="cursor-pointer text-md text-gray-400 hover:text-zinc-300" onClick={()=>setShowUpdateProfile(!showUpdateProfile)}>
-                                프로필 이미지 수정하기
-                            </p> 
-                            :null}
-                            {showUpdateProfile && 
-                            <div className="flex gap-5">
-                                <label className="h-32 cursor-pointer flex items-center gap-1 justify-center border border-gray-500 bg-transparent rounded-2xl p-2 text-2xl text-gray-600 hover:bg-gray-300">
-                                <input onChange={uploadPhoto} type="file" multiple className="hidden" />
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
-                                </svg>
-                                    Upload
-                                </label>
-                                {profileImg && 
-                                    <img className="w-32 h-32" src={'http://localhost:4000/uploads/'+profileImg} alt="선택한 이미지"/>
-                                }
-                                <button className="p-3 w-32 h-32 hover:bg-gray-300 bg-slate-100" onClick={updateProfileImg}>수정완료</button>
+                        <div className={"my-10"}>
+                            <h3 className={subTitleText()}>Contact</h3>
+                            <div className={flexRowInfo()}>
+                                <img src={emailIcon} alt="이메일 아이콘"/>
+                                <p className={"mx-2"}>{"email : "}</p>
+                                <p>{user?.email}</p>
                             </div>
+                            <div className={flexRowInfo()}>
+                                <img src={phoneIcon} alt="전화번호 아이콘"/>
+                                <p className={"mx-2"}>{"phone : "}</p>
+                                <p>{user?.userResumeDoc?.phone}</p>
+                            </div>
+                        </div>
+                        <div className={"my-10"}>
+                            <h3 className={subTitleText()}>Channel</h3>
+                            {user?.userResumeDoc?.channel.map((channel)=>(
+                                <div className={flexRowInfo()} key={channel.channelURL}>
+                                    <img src={linkIcon} alt="이메일 아이콘"/>
+                                    <p className={"mx-2"}>{channel.channelName} :</p>
+                                    <p>{channel.channelURL}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={"my-10"}>
+                            <h3 className={subTitleText()}>Skills</h3>
+                            <ShowArray>
+                                {user?.userResumeDoc?.technology.map((skill)=>(
+                                    <TechBorder key={skill} sort="UI" techName={skill}/>
+                                ))}
+                            </ShowArray>
+                        </div>
+                    </div>
+                </div>
+                <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96 md:gap-0">
+                    <div className="resume-div w-full bg-resume_card_BG p-5 min-h-full border-r-2">
+                        <div className="flex justify-between">
+                            <h2 className={titleCard()}>이력서</h2>
+                            {isAuthor ? 
+                            <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
+                                수정하기
+                            </span> :
+                            <span className="cursor-pointer" onClick={()=>setShowResumeCard(true)}>
+                                펼쳐보기
+                            </span>}
+                        </div>
+                        {userResume ? 
+                        <div className="content mt-5">
+                            <div className={flexRowInfo()+" gap-2"}>
+                                <p>학력 :</p>
+                                <p>{user?.userResumeDoc?.finalEducation}</p>
+                            </div>
+                            <div className={flexRowInfo()+" gap-2"}>
+                                <p>생년월일 :</p>
+                                <p>{user?.userResumeDoc?.birth}</p>
+                            </div>
+                            <div className="p-3">
+                                <p>자격증</p>
+                                {user?.userResumeDoc?.certification.map((name,index)=>(
+                                <div key={index} className="ml-4 mt-2">
+                                    {index+1}. {name}
+                                </div>  
+                                ))}
+                            </div>
+                            <div className="p-3">
+                                <p>대외활동</p>
+                                {user?.userResumeDoc?.acitivity.map((activity,index)=>(
+                                <div key={index} className="ml-4 mt-2">
+                                    {index+1}. {activity.activityName} - {activity.period}
+                                </div>  
+                                ))}
+                            </div>
+                        </div>
+                        :
+                        <p className="mt-10 cursor-pointer text-center" onClick={()=>router("/resume/create")}>
+                            이력서를 작성해주세요
+                        </p>}
+                    </div>
+                    <div className="coverLetter-div w-full bg-resume_card_BG bg-bl p-5 h-full">
+                        <div className="flex justify-between">
+                            <h2 className={titleCard()}>자기소개서</h2>
+                            {isAuthor ? 
+                            <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
+                                수정하기
+                            </span> :
+                            <span className="cursor-pointer" onClick={()=>setShowCoverLetter(true)}>펼쳐보기</span>
                             }
                         </div>
-                    </div>
-                    <div className={"my-10"}>
-                        <h3 className={subTitleText()}>Contact</h3>
-                        <div className={flexRowInfo()}>
-                            <img src={emailIcon} alt="이메일 아이콘"/>
-                            <p className={"mx-2"}>{"email : "}</p>
-                            <p>{user?.email}</p>
+            
+                        {/* 글자수 제한으로 미리보기로 냅두고 펼쳐보기로 전체보여주기 */}
+                        {user?.userResumeDoc?.coverLetter ? 
+                        <div className="content py-5">
+                                <p className="text-base leading-10">
+                                    {user?.userResumeDoc?.coverLetter}
+                                </p>
                         </div>
-                        <div className={flexRowInfo()}>
-                            <img src={phoneIcon} alt="전화번호 아이콘"/>
-                            <p className={"mx-2"}>{"phone : "}</p>
-                            <p>{user?.userResumeDoc?.phone}</p>
-                        </div>
-                    </div>
-                    <div className={"my-10"}>
-                        <h3 className={subTitleText()}>Channel</h3>
-                        {user?.userResumeDoc?.channel.map((channel)=>(
-                            <div className={flexRowInfo()} key={channel.channelURL}>
-                                <img src={linkIcon} alt="이메일 아이콘"/>
-                                <p className={"mx-2"}>{channel.channelName} :</p>
-                                <p>{channel.channelURL}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <div className={"my-10"}>
-                        <h3 className={subTitleText()}>Skills</h3>
-                        <ShowArray>
-                            {user?.userResumeDoc?.technology.map((skill)=>(
-                                <TechBorder key={skill} sort="UI" techName={skill}/>
-                            ))}
-                        </ShowArray>
+                        :
+                        <p className="mt-10 cursor-pointer text-center" onClick={()=>router("/resume/create")}>
+                            자기소개서를 작성해주세요
+                        </p>
+                        }
                     </div>
                 </div>
-            </div>
-            <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96 md:gap-0">
-                <div className="resume-div w-full bg-resume_card_BG p-5 min-h-full border-r-2">
-                    <div className="flex justify-between">
-                        <h2 className={titleCard()}>이력서</h2>
-                        {isAuthor ? 
-                        <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
-                            수정하기
-                        </span> :
-                        <span className="cursor-pointer" onClick={()=>setShowResumeCard(true)}>
-                            펼쳐보기
-                        </span>}
-                    </div>
-                    {userResume ? 
-                    <div className="content mt-5">
-                        <div className={flexRowInfo()+" gap-2"}>
-                            <p>학력 :</p>
-                            <p>{user?.userResumeDoc?.finalEducation}</p>
+                <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36">
+                        <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
+                        <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
+                            {user?.userPortfolio?.length===0 && <p>포트폴리오를 등록해주세요</p>}
+                            {clonePortfolios && clonePortfolios?.length>0 &&
+                                <PortfolioCategory categoryName="클론코딩" portfolio={clonePortfolios}/>
+                            }
+                            {individualPortfolios && individualPortfolios?.length>0 &&
+                                <PortfolioCategory categoryName="개인프로젝트" portfolio={individualPortfolios}/>
+                            }
+                            {cooperationPortfolios && cooperationPortfolios?.length>0 &&
+                                <PortfolioCategory categoryName="협업프로젝트" portfolio={cooperationPortfolios}/>
+                            }
                         </div>
-                        <div className={flexRowInfo()+" gap-2"}>
-                            <p>생년월일 :</p>
-                            <p>{user?.userResumeDoc?.birth}</p>
-                        </div>
-                        <div className="p-3">
-                            <p>자격증</p>
-                            {user?.userResumeDoc?.certification.map((name,index)=>(
-                            <div key={index} className="ml-4 mt-2">
-                                {index+1}. {name}
-                            </div>  
-                            ))}
-                        </div>
-                        <div className="p-3">
-                            <p>대외활동</p>
-                            {user?.userResumeDoc?.acitivity.map((activity,index)=>(
-                            <div key={index} className="ml-4 mt-2">
-                                {index+1}. {activity.activityName} - {activity.period}
-                            </div>  
-                            ))}
-                        </div>
-                    </div>
-                    :
-                    <p className="mt-10 cursor-pointer text-center" onClick={()=>router("/resume/create")}>
-                        이력서를 작성해주세요
-                    </p>}
                 </div>
-                <div className="coverLetter-div w-full bg-resume_card_BG bg-bl p-5 h-full">
-                    <div className="flex justify-between">
-                        <h2 className={titleCard()}>자기소개서</h2>
-                        {isAuthor ? 
-                        <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
-                            수정하기
-                        </span> :
-                        <span className="cursor-pointer" onClick={()=>setShowCoverLetter(true)}>펼쳐보기</span>
-                        }
-                    </div>
-        
-                    {/* 글자수 제한으로 미리보기로 냅두고 펼쳐보기로 전체보여주기 */}
-                    {user?.userResumeDoc?.coverLetter ? 
-                    <div className="content py-5">
-                            <p className="text-base leading-10">
-                                {user?.userResumeDoc?.coverLetter}
-                            </p>
-                    </div>
-                    :
-                    <p className="mt-10 cursor-pointer text-center" onClick={()=>router("/resume/create")}>
-                        자기소개서를 작성해주세요
-                    </p>
-                    }
-                </div>
-            </div>
-            <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36">
-                    <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
-                    <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
-                        {user?.userPortfolio?.length===0 && <p>포트폴리오를 등록해주세요</p>}
-                        {clonePortfolios && clonePortfolios?.length>0 &&
-                            <PortfolioCategory categoryName="클론코딩" portfolio={clonePortfolios}/>
-                        }
-                        {individualPortfolios && individualPortfolios?.length>0 &&
-                            <PortfolioCategory categoryName="개인프로젝트" portfolio={individualPortfolios}/>
-                        }
-                        {cooperationPortfolios && cooperationPortfolios?.length>0 &&
-                            <PortfolioCategory categoryName="협업프로젝트" portfolio={cooperationPortfolios}/>
-                        }
-                    </div>
             </div>
         </div>
     );
