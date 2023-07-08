@@ -108,7 +108,7 @@ const Experience = ({careers,activities}:ExperienceProps) => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <h2 className={`${styles.sectionHeadText} text-center`}>
+        <h2 className={`${styles.sectionHeadText}`}>
           경력사항
         </h2>
       </motion.div>
@@ -125,7 +125,7 @@ const Experience = ({careers,activities}:ExperienceProps) => {
       </div>
 
       <motion.div variants={textVariant()} className="mt-40">
-        <h2 className={`${styles.sectionHeadText} text-center`}>
+        <h2 className={`${styles.sectionHeadText}`}>
           대외활동
         </h2>
       </motion.div>
