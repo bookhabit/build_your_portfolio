@@ -128,9 +128,9 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
         );
       }
     return (
-        <div className="flex flex-col items-center justify-center px-0 xl:px-80">
+        <div className="flex flex-col items-center justify-center px-0 xl:px-80 bg-UI_user_profile_bg py-10">
             <div className="w-full">
-                <div className="profile-div w-full bg-UI_user_profile_bg px-6 py-16">
+                <div className="profile-div w-full  px-6 py-16 shadow-xl">
                     <div className="profile-card p-5">
                         <div className="profile-header relative">
                             <div className="left">
@@ -200,7 +200,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                     </div>
                 </div>
                 <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96 md:gap-0">
-                    <div className="resume-div w-full bg-resume_card_BG p-5 min-h-full border-r-2">
+                    <div className="resume-div w-full shadow-xl bg-resume_card_BG p-5 min-h-full border-r-2">
                         <div className="flex justify-between">
                             <h2 className={titleCard()}>이력서</h2>
                             {isAuthor ? 
@@ -243,7 +243,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                             이력서를 작성해주세요
                         </p>}
                     </div>
-                    <div className="coverLetter-div w-full bg-resume_card_BG bg-bl p-5 h-full">
+                    <div className="coverLetter-div w-full shadow-xl bg-resume_card_BG bg-bl p-5 h-full">
                         <div className="flex justify-between">
                             <h2 className={titleCard()}>자기소개서</h2>
                             {isAuthor ? 
@@ -268,7 +268,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                         }
                     </div>
                 </div>
-                <div className="portfolio-div w-full bg-UI_portfolio_card_bg flex flex-col items-center pt-16 pb-36">
+                <div className="portfolio-div w-full  flex flex-col items-center pt-16 pb-36 shadow-xl">
                         <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
                         <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
                             {user?.userPortfolio?.length===0 && <p>포트폴리오를 등록해주세요</p>}

@@ -82,7 +82,7 @@ export default function ProfilePage() {
             {user?.selectedUserUI==="Basic" && <UserInfoBasic user={user}  />}
             {user?.selectedUserUI==="3D" && <UserUI_3D user={user}  />}
             {/* user UI 변경하는 section */}
-            <div className={`flex flex-col items-center justify-center px-0 xl:px-80 ${selectedUserUI==="3D" ? 'bg-black' : 'bg-inherit'}`}>
+            <div className={`flex flex-col items-center justify-center px-0 xl:px-80 ${selectedUserUI==="3D" ? 'bg-black' : 'bg-UI_user_profile_bg'}`}>
               <div className="w-full pt-20 text-center">
                 <h1 className={`md:text-[50px] sm:text-[40px] xs:text-[30px] text-[20px]  ${selectedUserUI==="3D" ? 'text-white' : 'text-gray-400'}`}>메인페이지 디자인 변경하기</h1>
               </div>
