@@ -6,6 +6,7 @@ import { fadeIn, textVariant } from "../../utils/motion";
 import { PortfolioType } from "../../../Types/PortfolioType";
 import githubImg from "../../../assets/github.png";
 import ImageUI from "../../common/ImageUI";
+import { useNavigate } from "react-router";
 
 type ProjectCardType= {
   portfolio:PortfolioType,
@@ -13,6 +14,7 @@ type ProjectCardType= {
 }
 
 const ProjectCard = ({ portfolio, index }:ProjectCardType) => {
+  const router = useNavigate();
   function truncateText(text: string): string {
     if (text.length <= 80) {
       return text;
@@ -30,7 +32,7 @@ const ProjectCard = ({ portfolio, index }:ProjectCardType) => {
         }}
         className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
       >
-        <div className='relative w-full h-[230px]'>
+        <div className='relative w-full h-[230px] cursor-pointer' onClick={()=>router(`/portfolio/${portfolio._id}`)}>
           {portfolio.photos[0] && 
             <ImageUI
               src={portfolio.photos[0]}

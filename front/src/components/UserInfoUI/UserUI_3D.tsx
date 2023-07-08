@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { staggerContainer } from "../utils/motion";
 import Experience from "./user3d/Experience";
 import Projects from "./user3d/Projects";
+import CoverLetter from "./user3d/CoverLetter";
 
 export const styles = {
     paddingX: "sm:px-16 px-6",
@@ -27,6 +28,7 @@ export const styles = {
 
 const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
     const router = useNavigate();
+    console.log(user)
     return (
         <div className='relative z-0 bg-black'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
@@ -65,7 +67,12 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
             >
                 {/* 페이지2 -Testimonials>> 학력,생년월일 
                     자기소개  */}
-
+                <CoverLetter 
+                    education={user?.userResumeDoc?.finalEducation}
+                    birth={user?.userResumeDoc?.birth}
+                    introduceMyself={user?.userResumeDoc?.coverLetter}
+                    profileImg={user?.profileImg}
+                    />
                 {/* 페이지3 -work Timeline >> 자격증,대외활동,경력  */}
                 <Experience careers={user?.userResumeDoc?.career} activities={user?.userResumeDoc?.acitivity} />
                 
