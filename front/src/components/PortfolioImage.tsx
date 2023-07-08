@@ -4,16 +4,7 @@ import { PortfolioType } from "../Types/PortfolioType";
 
 const PortfolioImage = ({portfolio}:{portfolio:PortfolioType}) => {
     const router = useNavigate();
-    const importantPhoto = portfolio.important_functions
-    const imgFilter = ()=>{
-        if(portfolio.photos[0]){
-            return portfolio.photos[0]
-        }else if(importantPhoto){
-            return importantPhoto[0].important_function_photo[0]
-        }else{
-            return "https://papatalabs.com/files/template/a8e3786adf9f6e43e63010b4f3168b86.png"
-        }
-    }
+    
     return (
         <div className="flex flex-col items-center justify-center gap-5 " key={portfolio._id} onClick={()=>router(`/portfolio/${portfolio._id}`)}>
             {portfolio.photos[0] ? 

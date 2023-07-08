@@ -6,7 +6,6 @@ import {staggerContainer } from "../utils/motion";
 import Experience from "./user3d/Experience";
 import Projects from "./user3d/Projects";
 import ImageUI from "../common/ImageUI";
-import linkIcon from "../../assets/resume/linkIcon.svg"
 
 export const styles = {
     paddingX: "sm:px-16 px-6",
@@ -57,8 +56,8 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
             </div>
             {/* 페이지2 -Testimonials>> 학력,생년월일 
                     자기소개  */}
-            <div className={'mt-40 mb-20 flex flex-col gap-8 w-full items-center'}>
-                <h2 className={`${styles.sectionHeadText} text-center`}>
+            <div className={'sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
+                <h2 className={`${styles.sectionHeadText} mb-10`}>
                     자기소개
                 </h2>
                 <div className='bg-tertiary p-5 rounded-2xl sm:w-[660px] h-full w-full'>
@@ -72,9 +71,9 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                         </div>
 
                         <div className='mt-5 w-1/2'>
-                            <h3 className='text-white font-bold text-[24px]'>{user?.userResumeDoc?.finalEducation}</h3>
+                            <h3 className='text-white font-bold text-[20px]'>{user?.userResumeDoc?.finalEducation}</h3>
                             <p className='mt-2 text-secondary text-[14px]'>{user?.userResumeDoc?.birth}</p>
-                            <p className='mt-2 text-secondary text-[14px]'>{user?.userResumeDoc?.coverLetter}</p>
+                            <p className='mt-2 text-secondary text-[18px]'>{user?.userResumeDoc?.coverLetter}</p>
                         </div>
                 </div>
 
@@ -85,7 +84,6 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 whileInView='show'
                 viewport={{ once: true, amount: 0.25 }}
                 className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
-            
             >
                 
                 {/* 페이지3 -work Timeline >> 자격증,대외활동,경력  */}
@@ -107,8 +105,8 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 <Projects portfolios={user?.userPortfolio}/>
             </motion.section>
             {/* Contact >> 연락처  */}
-            <div className={'mt-20 pb-40 flex flex-col gap-8 w-full items-center'}>
-                <h2 className={`${styles.sectionHeadText} text-center`}>
+            <div className={'pb-40 sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
+                <h2 className={`${styles.sectionHeadText} mb-10`}>
                     Contact
                 </h2>
                 <div className='bg-tertiary p-10 rounded-2xl sm:w-[660px] h-full w-full'>
@@ -128,8 +126,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                         <span className='text-white font-medium mb-4'>Your Channel</span>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p> 
                             {user?.userResumeDoc?.channel.map((channel)=>(
-                                    <div className={"flex items-center ml-2 my-2"} key={channel.channelURL}>
-                                        <img src={linkIcon} alt="이메일 아이콘" />
+                                    <div className={"flex items-center my-2"} key={channel.channelURL}>
                                         <p className={"mx-2"}>{channel.channelName} :</p>
                                         <p>{channel.channelURL}</p>
                                     </div>
