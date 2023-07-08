@@ -15,7 +15,7 @@ export type UserTokenDataType = {
 }
 
 export type UserProfileType = {
-    selectedUserUI:SelectedUI
+    selectedUserUI:"Basic"|"3D"
     email:string;
     name:string;
     _id:String;

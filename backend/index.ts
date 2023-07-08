@@ -122,6 +122,7 @@ app.get('/user/:id', async (req:Request,res:Response) => {
         email:userDoc.email,
         name:userDoc.name,
         _id:userDoc._id,
+        profileImg:userDoc.profileImg,
         userResumeDoc:userResumeDoc,
         userPortfolio:userPortfolioDoc,
       }

@@ -16,7 +16,7 @@ export type UserProfileType = {
 }
 
 export type UserInfoType = {
-    selectedUserUI:SelectedUI
+    selectedUserUI:userUI
     email:string;
     name:string;
     _id:String;
@@ -24,3 +24,5 @@ export type UserInfoType = {
     userPortfolio:PortfolioType[]|null
     profileImg?:string;
 }
+
+export type userUI = "Basic" | "3D"

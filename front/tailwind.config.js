@@ -9,7 +9,7 @@ export default {
       backgroundImage:{
         'codingMan':"url('/coding.jpg')",
         'code':"url('/code.webp')",
-        "user3dBG": "url('/user3dBG.png')",
+        "user3dBG": "url('/public/user3dBG.png')",
       },
       boxShadow: {
         '2xl': '0 10px 15px 2px rgba(0, 0, 0, 0.5)',

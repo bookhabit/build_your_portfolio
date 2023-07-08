@@ -6,28 +6,26 @@ import { SelectedUI } from "../Types/PortfolioType";
 import UserInfoBasic from "../components/UserInfoUI/UserInfoBasic";
 import { InputChangeEvent } from "../elements/Input";
 import PreviewIcon from "../assets/portfolio/imgPreview.svg"
-import UserScrollParallaxUI from "../components/UserInfoUI/UserScrollParallaxUI";
-import UserSlideUI from "../components/UserInfoUI/UserSlideUI";
 import UserUI_3D from "../components/UserInfoUI/UserUI_3D";
-import { UserInfoType } from "../Types/userType";
+import { UserInfoType, userUI } from "../Types/userType";
 // import ImageUI from "../components/common/ImageUI";
 
 export default function ProfilePage() {
     const {user,setUser} = useContext(UserContext)
     const router = useNavigate();
-    const [selectedUserUI,setSelectedUserUI] = useState<SelectedUI>(user?.selectedUserUI ? user.selectedUserUI : "A" );
+    const [selectedUserUI,setSelectedUserUI] = useState<userUI>(user?.selectedUserUI ? user.selectedUserUI : "Basic" );
     
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
 
     useEffect(()=>{
-      setSelectedUserUI(user?.selectedUserUI as SelectedUI)
+      setSelectedUserUI(user?.selectedUserUI as userUI)
     },[])
 
     const onChangeInput = async (event:InputChangeEvent)=>{
         if(event.target.name==="selectedUI"){
-            setSelectedUserUI(event.target.value as SelectedUI);
+            setSelectedUserUI(event.target.value as userUI);
             const response = await axios.put('/user-ui',{selectedUserUI:event.target.value})
             if(response.status===200){
               axios.get('/profile')
@@ -41,20 +39,12 @@ export default function ProfilePage() {
 
     // 나중에 userUI로 캡쳐해서 이미지 src 바꾸기
     const userUIradio = [{
-        name:"A",
-        desc:"Basic",
+        name:"Basic",
+        desc:"기본",
         src:"https://file.miricanvas.com/template_thumb/2022/09/19/21/00/k2oejh1gzpx67va3/thumb.jpg"
-      } , {
-        name:"B",
-        desc:"Scroll Parallax",
-        src:"https://file.miricanvas.com/template_thumb/2022/10/05/12/10/kchzz44ut2gqscd2/thumb.jpg"
-      } , {
-        name:"C",
-        desc:"Slide-UI",
-        src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
-      },{
-        name:"D",
-        desc:"3D-UI",
+      } ,{
+        name:"3D",
+        desc:"3D와 애니메이션",
         src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
       }]
 
@@ -89,16 +79,14 @@ export default function ProfilePage() {
     return (
         <div>
             {/* user가 선택한 UI 대로 user페이지 렌더링 - 기본값 A  */}
-            {user?.selectedUserUI==="A" && <UserInfoBasic user={user}  />}
-            {user?.selectedUserUI==="B" && <UserScrollParallaxUI user={user}  />}
-            {user?.selectedUserUI==="C" && <UserSlideUI user={user}  />}
-            {user?.selectedUserUI==="D" && <UserUI_3D user={user}  />}
+            {user?.selectedUserUI==="Basic" && <UserInfoBasic user={user}  />}
+            {user?.selectedUserUI==="3D" && <UserUI_3D user={user}  />}
             {/* user UI 변경하는 section */}
-            <div className="flex flex-col items-center justify-center px-0 xl:px-80 py-20 ">
-              <div className="border-t-2 w-full pt-20 mt-20 text-center">
-                <h1 className="text-2xl text-gray-400">메인페이지 UI 변경하기</h1>
+            <div className={`flex flex-col items-center justify-center px-0 xl:px-80 ${selectedUserUI==="3D" ? 'bg-black' : 'bg-inherit'}`}>
+              <div className="w-full pt-20 text-center">
+                <h1 className={`md:text-[50px] sm:text-[40px] xs:text-[30px] text-[20px]  ${selectedUserUI==="3D" ? 'text-white' : 'text-gray-400'}`}>메인페이지 디자인 변경하기</h1>
               </div>
-              <section className="grid grid-cols-1 lg:grid-cols-4 sm:grid-cols-2 gap-8 justify-evenly h-full my-20">
+              <section className={`flex flex-wrap justify-center gap-10 h-full my-20 ${selectedUserUI==="3D" ? 'text-white' :'text-black'}`}>
                   {userUIradio.map((kind)=>(
                       <label
                         key={kind.name}
@@ -132,10 +120,14 @@ export default function ProfilePage() {
                   ))}
               </section>
               <div className="flex w-full justify-between my-8">
-                  <button className="bg-blue-200 w-52 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100">
+                  <button className={` w-52 px-5 py-2 text-sm font-bold rounded-lg 
+                  ${selectedUserUI==="3D" ? 'bg-tertiary hover:bg-purple-600 text-white' :'bg-blue-200 hover:bg-blue-100 '}
+                  `}>
                       포트폴리오 등록하러 가기
                   </button>
-                  <button onClick={logout} className="bg-blue-200 w-28 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100">
+                  <button onClick={logout} className={`bg-blue-200 w-28 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100
+                  ${selectedUserUI==="3D" ? 'bg-tertiary hover:bg-purple-600 text-white' :'bg-blue-200 hover:bg-blue-100 '}
+                  `}>
                       로그아웃
                   </button>
               </div>

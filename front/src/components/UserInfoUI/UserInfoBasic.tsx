@@ -128,7 +128,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
         );
       }
     return (
-        <div className="flex flex-col items-center justify-center px-0 xl:px-80 py-20 ">
+        <div className="flex flex-col items-center justify-center px-0 xl:px-80">
             <div className="w-full">
                 <div className="profile-div w-full bg-UI_user_profile_bg px-6 py-16">
                     <div className="profile-card p-5">
