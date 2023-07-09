@@ -30,7 +30,8 @@ const ShowModal = ({data,sort}:{data:ResumeType|string|undefined|null,sort:"cove
         return "text-base font-bold"
     }
     return (
-        <div className={`relative bg-resume_card_BG shadow-2xl 2xl:w-3/5 lg:w-3/5 md:w-4/5 xs:w-full flex flex-col p-24 items-center justify-center scrollable-container h-96 ${sort==="resume" && "min-h-full"}`}>
+        <div className={`relative bg-resume_card_BG shadow-2xl 2xl:w-3/5 lg:w-3/5 md:w-4/5 xs:w-full flex flex-col p-24 
+        items-center justify-center scrollable-container h-96 ${sort==="resume" && "min-h-full"}`}>
             <h1 className=" text-2xl text-black font-bold text-center mb-16">{sort==="resume"?"이력서":"자기소개서"}</h1>
             {
                 sort==="resume" &&
@@ -79,21 +80,39 @@ const ShowModal = ({data,sort}:{data:ResumeType|string|undefined|null,sort:"cove
                             <Label icon={careerIcon} alt="경력 아이콘" sort="resumeLabel" label="경력" />
                         </div>
                         <div className={dataArrayline()}>
-                            {resumeData?.career.map((career)=>(
-                                <p className={itemFontSize()} key={career.commanyName}>
-                                {career.commanyName+' : '+career.period}
-                              </p>
-                            ))}
+                        {resumeData?.career.map((career)=>(
+                            <div key={career.companyName} className="border flex flex-col gap-3 p-5 rounded-lg w-full">
+                                <p>회사명 : {career.companyName+' : '+career.jobDetail}</p>
+                                <p>기간 : {career.period.start+' : '+career.period.end}</p>
+                                {career.mainTask.map(((task,index)=>(
+                                <div key={index} className="flex flex-wrap items-center">
+                                    <p>주요직무 {index+1} : </p>
+                                    <p key={task} className="p-2">
+                                    {task}
+                                    </p>
+                                </div>
+                                )))}
+                            </div>
+                            ))}   
                         </div>
                         <div className={formItemClassRow()}>
                             <Label icon={CooperationIcon} alt="대외활동 아이콘" sort="resumeLabel" label="대외활동" />
                         </div>
                         <div className={dataArrayline()}>
-                            {resumeData?.acitivity.map((activity)=>(
-                            <p className={itemFontSize()} key={activity.activityName}>
-                                {activity.activityName+' : '+activity.period}
-                              </p>
-                            ))}
+                        {resumeData?.activity.map((activity,index)=>(
+                            <div key={index} className="border flex flex-col gap-3 p-5 rounded-lg w-full">
+                            <p>활동이름 : {activity.activityName}</p>
+                            <p>활동기간 : {activity.period.start+' : '+activity.period.end}</p>
+                                {activity.activity.map(((task,index)=>(
+                                <div key={index} className="flex flex-wrap items-center">
+                                <p>활동내역 {index+1} :</p>
+                                <p key={task} className="p-2">
+                                    {task}
+                                </p>
+                                </div>
+                            )))}
+                            </div>
+                        ))}   
                         </div>
                     </div>
             }

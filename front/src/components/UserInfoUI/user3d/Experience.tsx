@@ -15,21 +15,10 @@ type CareerCardType= {
   career: carrerType 
 }
 
-type AcitivityCardType = {
+type ActivityCardType = {
   activity: activityType 
 }
 
-// 테스트데이터 나중에 바꿔야함
-
-const testCareer = {
-  points: [
-    "Developing and maintaining web applications using React.js and other related technologies.",
-    "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-    "Implementing responsive design and ensuring cross-browser compatibility.",
-    "Participating in code reviews and providing constructive feedback to other developers.",
-  ],
-}
-  
 
 const CareerCard = ({ career }:CareerCardType) => {
   return (
@@ -39,7 +28,7 @@ const CareerCard = ({ career }:CareerCardType) => {
         color: "#fff",
       }}
       contentArrowStyle={{ borderRight: "7px solid  #232631" }}
-      date={career?.period.start+"~"+career?.period.end}
+      date={career?.period.start+" ~ "+career?.period.end}
     >
       <div>
         <h3 className='text-white text-[24px] font-bold mb-3'> {career?.companyName}</h3>
@@ -47,16 +36,16 @@ const CareerCard = ({ career }:CareerCardType) => {
           className='text-secondary text-[16px] font-semibold'
           style={{ margin: 0 }}
         >
-          직무이름 ( 테스트 )
+          {career.jobDetail}
         </p>
 
         <ul className='mt-5 list-disc ml-5 space-y-2'>
-          {testCareer.points.map((point, index) => (
+          {career.mainTask.map((task, index) => (
             <li
-              key={`experience-point-${index}`}
+              key={`experience-task-${index}`}
               className='text-white-100 text-[14px] pl-1 tracking-wider'
             >
-              {point}
+              {task}
             </li>
           ))}
         </ul>
@@ -65,7 +54,8 @@ const CareerCard = ({ career }:CareerCardType) => {
   );
 };
 
-const AcitivityCard = ({ activity }:AcitivityCardType) => {
+const AcitivityCard = ({ activity }:ActivityCardType) => {
+  console.log(activity)
   return (
     <VerticalTimelineElement
       contentStyle={{
@@ -84,12 +74,12 @@ const AcitivityCard = ({ activity }:AcitivityCardType) => {
           활동이력
         </p>
         <ul className='mt-5 list-disc ml-5 space-y-2'>
-          {testCareer.points.map((point, index) => (
+          {activity.activity.map((activity, index) => (
             <li
-              key={`experience-point-${index}`}
+              key={`experience-activity-${index}`}
               className='text-white-100 text-[14px] pl-1 tracking-wider'
             >
-              {point}
+              {activity}
             </li>
           ))}
         </ul>
@@ -105,6 +95,7 @@ type ExperienceProps = {
 };
 
 const Experience = ({careers,activities}:ExperienceProps) => {
+  console.log(activities)
   return (
     <>
       <motion.div variants={textVariant()}>

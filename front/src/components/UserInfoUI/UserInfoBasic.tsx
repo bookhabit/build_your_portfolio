@@ -22,7 +22,6 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
     const [isAuthor,setIsAuthor]=useState<boolean>(false)
     const router = useNavigate();
     const userResume = user?.userResumeDoc as ResumeType
-    
     useEffect(()=>{
         if(user&&loggedUser){
             if(user?._id === loggedUser?._id){
@@ -32,7 +31,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
             }
         }
     },[])
-    console.log(isAuthor ?'이 user정보의 주인입니다' :'이 user정보의 주인이 아닙니다')
+    
     // state
     const [showResumeCard,setShowResumeCard] = useState<boolean>(false)
     const [showCoverLetter,setShowCoverLetter] = useState<boolean>(false)
@@ -199,8 +198,8 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                         </div>
                     </div>
                 </div>
-                <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96 md:gap-0">
-                    <div className="resume-div w-full shadow-xl bg-resume_card_BG p-5 min-h-full border-r-2">
+                <div className="middle-div w-full flex flex-col gap-4 md:flex-row items-center md:h-96 md:gap-0 overflow-hidden">
+                    <div className="resume-div w-full shadow-xl bg-resume_card_BG p-5 h-[400px] border-r-2">
                         <div className="flex justify-between">
                             <h2 className={titleCard()}>이력서</h2>
                             {isAuthor ? 
@@ -232,15 +231,14 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                             <div className="p-3">
                                 <p>대외활동</p>
                                 {user?.userResumeDoc?.activity.map((activity,index)=>(
-                                <div key={index} className="ml-4 mt-2">
-                                    {index+1}. 
-                                    <p>{activity.activityName}</p>
+                                <div key={index} className="ml-4 mt-2 border p-3"> 
+                                    <p>{index+1}.{activity.activityName}</p>
                                     {activity.period.start&&activity.period.end && 
-                                     <p>{activity.period.start}~{activity.period.end}</p>
+                                     <p>{activity.period.start} ~ {activity.period.end}</p>
                                     }
                                      {activity.activity.map((activity,index)=>(
-                                           <div key={index}>
-                                                <p>활동내역 {1}</p>
+                                           <div key={index} className="flex gap-3 items-center">
+                                                <p>활동내역 {index+1}</p>
                                                 <p>{activity}</p>
                                            </div>
                                      ))}
@@ -253,7 +251,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                             이력서를 작성해주세요
                         </p>}
                     </div>
-                    <div className="coverLetter-div w-full shadow-xl bg-resume_card_BG bg-bl p-5 h-full">
+                    <div className="coverLetter-div w-full shadow-xl bg-resume_card_BG bg-bl p-5 h-[400px]">
                         <div className="flex justify-between">
                             <h2 className={titleCard()}>자기소개서</h2>
                             {isAuthor ? 

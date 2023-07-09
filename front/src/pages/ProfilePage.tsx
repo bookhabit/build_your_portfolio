@@ -14,11 +14,10 @@ export default function ProfilePage() {
     const {user,setUser} = useContext(UserContext)
     const router = useNavigate();
     const [selectedUserUI,setSelectedUserUI] = useState<userUI>(user?.selectedUserUI ? user.selectedUserUI : "Basic" );
-    
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
-
+console.log(user)
     useEffect(()=>{
       setSelectedUserUI(user?.selectedUserUI as userUI)
     },[])

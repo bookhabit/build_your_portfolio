@@ -25,6 +25,7 @@ export const styles = {
 
 
 const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
+    console.log('3dui',user)
     return (
         <div className='relative z-0 bg-black'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
@@ -89,7 +90,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 {/* 페이지3 -work Timeline >> 자격증,대외활동,경력  */}
                 <Experience 
                     careers={user?.userResumeDoc?.career} 
-                    activities={user?.userResumeDoc?.acitivity} />
+                    activities={user?.userResumeDoc?.activity} />
                 
                 {/* 페이지4 -about >> 기술스택 + 자격증 */}
                 {user?.userResumeDoc?.technology 
