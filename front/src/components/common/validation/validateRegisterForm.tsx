@@ -1,10 +1,11 @@
 export type ValidationRegisterForm = {
+    nickName:string,
     name:string,
     email:string,
     password:string
   }
 
-function validateRegisterForm(name:string,email:string,password:string,setErrorMessage:React.Dispatch<React.SetStateAction<ValidationRegisterForm>>):boolean {
+function validateRegisterForm(nickName:string,name:string,email:string,password:string,setErrorMessage:React.Dispatch<React.SetStateAction<ValidationRegisterForm>>):boolean {
   // name validation
     // 숫자가 포함되지 않는지 확인하는 정규 표현식
     const nameRegex = /^[^0-9]*$/;
@@ -12,7 +13,14 @@ function validateRegisterForm(name:string,email:string,password:string,setErrorM
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     // 비밀번호를 검증하는 정규 표현식
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{10,}$/;
-
+    
+    if (!nickName) {
+      setErrorMessage((prevState) => ({
+        ...prevState,
+        nickName: "닉네임을 입력해주세요",
+      }));
+      return false
+    }
     if (!name) {
       setErrorMessage((prevState) => ({
         ...prevState,

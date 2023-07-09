@@ -1,4 +1,4 @@
-import { ChannelType, ResumeType, acitivityType, carrerType } from '../../../Types/ResumeType';
+import { ChannelType, ResumeType, activityType, carrerType } from '../../../Types/ResumeType';
 
 export type ValidateResume = {
     name?:string;
@@ -9,7 +9,7 @@ export type ValidateResume = {
     channel:ChannelType; // https://github.com/bookhabit
     technology:string;
     career:carrerType;
-    acitivity:acitivityType;
+    activity:activityType;
     myselfSentence:string;
     reasonForCoding:string;
     coverLetter:string;

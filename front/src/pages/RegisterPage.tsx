@@ -11,12 +11,14 @@ import validateRegisterForm, { ValidationRegisterForm } from "../components/comm
 
 
 export default function ReigsterPage() {
+  const [nickName,setNickName] = useState<string>('');
   const [name,setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [redirect, setRedirect] = useState<boolean>(false);
   const formRef = useRef(null);
   const [errorMessage,setErrorMessage] = useState<ValidationRegisterForm>({
+    nickName:"",
     name:"",
     email:"",
     password:"",
@@ -36,6 +38,12 @@ export default function ReigsterPage() {
       setErrorMessage((prevState) => ({
         ...prevState,
         name: "",
+      }));
+    }else if(event.target.name==="nickName"){
+      setNickName(event.target.value)
+      setErrorMessage((prevState) => ({
+        ...prevState,
+        nickName: "",
       }));
     }else if(event.target.name==="email"){
       setEmail(event.target.value)
@@ -57,10 +65,11 @@ export default function ReigsterPage() {
     event.preventDefault();
     // form요소 유효성 검사
     setValidateMode(true)
-    const validateForm:boolean = validateRegisterForm(name,email,password,setErrorMessage)
+    const validateForm:boolean = validateRegisterForm(nickName,name,email,password,setErrorMessage)
     if(validateForm){
       try{
         const res = await axios.post('/register',{
+          nickName:nickName,
           name:name,
           email:email,
           password:password
@@ -71,13 +80,22 @@ export default function ReigsterPage() {
           setRedirect(true)
         }
       }catch(err:any){
-        if(err.response?.status===409){
+        console.log(err)
+        if(err.response?.status===409&&err.response?.data==="이미 존재하는 닉네임입니다."){
+          setValidateMode(true)
+          setErrorMessage((prevState) => ({
+            ...prevState,
+            nickName: err.response.data
+          }));
+        }
+        if(err.response?.status===409&&err.response?.data==="이미 존재하는 이메일 입니다."){
           setValidateMode(true)
           setErrorMessage((prevState) => ({
             ...prevState,
             email: err.response.data
           }));
-          }else{
+        }
+        else{
             alert('회원가입에 실패하였습니다')
           }
       }
@@ -105,7 +123,18 @@ export default function ReigsterPage() {
         <form ref={formRef} className={`authForm py-12 bg-form_bg shadow-2xl`}>
           <h1 className=" text-4xl font-bold text-center mb-4">Register</h1>
           <div className={`flex flex-col my-12 items-center ${validateMode? "gap-2":"gap-8"}`}>
-              <Input 
+                <Input 
+                    type="text"
+                    placeholder="닉네임을 입력해주세요"
+                    _onChange={onChangeInput}
+                    sort="authInput"
+                    value={nickName}
+                    name="nickName"
+                    isValid={!!errorMessage.nickName}
+                    errorMessage={errorMessage.nickName}
+                    validateMode={validateMode}
+                />
+                <Input 
                     type="text"
                     placeholder="이름을 입력해주세요"
                     _onChange={onChangeInput}

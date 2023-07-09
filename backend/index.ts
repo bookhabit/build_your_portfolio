@@ -35,24 +35,29 @@ connectToMongoDB();
 
 // 회원가입
 app.post('/register', async (req:Request,res:Response) => {
-      const {name,email,password} = req.body;
+      const {nickName,name,email,password} = req.body;
+      console.log(nickName,name,email,password)
       // validation
       const dbEmail=await User.findOne({email:email})
+      const dbNickName = await User.findOne({ nickName: nickName });
+      if (dbNickName?.nickName === nickName) {
+        return res.status(409).json('이미 존재하는 닉네임입니다.');
+      }
       if(dbEmail?.email===email){
         return res.status(409).json('이미 존재하는 이메일 입니다.');
-      }else{
-        try{
-          const userDoc = await User.create({
-            name,
-            email,
-            password:bcrypt.hashSync(password, bcryptSalt),
-            });
-            res.status(200).json({userDoc});
-        }catch(e){
-          res.status(422)
-        }
       }
+      try{
+        const userDoc = await User.create({
+          nickName,
+          name,
+          email,
+          password:bcrypt.hashSync(password, bcryptSalt),
+          });
+          res.status(200).json({userDoc});
+      }catch(e){
+        res.status(422)
       }
+    }
   );
 
 // 로그인
@@ -95,6 +100,7 @@ app.get('/profile', (req:Request,res:Response) => {
 
         const resultUser:UserProfileType = {
           selectedUserUI:userDoc.selectedUserUI,
+          nickName:userDoc.nickName,
           email:userDoc.email,
           name:userDoc.name,
           _id:userDoc._id,
@@ -119,6 +125,7 @@ app.get('/user/:id', async (req:Request,res:Response) => {
 
       const resultUser:UserProfileType = {
         selectedUserUI:userDoc.selectedUserUI,
+        nickName:userDoc.nickName,
         email:userDoc.email,
         name:userDoc.name,
         _id:userDoc._id,

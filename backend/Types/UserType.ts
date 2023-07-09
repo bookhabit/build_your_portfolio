@@ -2,6 +2,7 @@ import { PortfolioType, SelectedUI } from "./PortfolioType";
 import { ResumeType } from "./ResumeType";
 
 export type UserType = {
+    nickName:string;
     email:string;
     password:string;
     name:string;
@@ -15,6 +16,7 @@ export type UserTokenDataType = {
 }
 
 export type UserProfileType = {
+    nickName:string;
     selectedUserUI:"Basic"|"3D"
     email:string;
     name:string;
