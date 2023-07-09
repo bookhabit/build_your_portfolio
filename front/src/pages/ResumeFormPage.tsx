@@ -30,6 +30,7 @@ export default function ResumeFormPage() {
     const {id:resumeId} = useParams();
     // form field
     const [name,setName] = useState<string>('');
+    const [nickName,setNickName] = useState<string>('');
     const [birth,setBirth] = useState<string>('');
     const [finalEducation,setFinalEducation] = useState<string>('');
     const [phone,setPhone] = useState<string>('');
@@ -111,6 +112,9 @@ console.log(careerArr)
     const onChangeInput = (event:InputChangeEvent)=>{
       if(event.target.name==="name"){
         setName(event.target.value)
+      }
+      if(event.target.name==="nickName"){
+        setNickName(event.target.value)
       }
       if(event.target.name==="birth"){
         setBirth(event.target.value)
@@ -283,6 +287,8 @@ console.log(careerArr)
          // 가져온 id로 데이터 넣어주기
          if(user?.name){
            setName(user?.name)
+         }if(user?.nickName){
+          setNickName(user?.nickName)
          }
          setBirth(resumeData.birth)
          setPhone(resumeData.phone)
@@ -304,7 +310,7 @@ console.log(careerArr)
         ev.preventDefault();
         setValidateMode(true)
         const resumeForm:ResumeType = {
-          name,birth,finalEducation,phone,
+          name,nickName,birth,finalEducation,phone,
           certification:certificationArr,
           channel:channelArr,
           technology:technologyArr,
@@ -363,6 +369,22 @@ console.log(careerArr)
                 type="text"
                 sort="resumeInput"
                 isValid={!!errorMessage.name}
+                errorMessage={''}
+                validateMode={validateMode}
+              />
+            </div>
+            }
+             {updatePage && 
+            <div className={formItemClassRow()}>
+              <Label icon={CooperationIcon} alt="이름 아이콘" sort="resumeLabel" label="닉네임" />
+              <Input 
+                placeholder="ex) bookhabit"
+                value={nickName}
+                _onChange={onChangeInput}
+                name="nickName"
+                type="text"
+                sort="resumeInput"
+                isValid={true}
                 errorMessage={''}
                 validateMode={validateMode}
               />

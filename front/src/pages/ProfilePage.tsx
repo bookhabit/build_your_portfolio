@@ -17,7 +17,7 @@ export default function ProfilePage() {
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
-console.log(user)
+
     useEffect(()=>{
       setSelectedUserUI(user?.selectedUserUI as userUI)
     },[])
@@ -118,11 +118,16 @@ console.log(user)
                       </label>
                   ))}
               </section>
-              <div className="flex w-full justify-between my-8">
-                  <button className={` w-52 px-5 py-2 text-sm font-bold rounded-lg 
+              <div className="flex w-full justify-around my-8">
+                  <button className={`p-4 text-sm font-bold rounded-lg 
                   ${selectedUserUI==="3D" ? 'bg-tertiary hover:bg-purple-600 text-white' :'bg-blue-200 hover:bg-blue-100 '}
-                  `}>
+                  `} onClick={()=>router("/portfolio/create")}>
                       포트폴리오 등록하러 가기
+                  </button>
+                  <button className={`p-4 text-sm font-bold rounded-lg 
+                  ${selectedUserUI==="3D" ? 'bg-tertiary hover:bg-purple-600 text-white' :'bg-blue-200 hover:bg-blue-100 '}
+                  `} onClick={()=>router(`/resume/update/${user?.userResumeDoc?._id}`)}>
+                               회원정보 수정하기
                   </button>
                   <button onClick={logout} className={`bg-blue-200 w-28 px-5 py-2 text-sm font-bold rounded-lg hover:bg-blue-100
                   ${selectedUserUI==="3D" ? 'bg-tertiary hover:bg-purple-600 text-white' :'bg-blue-200 hover:bg-blue-100 '}

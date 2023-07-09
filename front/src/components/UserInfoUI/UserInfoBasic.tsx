@@ -126,6 +126,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
         </div>
         );
       }
+      console.log(user)
     return (
         <div className="flex flex-col items-center justify-center px-0 xl:px-80 bg-UI_user_profile_bg py-10">
             <div className="w-full">
@@ -133,7 +134,10 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                     <div className="profile-card p-5">
                         <div className="profile-header relative">
                             <div className="left">
-                                <h2 className={titleCard()}>{user?.name}</h2>
+                                <div className="flex gap-3 items-center">
+                                    <h2 className={titleCard()}>{user?.name}</h2>
+                                    <h2 className="font-2xl text-gray-400">({user?.nickName})</h2>
+                                </div>
                                 <p className="my-5 w-2/3 font-bold text-2xl">'{user?.userResumeDoc?.myselfSentence}'</p>
                                 <div className="flex items-center my-6 flex-wrap gap-2">
                                     <img src={computerIcon} alt="컴퓨터아이콘"/>
@@ -202,13 +206,9 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                     <div className="resume-div w-full shadow-xl bg-resume_card_BG p-5 h-[400px] border-r-2">
                         <div className="flex justify-between">
                             <h2 className={titleCard()}>이력서</h2>
-                            {isAuthor ? 
-                            <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
-                                수정하기
-                            </span> :
                             <span className="cursor-pointer" onClick={()=>setShowResumeCard(true)}>
                                 펼쳐보기
-                            </span>}
+                            </span>
                         </div>
                         {userResume ? 
                         <div className="content mt-5">
@@ -254,12 +254,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                     <div className="coverLetter-div w-full shadow-xl bg-resume_card_BG bg-bl p-5 h-[400px]">
                         <div className="flex justify-between">
                             <h2 className={titleCard()}>자기소개서</h2>
-                            {isAuthor ? 
-                            <span className="cursor-pointer" onClick={()=>router(`/resume/update/${userResume._id}`)}>
-                                수정하기
-                            </span> :
                             <span className="cursor-pointer" onClick={()=>setShowCoverLetter(true)}>펼쳐보기</span>
-                            }
                         </div>
             
                         {/* 글자수 제한으로 미리보기로 냅두고 펼쳐보기로 전체보여주기 */}

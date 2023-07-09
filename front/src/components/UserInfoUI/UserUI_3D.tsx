@@ -26,6 +26,7 @@ export const styles = {
 
 const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
     console.log('3dui',user)
+    
     return (
         <div className='relative z-0 bg-black'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
@@ -40,6 +41,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                         <div>
                         <h1 className={`${styles.heroHeadText} text-white`}>
                             Hi, I'm <span className='text-[#915EFF] hover:text-white'>{user?.name}</span>
+                            <span className="text-2xl">({user?.nickName})</span>
                         </h1>
                         <p className={`${styles.heroSubText} mt-5 text-white-100 hover:text-[#915EFF]`}>
                             {user?.userResumeDoc?.myselfSentence}<br className='sm:block hidden' />

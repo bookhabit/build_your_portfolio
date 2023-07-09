@@ -1,5 +1,6 @@
 export type ResumeType = {
     name?:string;
+    nickName:string;
     birth:string; // 1998-03-21
     finalEducation:string;
     phone:string; // 010-7607-9182
