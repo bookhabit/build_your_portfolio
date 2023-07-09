@@ -223,14 +223,14 @@ app.post('/upload', photosMiddleware.array('photos', 100), (req: Request, res: R
 // 이력서 등록
 app.post('/resume/create',(req:Request,res:Response)=>{
   const {token} = req.cookies;
-  const {birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
+  const {birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,activity,
   } = req.body;
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     const userData = userDataCallback as UserTokenDataType
     if (err) throw err;
     const resumeDoc = await Resume.create({
       author:userData.id,
-      birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
+      birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,activity,
     })
     res.json({resumeDoc})
   });
@@ -239,9 +239,9 @@ app.post('/resume/create',(req:Request,res:Response)=>{
 // 이력서 수정
 app.put('/resume/update',async (req,res)=>{
   const {token} = req.cookies;
-  const {resumeId,name,birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
+  const {resumeId,name,birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,activity,
   } = req.body;
-  console.log(name)
+  
   jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
     const userData = userDataCallback as UserTokenDataType
     if(err) throw err;
@@ -251,7 +251,7 @@ app.put('/resume/update',async (req,res)=>{
       if(resumeDoc.author){
         if(userData.id === resumeDoc.author.toString()){
           resumeDoc.set({
-            birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,acitivity,
+            birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,certification,channel,technology,career,activity,
           })
           userDoc.name = name;
           await userDoc.save();

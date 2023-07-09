@@ -1,7 +1,7 @@
 import {  useContext, useState,useEffect } from "react";
 import { Navigate, useParams } from "react-router";
 import axios from "axios";
-import { ChannelType, ResumeType, acitivityType, carrerType } from "../Types/ResumeType";
+import { ChannelType, ResumeType, activityType, carrerType } from "../Types/ResumeType";
 import birthIcon from "../assets/resume/birthIcon.svg"
 import UniversityIcon from "../assets/resume/UniversityIcon.svg"
 import phoneIcon from "../assets/resume/phoneIcon.svg"
@@ -54,7 +54,7 @@ export default function ResumeFormPage() {
       }
     });
     
-    const [acitivityInput,setAcitivityInput] = useState<acitivityType>({
+    const [activityInput,setActivityInput] = useState<activityType>({
       activityName:'',
       period:{
         start:"",
@@ -65,15 +65,13 @@ export default function ResumeFormPage() {
 
     const [careerMainTask,setCareerMainTask] = useState("");
     const [mainActivity,setMainActivity] = useState("");
-  
-    const [mainActivityArr,setMainActivityArr] = useState<string[]>([]);
 
     // plus btn > setState 최종 form
     const [certificationArr,setCertificationArr] = useState<string[]>([])
     const [channelArr,setChannelArr] = useState<ChannelType[]>([]);
     const [technologyArr,setTechnologyArr] = useState<string[]>([]);
     const [careerArr,setCareerArr] = useState<carrerType[]>([]);
-    const [acitivityArr,setAcitivityArr] = useState<acitivityType[]>([]);
+    const [activityArr,setActivityArr] = useState<activityType[]>([]);
 console.log(careerArr)
     // error handling
     const [errorMessage,setErrorMessage] = useState<ValidateResume>({
@@ -96,7 +94,7 @@ console.log(careerArr)
         },
         mainTask:[]
       },
-      acitivity:{
+      activity:{
         activityName:"",
         period:{
           start:"",
@@ -240,31 +238,37 @@ console.log(careerArr)
         }));
       }
       else if(event.target.name==="activityName"){
-        setAcitivityInput((prevState)=>({
+        setActivityInput((prevState)=>({
           ...prevState,
           activityName:event.target.value
         }))
         setErrorMessage((prevState) => ({
           ...prevState,
           acitivity: {
-            ...prevState.acitivity,
+            ...prevState.activity,
             activityName: ""
           }
         }));
+      }else if (event.target.name === 'activityStart') {
+        setActivityInput((prevState) => ({
+          ...prevState,
+          period: {
+            ...prevState.period,
+            start: event.target.value,
+          },
+        }));
+      } else if (event.target.name === 'activityEnd') {
+        setActivityInput((prevState) => ({
+          ...prevState,
+          period: {
+            ...prevState.period,
+            end: event.target.value,
+          },
+        }));
+      } else if (event.target.name === 'mainActivity') {
+        setMainActivity(event.target.value);
       }
-      // else if(event.target.name==="acitivityInput.period"){
-      //   setAcitivityInput((prevState)=>({
-      //     ...prevState,
-      //     period:event.target.value
-      //   }))
-      //   setErrorMessage((prevState) => ({
-      //     ...prevState,
-      //     acitivity: {
-      //       ...prevState.acitivity,
-      //       period: ""
-      //     }
-      //   }));
-      // }
+      
       setValidateMode(false)
     }
 
@@ -290,12 +294,10 @@ console.log(careerArr)
          setChannelArr(resumeData.channel)
          setTechnologyArr(resumeData.technology)
          setCareerArr(resumeData.career)
-         setAcitivityArr(resumeData.acitivity)
+         setActivityArr(resumeData.activity)
       });
     }, [resumeId]);
-    console.log(careerMainTask)
-    console.log(careerInput)
-    console.log(careerArr)
+    
     
     // 이력서 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
@@ -307,9 +309,10 @@ console.log(careerArr)
           channel:channelArr,
           technology:technologyArr,
           career:careerArr,
-          acitivity:acitivityArr,
+          activity:activityArr,
           myselfSentence,reasonForCoding,coverLetter,
         };
+        console.log(resumeForm);
         const validateForm:boolean = validateResumeForm(resumeForm,setErrorMessage)
         
         if(validateForm){
@@ -525,8 +528,7 @@ console.log(careerArr)
             )}
             <div className={"flex gap-4 flex-wrap"}>
               <Label icon={careerIcon} alt="경력 아이콘" sort="resumeLabel" label="경력" />
-              <div className="grid grid-cols-2 gap-5">
-                <Input 
+              <Input 
                   placeholder="ex) 회사명"
                   value={careerInput.companyName}
                   _onChange={onChangeInput}
@@ -538,23 +540,12 @@ console.log(careerArr)
                   validateMode={validateMode}
                   />
                 <Input 
-                  placeholder="ex) 직무"
-                  value={careerInput.jobDetail}
-                  _onChange={onChangeInput}
-                  name="jobDetail"
-                  type="text"
-                  sort="resumeInput"
-                  isValid={!!errorMessage.career.jobDetail}
-                  errorMessage={errorMessage.career.jobDetail}
-                  validateMode={validateMode}
-                />
-                <Input 
                   value={careerInput.period.start}
                   _onChange={onChangeInput}
                   name="career.start"
                   type="date"
                   sort="resumeInput"
-                  isValid={!!errorMessage.career.period}
+                  isValid={careerArr.length<0 && !!errorMessage.career.period.start}
                   errorMessage={errorMessage.career.period.start}
                   validateMode={validateMode}
                 />
@@ -564,23 +555,34 @@ console.log(careerArr)
                   name="career.end"
                   type="date"
                   sort="resumeInput"
-                  isValid={!!errorMessage.career.period}
+                  isValid={careerArr.length<0&& !!errorMessage.career.period.end}
                   errorMessage={errorMessage.career.period.end}
                   validateMode={validateMode}
                   />
-                  </div>
-                  <div className="flex items-center gap-5 w-full">
-                    <Input 
-                      placeholder="주요직무)"
-                      value={careerMainTask}
-                      _onChange={onChangeInput}
-                      name="mainTask"
-                      type="text"
-                      sort="resumeInputFull"
-                      isValid={!!careerMainTask}
-                      errorMessage={"입력해주세요"}
-                      validateMode={validateMode}
-                      />
+                <div className="flex items-center gap-5 w-full">
+                  <Input 
+                    placeholder="ex) 직무명"
+                    value={careerInput.jobDetail}
+                    _onChange={onChangeInput}
+                    name="jobDetail"
+                    type="text"
+                    sort="resumeInput"
+                    isValid={!!errorMessage.career.jobDetail}
+                    errorMessage={errorMessage.career.jobDetail}
+                    validateMode={validateMode}
+                  />
+                  <Input 
+                    placeholder="주요직무)"
+                    value={careerMainTask}
+                    _onChange={onChangeInput}
+                    name="mainTask"
+                    type="text"
+                    sort="resumeInputFull"
+                    isValid={!!careerMainTask}
+                    errorMessage={"입력해주세요"}
+                    validateMode={validateMode}
+                    />
+                    <div className="w-1/10">
                       <Button
                         sort="plusButton"
                         icon={plusIcon}
@@ -593,16 +595,18 @@ console.log(careerArr)
                           setCareerMainTask(""); // 추가한 후 careerMainTask 값을 초기화합니다.
                         }}
                       />
+
                     </div>
-                    {careerInput.mainTask.length > 0 && (
-                      <ShowArray>
-                        {careerInput.mainTask.map((task)=>(
-                          <p key={task} className="border-b p-2">
-                            {task}
-                          </p>
-                        ))}    
-                      </ShowArray>
-                    )}
+                  </div>
+                  {careerInput.mainTask.length > 0 && (
+                    <ShowArray>
+                      {careerInput.mainTask.map((task)=>(
+                        <p key={task} className="border-b p-2">
+                          {task}
+                        </p>
+                      ))}    
+                    </ShowArray>
+                  )}
                 <Button
                   sort="portfolio"
                   text="경력추가"
@@ -629,13 +633,13 @@ console.log(careerArr)
             {careerArr.length > 0 && (
               <ShowArray>
                 {careerArr.map((career)=>(
-                  <div key={career.companyName}>
-                    <p>{career.companyName+' : '+career.jobDetail}</p>
-                    <p>{career.period.start+' : '+career.period.end}</p>
+                  <div key={career.companyName} className="border flex flex-col gap-3 p-5 rounded-lg w-full">
+                    <p>회사명 : {career.companyName+' : '+career.jobDetail}</p>
+                    <p>기간 : {career.period.start+' : '+career.period.end}</p>
                       {career.mainTask.map(((task,index)=>(
                       <div key={index} className="flex flex-wrap items-center">
-                        <p>주요직무{index+1}</p>
-                        <p key={task} className="border-b p-2">
+                        <p>주요직무 {index+1} : </p>
+                        <p key={task} className="p-2">
                           {task}
                         </p>
                       </div>
@@ -644,55 +648,112 @@ console.log(careerArr)
                 ))}   
               </ShowArray>
             )}
-            <div className={formItemClassRow()}>
+            <div className={"flex gap-4 flex-wrap"}>
               <Label icon={CooperationIcon} alt="대외활동 아이콘" sort="resumeLabel" label="대외활동" />
-              <Input 
-                placeholder="ex) 활동명"
-                value={acitivityInput.activityName}
+              <Input
+                placeholder="활동명"
+                value={activityInput.activityName}
                 _onChange={onChangeInput}
                 name="activityName"
                 type="text"
                 sort="resumeInput"
-                isValid={!!errorMessage.acitivity.activityName}
-                errorMessage={errorMessage.acitivity.activityName}
+                isValid={!!errorMessage.activity.activityName}
+                errorMessage={errorMessage.activity.activityName}
                 validateMode={validateMode}
               />
               <Input 
-                placeholder="ex) 활동기간 (연,월 단위)"
-                value={acitivityInput.period}
+                value={activityInput.period.start}
                 _onChange={onChangeInput}
-                name="acitivityInput.period"
-                type="text"
+                name="activityStart"
+                type="date"
                 sort="resumeInput"
-                isValid={!!errorMessage.acitivity.period}
-                errorMessage={errorMessage.acitivity.period}
+                isValid={!!errorMessage.activity.period.start}
+                errorMessage={errorMessage.activity.period.end}
                 validateMode={validateMode}
               />
+              <Input 
+                value={activityInput.period.end}
+                _onChange={onChangeInput}
+                name="activityEnd"
+                type="date"
+                sort="resumeInput"
+                isValid={!!errorMessage.activity.period.end}
+                errorMessage={errorMessage.activity.period.end}
+                validateMode={validateMode}
+              />
+              <div className="flex items-center gap-5 w-full">
+                    <Input 
+                      placeholder="주요 활동내용)"
+                      value={mainActivity}
+                      _onChange={onChangeInput}
+                      name="mainActivity"
+                      type="text"
+                      sort="resumeInputFull"
+                      isValid={!!mainActivity}
+                      errorMessage={mainActivity}
+                      validateMode={validateMode}
+                      />
+                      <Button
+                        sort="plusButton"
+                        icon={plusIcon}
+                        _onClick={(event)=>{
+                          event.preventDefault()
+                          setActivityInput((prevState) => ({
+                            ...prevState,
+                            activity: [...prevState.activity, mainActivity]
+                          }));
+                          setMainActivity(""); // 추가한 후 careerMainTask 값을 초기화합니다.
+                        }}
+                      />
+                    </div>
+                    {activityInput.activity.length > 0 && (
+                      <ShowArray>
+                        {activityInput.activity.map((task)=>(
+                          <p key={task} className="border-b p-2">
+                            {task}
+                          </p>
+                        ))}    
+                      </ShowArray>
+                    )}
               <Button
-                sort="plusButton"
+                sort="portfolio"
+                text="대외활동 추가"
                 icon={plusIcon}
                 alt="+아이콘"
                 _onClick={(event)=>{
                   event.preventDefault()
-                  if(acitivityInput.activityName&&acitivityInput.period){
-                    setAcitivityInput((prevState)=>({
+                  if(activityInput.activityName&&activityInput.period&&activityInput.activity.length>0){
+                    setActivityArr([activityInput,...activityArr])
+                    setActivityInput((prevState)=>({
                       ...prevState,
-                      activityName:"",
-                      period:""
+                      activityName:'',
+                      period:{
+                        start:"",
+                        end:"",
+                      },
+                      activity:[]
                     }))
-                    setAcitivityArr([acitivityInput,...acitivityArr])
                   }
                 }}
               />
             </div>
-            {acitivityArr.length > 0 && (
+            {activityArr.length > 0 && (
               <ShowArray>
-                {acitivityArr.map((activity)=>(
-                  <p key={activity.activityName}>
-                    {activity.activityName+' : '+activity.period}
-                  </p>
-                ))}    
-              </ShowArray>
+              {activityArr.map((activity,index)=>(
+                <div key={index} className="border flex flex-col gap-3 p-5 rounded-lg w-full">
+                  <p>활동이름 : {activity.activityName}</p>
+                  <p>활동기간 : {activity.period.start+' : '+activity.period.end}</p>
+                    {activity.activity.map(((task,index)=>(
+                    <div key={index} className="flex flex-wrap items-center">
+                      <p>활동내역 {index+1} :</p>
+                      <p key={task} className="p-2">
+                        {task}
+                      </p>
+                    </div>
+                  )))}
+                </div>
+              ))}   
+            </ShowArray>
             )}
             <div className={formItemClassCol()}>
               <Label sort="resumeLabel" label="자신을 한 문장으로 소개해보세요" />

@@ -231,9 +231,19 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                             </div>
                             <div className="p-3">
                                 <p>대외활동</p>
-                                {user?.userResumeDoc?.acitivity.map((activity,index)=>(
+                                {user?.userResumeDoc?.activity.map((activity,index)=>(
                                 <div key={index} className="ml-4 mt-2">
-                                    {index+1}. {activity.activityName} - {activity.period}
+                                    {index+1}. 
+                                    <p>{activity.activityName}</p>
+                                    {activity.period.start&&activity.period.end && 
+                                     <p>{activity.period.start}~{activity.period.end}</p>
+                                    }
+                                     {activity.activity.map((activity,index)=>(
+                                           <div key={index}>
+                                                <p>활동내역 {1}</p>
+                                                <p>{activity}</p>
+                                           </div>
+                                     ))}
                                 </div>  
                                 ))}
                             </div>

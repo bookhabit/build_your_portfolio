@@ -14,13 +14,19 @@ const ResumeSchema = new Schema({
     technology:[String],
     career:[{
         companyName:String,
-        period:String,
+        period:{
+            start:String,
+            end:String,
+        },
         jobDetail:String,
         mainTask:[String],
     }],
-    acitivity:[{
+    activity:[{
         activityName:String,
-        period:String,
+        period:{
+            start:String,
+            end:String,
+        },
         activity:[String],
     }],
     myselfSentence:String,

@@ -7,7 +7,7 @@ export type ResumeType = {
     channel:ChannelType[]; // https://github.com/bookhabit
     technology:string[];
     career:carrerType[];
-    acitivity:acitivityType[];
+    activity:activityType[];
     myselfSentence:string;
     reasonForCoding:string;
     coverLetter:string;
@@ -25,7 +25,7 @@ export type carrerType = {
     mainTask:string[];
 }
 
-export type acitivityType = {
+export type activityType = {
     activityName:string;
     period:{
         start:string;

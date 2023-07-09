@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import "react-vertical-timeline-component/style.min.css";
 import { fadeIn, textVariant } from "../../utils/motion";
 import { styles } from "../UserUI_3D";
-import { acitivityType, carrerType } from "../../../Types/ResumeType";
+import { activityType, carrerType } from "../../../Types/ResumeType";
 
 
 type CareerCardType= {
@@ -16,7 +16,7 @@ type CareerCardType= {
 }
 
 type AcitivityCardType = {
-  activity: acitivityType 
+  activity: activityType 
 }
 
 // 테스트데이터 나중에 바꿔야함
@@ -39,10 +39,10 @@ const CareerCard = ({ career }:CareerCardType) => {
         color: "#fff",
       }}
       contentArrowStyle={{ borderRight: "7px solid  #232631" }}
-      date={career?.period}
+      date={career?.period.start+"~"+career?.period.end}
     >
       <div>
-        <h3 className='text-white text-[24px] font-bold mb-3'> {career?.commanyName}</h3>
+        <h3 className='text-white text-[24px] font-bold mb-3'> {career?.companyName}</h3>
         <p
           className='text-secondary text-[16px] font-semibold'
           style={{ margin: 0 }}
@@ -73,7 +73,7 @@ const AcitivityCard = ({ activity }:AcitivityCardType) => {
         color: "#fff",
       }}
       contentArrowStyle={{ borderRight: "7px solid  #232631" }}
-      date={activity?.period}
+      date={activity?.period.start+"~"+activity?.period.end}
     >
       <div>
         <h3 className='text-white text-[24px] font-bold mb-3'> {activity?.activityName}</h3>
@@ -101,7 +101,7 @@ const AcitivityCard = ({ activity }:AcitivityCardType) => {
 
 type ExperienceProps = {
   careers: carrerType[] | undefined
-  activities:acitivityType[] | undefined
+  activities:activityType[] | undefined
 };
 
 const Experience = ({careers,activities}:ExperienceProps) => {
