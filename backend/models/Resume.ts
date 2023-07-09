@@ -13,12 +13,15 @@ const ResumeSchema = new Schema({
     }], // https://github.com/bookhabit
     technology:[String],
     career:[{
-        commanyName:String,
+        companyName:String,
         period:String,
+        jobDetail:String,
+        mainTask:[String],
     }],
     acitivity:[{
         activityName:String,
         period:String,
+        activity:[String],
     }],
     myselfSentence:String,
     reasonForCoding:String,

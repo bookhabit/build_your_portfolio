@@ -17,6 +17,12 @@ const ResumeInput = tw.input<ValidateProps>`
   ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
 `;
 
+const ResumeInputFull = tw.input<ValidateProps>`
+  bg-inherit border-b border-black placeholder-black p-1 w-full
+  outline-none focus:border-b focus:border-border_focus
+  ${(props)=>props.isValid && props.validateMode && "border-error_stroke"}
+`;
+
 const PortfolioInput = tw.input<ValidateProps>`
   text-center font-bold text-3xl border-b py-3 outline-none 
    focus:text-gray-400 focus:w-auto
@@ -44,7 +50,7 @@ interface IProps{
     placeholder?:string;
     name:string;
     type:string;
-    sort:"authInput"|"resumeInput"|"portfolioInput"|"borderInput"|"URLInput"
+    sort:"authInput"|"resumeInput"|"portfolioInput"|"borderInput"|"URLInput"|"resumeInputFull"
     isValid:boolean;
     errorMessage:string;
     validateMode:boolean;
@@ -66,6 +72,16 @@ const Input = (props:IProps) => {
 
             {sort==="resumeInput"&&
               <ResumeInput 
+                placeholder = {placeholder} 
+                onChange={_onChange} 
+                type={type} 
+                name={name} 
+                value={value}
+                isValid={isValid} validateMode={validateMode}
+            />}
+
+            {sort==="resumeInputFull"&&
+              <ResumeInputFull 
                 placeholder = {placeholder} 
                 onChange={_onChange} 
                 type={type} 

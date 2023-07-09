@@ -16,13 +16,22 @@ export type ResumeType = {
 }
 
 export type carrerType = {
-    commanyName:string;
-    period:string;
+    companyName:string;
+    period:{
+        start:string;
+        end:string;
+    }
+    jobDetail:string;
+    mainTask:string[];
 }
 
 export type acitivityType = {
     activityName:string;
-    period:string;
+    period:{
+        start:string;
+        end:string;
+    }
+    activity:string[]
 }
 
 export type ChannelType = {

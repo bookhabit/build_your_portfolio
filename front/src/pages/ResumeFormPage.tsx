@@ -45,13 +45,28 @@ export default function ResumeFormPage() {
     });
     const [technologyInput,setTechnologyInput] = useState<string>('');
     const [careerInput,setCareerInput] = useState<carrerType>({
-      commanyName:'',
-      period:''
+      companyName:'',
+      jobDetail:"",
+      mainTask:[],
+      period:{
+        start:"",
+        end:"",
+      }
     });
+    
     const [acitivityInput,setAcitivityInput] = useState<acitivityType>({
       activityName:'',
-      period:''
+      period:{
+        start:"",
+        end:"",
+      },
+      activity:[]
     });
+
+    const [careerMainTask,setCareerMainTask] = useState("");
+    const [mainActivity,setMainActivity] = useState("");
+  
+    const [mainActivityArr,setMainActivityArr] = useState<string[]>([]);
 
     // plus btn > setState 최종 form
     const [certificationArr,setCertificationArr] = useState<string[]>([])
@@ -59,7 +74,7 @@ export default function ResumeFormPage() {
     const [technologyArr,setTechnologyArr] = useState<string[]>([]);
     const [careerArr,setCareerArr] = useState<carrerType[]>([]);
     const [acitivityArr,setAcitivityArr] = useState<acitivityType[]>([]);
-
+console.log(careerArr)
     // error handling
     const [errorMessage,setErrorMessage] = useState<ValidateResume>({
       name:"",
@@ -73,12 +88,21 @@ export default function ResumeFormPage() {
       }, 
       technology:"",
       career:{
-        commanyName:"",
-        period:"",
+        companyName:"",
+        jobDetail:"",
+        period:{
+          start:"",
+          end:"",
+        },
+        mainTask:[]
       },
       acitivity:{
         activityName:"",
-        period:"",
+        period:{
+          start:"",
+          end:"",
+        },
+        activity:[]
       },
       myselfSentence:"",
       reasonForCoding:"",
@@ -149,29 +173,69 @@ export default function ResumeFormPage() {
           technology: "",
         }));
       }
-      else if(event.target.name==="commanyName"){
-        setCareerInput((prevState)=>({
+      else if (event.target.name === "companyName") {
+        setCareerInput((prevState) => ({
           ...prevState,
-          commanyName:event.target.value
-        }))
+          companyName: event.target.value
+        }));
         setErrorMessage((prevState) => ({
           ...prevState,
           career: {
             ...prevState.career,
-            commanyName: ""
+            companyName: ""
           }
         }));
-      }
-      else if(event.target.name==="careerInput.period"){
-        setCareerInput((prevState)=>({
+      } else if (event.target.name === "jobDetail") {
+        setCareerInput((prevState) => ({
           ...prevState,
-          period:event.target.value
-        }))
+          jobDetail: event.target.value
+        }));
         setErrorMessage((prevState) => ({
           ...prevState,
           career: {
             ...prevState.career,
-            period: ""
+            jobDetail: ""
+          }
+        }));
+      } else if (event.target.name === "mainTask") {
+        setCareerMainTask(event.target.value);
+        
+      }
+      
+      else if (event.target.name === "career.start") {
+        setCareerInput((prevState) => ({
+          ...prevState,
+          period: {
+            ...prevState.period,
+            start: event.target.value
+          }
+        }));
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          career: {
+            ...prevState.career,
+            period: {
+              ...prevState.career.period,
+              start: ""
+            }
+          }
+        }));
+      } else if (event.target.name === "career.end") {
+        setCareerInput((prevState) => ({
+          ...prevState,
+          period: {
+            ...prevState.period,
+            end: event.target.value
+          }
+        }));
+        setErrorMessage((prevState) => ({
+          ...prevState,
+          career: {
+            ...prevState.career,
+            period: {
+              ...prevState.career.period,
+              end: ""
+            }
           }
         }));
       }
@@ -188,19 +252,19 @@ export default function ResumeFormPage() {
           }
         }));
       }
-      else if(event.target.name==="acitivityInput.period"){
-        setAcitivityInput((prevState)=>({
-          ...prevState,
-          period:event.target.value
-        }))
-        setErrorMessage((prevState) => ({
-          ...prevState,
-          acitivity: {
-            ...prevState.acitivity,
-            period: ""
-          }
-        }));
-      }
+      // else if(event.target.name==="acitivityInput.period"){
+      //   setAcitivityInput((prevState)=>({
+      //     ...prevState,
+      //     period:event.target.value
+      //   }))
+      //   setErrorMessage((prevState) => ({
+      //     ...prevState,
+      //     acitivity: {
+      //       ...prevState.acitivity,
+      //       period: ""
+      //     }
+      //   }));
+      // }
       setValidateMode(false)
     }
 
@@ -229,7 +293,9 @@ export default function ResumeFormPage() {
          setAcitivityArr(resumeData.acitivity)
       });
     }, [resumeId]);
-    console.log(updatePage)
+    console.log(careerMainTask)
+    console.log(careerInput)
+    console.log(careerArr)
     
     // 이력서 등록 및 수정
     async function savePlace(ev:React.FormEvent) {
@@ -457,57 +523,125 @@ export default function ResumeFormPage() {
                 ))}    
               </ShowArray>
             )}
-            <div className={formItemClassRow()}>
+            <div className={"flex gap-4 flex-wrap"}>
               <Label icon={careerIcon} alt="경력 아이콘" sort="resumeLabel" label="경력" />
-              <Input 
-                placeholder="ex) 회사명"
-                value={careerInput.commanyName}
-                _onChange={onChangeInput}
-                name="commanyName"
-                type="text"
-                sort="resumeInput"
-                isValid={!!errorMessage.career.commanyName}
-                errorMessage={errorMessage.career.commanyName}
-                validateMode={validateMode}
-              />
-              <Input 
-                placeholder="ex) 근무기간 (연,월 단위)"
-                value={careerInput.period}
-                _onChange={(event)=>setCareerInput((prevState)=>({
-                  ...prevState,
-                  period:event.target.value
-                }))}
-                name="careerInput.period"
-                type="text"
-                sort="resumeInput"
-                isValid={!!errorMessage.career.period}
-                errorMessage={errorMessage.career.period}
-                validateMode={validateMode}
-              />
-              <Button
-                sort="plusButton"
-                icon={plusIcon}
-                alt="+아이콘"
-                _onClick={(event)=>{
-                  event.preventDefault()
-                  if(careerInput.commanyName&&careerInput.period){
-                    setCareerInput((prevState)=>({
-                      ...prevState,
-                      commanyName:"",
-                      period:""
-                    }))
-                    setCareerArr([careerInput,...careerArr])
-                  }
-                }}
-              />
+              <div className="grid grid-cols-2 gap-5">
+                <Input 
+                  placeholder="ex) 회사명"
+                  value={careerInput.companyName}
+                  _onChange={onChangeInput}
+                  name="companyName"
+                  type="text"
+                  sort="resumeInput"
+                  isValid={!!errorMessage.career.companyName}
+                  errorMessage={errorMessage.career.companyName}
+                  validateMode={validateMode}
+                  />
+                <Input 
+                  placeholder="ex) 직무"
+                  value={careerInput.jobDetail}
+                  _onChange={onChangeInput}
+                  name="jobDetail"
+                  type="text"
+                  sort="resumeInput"
+                  isValid={!!errorMessage.career.jobDetail}
+                  errorMessage={errorMessage.career.jobDetail}
+                  validateMode={validateMode}
+                />
+                <Input 
+                  value={careerInput.period.start}
+                  _onChange={onChangeInput}
+                  name="career.start"
+                  type="date"
+                  sort="resumeInput"
+                  isValid={!!errorMessage.career.period}
+                  errorMessage={errorMessage.career.period.start}
+                  validateMode={validateMode}
+                />
+                <Input 
+                  value={careerInput.period.end}
+                  _onChange={onChangeInput}
+                  name="career.end"
+                  type="date"
+                  sort="resumeInput"
+                  isValid={!!errorMessage.career.period}
+                  errorMessage={errorMessage.career.period.end}
+                  validateMode={validateMode}
+                  />
+                  </div>
+                  <div className="flex items-center gap-5 w-full">
+                    <Input 
+                      placeholder="주요직무)"
+                      value={careerMainTask}
+                      _onChange={onChangeInput}
+                      name="mainTask"
+                      type="text"
+                      sort="resumeInputFull"
+                      isValid={!!careerMainTask}
+                      errorMessage={"입력해주세요"}
+                      validateMode={validateMode}
+                      />
+                      <Button
+                        sort="plusButton"
+                        icon={plusIcon}
+                        _onClick={(event)=>{
+                          event.preventDefault()
+                          setCareerInput((prevState) => ({
+                            ...prevState,
+                            mainTask: [...prevState.mainTask, careerMainTask]
+                          }));
+                          setCareerMainTask(""); // 추가한 후 careerMainTask 값을 초기화합니다.
+                        }}
+                      />
+                    </div>
+                    {careerInput.mainTask.length > 0 && (
+                      <ShowArray>
+                        {careerInput.mainTask.map((task)=>(
+                          <p key={task} className="border-b p-2">
+                            {task}
+                          </p>
+                        ))}    
+                      </ShowArray>
+                    )}
+                <Button
+                  sort="portfolio"
+                  text="경력추가"
+                  icon={plusIcon}
+                  alt="+아이콘"
+                  _onClick={(event)=>{
+                    event.preventDefault()
+                    if(careerInput.companyName&&careerInput.jobDetail&&careerInput.period.start&&careerInput.period.end){
+                      setCareerArr([careerInput,...careerArr])
+                      setCareerInput((prevState)=>({
+                        ...prevState,
+                        commanyName:"",
+                        jobDetail:"",
+                        period : {
+                          start:"",
+                          end:"",
+                        },
+                        mainTask:[]
+                      }))
+                    }
+                  }}
+                />
             </div>
             {careerArr.length > 0 && (
               <ShowArray>
                 {careerArr.map((career)=>(
-                  <p key={career.commanyName}>
-                    {career.commanyName+' : '+career.period}
-                  </p>
-                ))}    
+                  <div key={career.companyName}>
+                    <p>{career.companyName+' : '+career.jobDetail}</p>
+                    <p>{career.period.start+' : '+career.period.end}</p>
+                      {career.mainTask.map(((task,index)=>(
+                      <div key={index} className="flex flex-wrap items-center">
+                        <p>주요직무{index+1}</p>
+                        <p key={task} className="border-b p-2">
+                          {task}
+                        </p>
+                      </div>
+                    )))}
+                  </div>
+                ))}   
               </ShowArray>
             )}
             <div className={formItemClassRow()}>
