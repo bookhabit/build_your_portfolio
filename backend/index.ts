@@ -367,4 +367,23 @@ app.get('/posts',async (req,res)=>{
   res.json(await Post.find()) 
 })
 
+// 검색기능 - name과 nickName으로 user찾기
+
+app.get("/search", async (req: Request, res: Response) => {
+  const { search } = req.query;
+  try {
+    const users = await User.find({
+      $or: [
+        { name: search as string },
+        { nickName: search as string }
+      ]
+    });
+
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(4000)

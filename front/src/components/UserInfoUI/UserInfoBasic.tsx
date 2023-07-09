@@ -97,10 +97,10 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
     // show-reumseCard
     if (showResumeCard) {
         return (
-        <div className="absolute inset-0 bg-black items-center flex flex-col justify-center p-14 h-auto">
+        <div className="inset-0 bg-black items-center flex flex-col justify-center p-14 h-screen">
             <ShowModal data={user?.userResumeDoc} sort="resume"/>
             <div>
-              <button onClick={() => setShowResumeCard(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
+              <button onClick={() => setShowResumeCard(false)} className="fixed right-20 top-24 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
                 </svg>
@@ -113,10 +113,10 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
       // show-coverLetter
     if (showCoverLetter) {
         return (
-        <div className="absolute inset-0 bg-black min-h-screen items-center flex flex-col justify-center">
+        <div className="inset-0 bg-black min-h-screen items-center flex flex-col justify-center">
             <ShowModal data={user?.userResumeDoc?.coverLetter} sort="coverLetter"/>
             <div>
-              <button onClick={() => setShowCoverLetter(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
+              <button onClick={() => setShowCoverLetter(false)} className="fixed right-20 top-24 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                   <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
                 </svg>
