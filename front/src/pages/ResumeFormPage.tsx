@@ -18,6 +18,8 @@ import { InputChangeEvent } from "../elements/Input";
 import validateResumeForm, { ValidateResume } from "../components/common/validation/validateResumeForm";
 import TechBorder from "../components/common/TechBorder";
 import { UserContext } from "../Context/UserContext";
+import { validateModeAtom } from "../recoil/validateAtom";
+import { useRecoilState } from "recoil";
 
 export const ShowArray = tw.div`
   bg-inherit p-1 min-w-full flex flex-wrap gap-3
@@ -107,7 +109,7 @@ console.log(careerArr)
       reasonForCoding:"",
       coverLetter:"",
     })
-    const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
+    const [validateMode,setValidateMode ] = useRecoilState<boolean>(validateModeAtom)
 
     const onChangeInput = (event:InputChangeEvent)=>{
       if(event.target.name==="name"){

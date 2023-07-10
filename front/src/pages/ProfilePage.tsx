@@ -2,7 +2,6 @@ import { useContext, useEffect, useState} from "react";
 import {  useNavigate} from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import axios from "axios";
-import { SelectedUI } from "../Types/PortfolioType";
 import UserInfoBasic from "../components/UserInfoUI/UserInfoBasic";
 import { InputChangeEvent } from "../elements/Input";
 import PreviewIcon from "../assets/portfolio/imgPreview.svg"

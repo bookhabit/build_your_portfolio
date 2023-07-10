@@ -7,9 +7,10 @@ import { UserContext, UserContextType } from "../Context/UserContext";
 import { Button } from "../elements";
 import Input, { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
-import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
-import { UserInfoType, UserProfileType } from "../Types/userType";
+import { UserInfoType } from "../Types/userType";
 import validateLoginForm, { ValidationLoginForm } from "../components/common/validation/validateLoginForm";
+import { useRecoilState } from "recoil";
+import { validateModeAtom } from "../recoil/validateAtom";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -21,8 +22,7 @@ export default function LoginPage() {
     email:"",
     password:"",
   })
-  const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
-
+  const [validateMode,setValidateMode ] = useRecoilState<boolean>(validateModeAtom)
   useEffect(() => {
     gsap.fromTo(formRef.current,{x: 1000}, {x: 0} )
 }, [])
@@ -97,7 +97,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center h-full">
-        <form ref={formRef} className="authForm py-12 bg-form_bg shadow-2xl">
+        <form ref={formRef} className="loginForm py-12 bg-form_bg shadow-2xl">
           <h1 className=" text-4xl font-bold text-center mb-4">Login</h1>
           <div className={`flex flex-col my-12 items-center ${validateMode? "gap-2":"gap-8"}`}>
                 <Input 

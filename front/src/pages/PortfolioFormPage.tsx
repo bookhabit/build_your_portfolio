@@ -1,12 +1,11 @@
 import {  ChangeEvent, useContext, useEffect, useState } from "react";
 import PhotosUploader from "../components/testRestAPI/PhotosUploader";
-import { Navigate, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
 import { CategoryType, DemoLinkType, DevelopPeriodType, Important_function, PortfolioDetailType, PortfolioType, SelectedUI } from "../Types/PortfolioType";
 import { ShowArray } from "./ResumeFormPage";
-import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import FormContainer from "../components/FormContainer";
 import PreviewIcon from "../assets/portfolio/imgPreview.svg"
 import { ValidatePortfolio } from "../components/common/validation/validatePortfolioForm";
@@ -19,6 +18,8 @@ import { UserContext, UserContextType } from "../Context/UserContext";
 import ScrollParallaxUI from "../components/PortfolioUI/ScrollParallaxUI";
 import SlideUI from "../components/PortfolioUI/SlideUI";
 import UI_3D from "../components/PortfolioUI/UI_3D";
+import { useRecoilState } from "recoil";
+import { validateModeAtom } from "../recoil/validateAtom";
 
 export default function PortfolioFormPage() {
     const router = useNavigate();
@@ -107,7 +108,7 @@ export default function PortfolioFormPage() {
       category:"",
       selectedUI:"",
     })
-    const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
+    const [validateMode,setValidateMode ] = useRecoilState<boolean>(validateModeAtom)
 
     // validateForm
   

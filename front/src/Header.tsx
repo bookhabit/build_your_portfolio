@@ -3,9 +3,9 @@ import {Link, useNavigate} from "react-router-dom";
 import { UserContext, UserContextType } from "./Context/UserContext";
 import { InputChangeEvent } from "./elements/Input";
 import axios from "axios";
-import { UserInfoType, UserType } from "./Types/userType";
+import { UserInfoType } from "./Types/userType";
 import ImageUI from "./components/common/ImageUI";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import {  useSetRecoilState } from "recoil";
 import { SearchRedirectAtom } from "./recoil/searchAtom";
 
 export default function Header() {

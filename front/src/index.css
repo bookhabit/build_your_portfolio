@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-.authForm{
+.signupForm{
+    height: 650px;
+    width:500px;
+}
+.loginForm{
     height: 550px;
     width:500px;
 }
-
 
 input:focus::placeholder {
   opacity: 0;

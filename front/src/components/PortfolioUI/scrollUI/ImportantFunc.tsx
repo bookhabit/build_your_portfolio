@@ -1,11 +1,8 @@
-import React from "react";
 import {Tilt} from "react-tilt";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../../utils/motion";
-import { Important_function, PortfolioType } from "../../../Types/PortfolioType";
-import githubImg from "../../../assets/github.png";
+import { Important_function } from "../../../Types/PortfolioType";
 import ImageUI from "../../common/ImageUI";
-import { useNavigate } from "react-router";
 import { styles } from "../../UserInfoUI/UserUI_3D";
 
 type ProjectCardType= {
@@ -14,14 +11,6 @@ type ProjectCardType= {
 }
 
 const ProjectCard = ({ important_function, index }:ProjectCardType) => {
-  const router = useNavigate();
-  function truncateText(text: string): string {
-    if (text.length <= 80) {
-      return text;
-    } else {
-      return text.slice(0, 80) + "...";
-    }
-  }
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt

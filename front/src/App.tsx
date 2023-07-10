@@ -10,7 +10,6 @@ import PostDetail from './pages/PostDetail';
 import ProfilePage from './pages/ProfilePage';
 import UserPostsPage from './pages/UserPostsPage';
 import 'animate.css'
-import { ValidateContextProvider } from './Context/ValidateContext';
 import PortfolioFormPage from './pages/PortfolioFormPage';
 import ResumeFormPage from './pages/ResumeFormPage';
 import UserPage from './pages/UserPage';
@@ -24,7 +23,6 @@ function App() {
   return (
     <RecoilRoot>
       <UserContextProvider>
-        <ValidateContextProvider>
           <Routes>
             <Route path="/" element={<Layout/>}>
               <Route path="/" element={<IndexPage/>} />
@@ -41,7 +39,6 @@ function App() {
               <Route path="/account/posts" element={<UserPostsPage />} />
             </Route>
           </Routes>
-        </ValidateContextProvider>
       </UserContextProvider>
     </RecoilRoot>
   )

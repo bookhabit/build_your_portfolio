@@ -1,13 +1,14 @@
 import { useNavigate} from "react-router-dom";
-import { useContext, useEffect, useRef, useState} from "react";
+import {  useEffect, useRef, useState} from "react";
 import axios from "axios";
 import googleSvg from "../assets/auth/google.svg"
 import githubSvg from "../assets/auth/github.svg"
 import { Button, Input } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
-import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import validateRegisterForm, { ValidationRegisterForm } from "../components/common/validation/validateRegisterForm";
+import { useRecoilState } from "recoil";
+import { validateModeAtom } from "../recoil/validateAtom";
 
 
 export default function ReigsterPage() {
@@ -23,7 +24,7 @@ export default function ReigsterPage() {
     email:"",
     password:"",
   })
-  const { validateMode,setValidateMode } = useContext<ValidateContextType>(ValidateContext);
+  const [validateMode,setValidateMode ] = useRecoilState<boolean>(validateModeAtom)
   
 
   useEffect(() => {
@@ -120,7 +121,7 @@ export default function ReigsterPage() {
   return (
     
     <div className="flex items-center justify-center h-full">      
-        <form ref={formRef} className={`authForm py-12 bg-form_bg shadow-2xl`}>
+        <form ref={formRef} className={`signupForm py-12 bg-form_bg shadow-2xl`}>
           <h1 className=" text-4xl font-bold text-center mb-4">Register</h1>
           <div className={`flex flex-col my-12 items-center ${validateMode? "gap-2":"gap-8"}`}>
                 <Input 
