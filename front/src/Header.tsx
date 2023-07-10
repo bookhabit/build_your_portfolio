@@ -1,20 +1,28 @@
-import {  FormEvent, useState } from "react";
+import {  FormEvent, useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { InputChangeEvent } from "./elements/Input";
 import axios from "axios";
 import { UserInfoType } from "./Types/userType";
 import ImageUI from "./components/common/ImageUI";
-import {  useRecoilValue, useSetRecoilState } from "recoil";
+import {  useRecoilState, useSetRecoilState } from "recoil";
 import { SearchRedirectAtom } from "./recoil/searchAtom";
 import { userAtom } from "./recoil/userAtom";
 
 export default function Header() {
-  const user = useRecoilValue(userAtom)
+  const [user,setUser] = useRecoilState(userAtom)
   const [searchValue,setSearchValue] = useState<string>('');
   const [showResultValues,setShowResultValues] = useState<boolean>(false)
   const [resultValues,setResultValues] = useState<UserInfoType[]>([])
-
   const setRedirect = useSetRecoilState(SearchRedirectAtom)
+
+  useEffect(() => {
+    if (!user) {
+      axios.get('/profile')
+            .then(({data}:{data:UserInfoType}) => {
+              setUser(data);
+            });
+    }
+  }, []);
 
   const searchHandler = async (event:InputChangeEvent)=>{
     setSearchValue(event.target.value)
