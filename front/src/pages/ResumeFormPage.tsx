@@ -1,4 +1,4 @@
-import {  useContext, useState,useEffect } from "react";
+import { useState,useEffect } from "react";
 import { Navigate, useParams } from "react-router";
 import axios from "axios";
 import { ChannelType, ResumeType, activityType, carrerType } from "../Types/ResumeType";
@@ -13,20 +13,19 @@ import CooperationIcon from "../assets/resume/CooperationIcon.svg"
 import plusIcon from "../assets/resume/plusIcon.svg"
 import { Button, Input, Label, Textarea } from "../elements";
 import tw from "tailwind-styled-components";
-import { ValidateContext, ValidateContextType } from "../Context/ValidateContext";
 import { InputChangeEvent } from "../elements/Input";
 import validateResumeForm, { ValidateResume } from "../components/common/validation/validateResumeForm";
 import TechBorder from "../components/common/TechBorder";
-import { UserContext } from "../Context/UserContext";
 import { validateModeAtom } from "../recoil/validateAtom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userAtom } from "../recoil/userAtom";
 
 export const ShowArray = tw.div`
   bg-inherit p-1 min-w-full flex flex-wrap gap-3
 `;
 
 export default function ResumeFormPage() {
-    const {user,setUser} = useContext(UserContext)
+    const user = useRecoilValue(userAtom);
     const [redirect,setRedirect] = useState<boolean>(false);
     const [updatePage,setUpdatePage] = useState<boolean>(false);
     const {id:resumeId} = useParams();

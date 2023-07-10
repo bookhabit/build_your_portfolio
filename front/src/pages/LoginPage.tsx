@@ -1,22 +1,22 @@
 import { Navigate} from "react-router-dom";
-import {useContext, useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState} from "react";
 import axios from "axios";
 import googleSvg from "../assets/auth/google.svg"
 import githubSvg from "../assets/auth/github.svg"
-import { UserContext, UserContextType } from "../Context/UserContext";
 import { Button } from "../elements";
 import Input, { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
 import { UserInfoType } from "../Types/userType";
 import validateLoginForm, { ValidationLoginForm } from "../components/common/validation/validateLoginForm";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
+import { userAtom } from "../recoil/userAtom";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
-  const { setUser } = useContext<UserContextType>(UserContext);
+  const setUser = useSetRecoilState(userAtom);
   const formRef = useRef(null);
   const [errorMessage,setErrorMessage] = useState<ValidationLoginForm>({
     email:"",

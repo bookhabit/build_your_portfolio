@@ -1,22 +1,23 @@
-import { useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import {  useNavigate} from "react-router-dom";
-import { UserContext } from "../Context/UserContext";
 import axios from "axios";
 import UserInfoBasic from "../components/UserInfoUI/UserInfoBasic";
 import { InputChangeEvent } from "../elements/Input";
 import PreviewIcon from "../assets/portfolio/imgPreview.svg"
 import UserUI_3D from "../components/UserInfoUI/UserUI_3D";
 import { UserInfoType, userUI } from "../Types/userType";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../recoil/userAtom";
 // import ImageUI from "../components/common/ImageUI";
 
 export default function ProfilePage() {
-    const {user,setUser} = useContext(UserContext)
+    const [user,setUser] = useRecoilState(userAtom);
     const router = useNavigate();
     const [selectedUserUI,setSelectedUserUI] = useState<userUI>(user?.selectedUserUI ? user.selectedUserUI : "Basic" );
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
-
+console.log('user',user)
     useEffect(()=>{
       setSelectedUserUI(user?.selectedUserUI as userUI)
     },[])

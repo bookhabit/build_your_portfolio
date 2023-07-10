@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router"
-import { UserContext } from "../Context/UserContext";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import PrfofileUI from "../assets/scrollUI/profileUI.png"
 import ResumeUI from "../assets/scrollUI/resumeUI.png"
 import CoverLetterUI from "../assets/scrollUI/coverLetterUI.png"
@@ -9,10 +8,12 @@ import PortfolioForm1 from "../assets/scrollUI/PortfolioForm1.png"
 import PortfolioForm2 from "../assets/scrollUI/PortfolioForm2.png"
 import PortfolioForm3 from "../assets/scrollUI/PortfolioForm3.png"
 import PortfolioForm4 from "../assets/scrollUI/PortfolioForm4.png"
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../recoil/userAtom";
 
 export default function IndexPage() {
   const router = useNavigate();
-  const {user} = useContext(UserContext)
+  const user = useRecoilValue(userAtom)
 
   // 관찰자 생성
   useEffect(() => {

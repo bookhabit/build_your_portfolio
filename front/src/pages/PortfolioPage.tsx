@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import BasicUI from "../components/PortfolioUI/BasicUI";
@@ -6,12 +6,13 @@ import ScrollParallaxUI from "../components/PortfolioUI/ScrollParallaxUI";
 import SlideUI from "../components/PortfolioUI/SlideUI";
 import UI_3D from "../components/PortfolioUI/UI_3D";
 import { PortfolioDetailType } from "../Types/PortfolioType";
-import { UserContext, UserContextType } from "../Context/UserContext";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../recoil/userAtom";
 
 
 const PortfolioPage = () => {
     const {id:portfolioId} = useParams();
-    const { user } = useContext<UserContextType>(UserContext);
+    const user = useRecoilValue(userAtom)
     const [userPage,setUserPage] = useState<boolean>(false);
     const [portfolio,setPortfolio] = useState<PortfolioDetailType |undefined>();
 

@@ -5,7 +5,6 @@ import IndexPage from './pages/IndexPage';
 import axios from 'axios';
 import LoginPage from './pages/LoginPage';
 import ReigsterPage from './pages/RegisterPage';
-import { UserContextProvider } from './Context/UserContext';
 import PostDetail from './pages/PostDetail';
 import ProfilePage from './pages/ProfilePage';
 import UserPostsPage from './pages/UserPostsPage';
@@ -22,7 +21,6 @@ axios.defaults.withCredentials = true;
 function App() {
   return (
     <RecoilRoot>
-      <UserContextProvider>
           <Routes>
             <Route path="/" element={<Layout/>}>
               <Route path="/" element={<IndexPage/>} />
@@ -39,7 +37,6 @@ function App() {
               <Route path="/account/posts" element={<UserPostsPage />} />
             </Route>
           </Routes>
-      </UserContextProvider>
     </RecoilRoot>
   )
 }

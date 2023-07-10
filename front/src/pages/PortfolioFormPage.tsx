@@ -14,16 +14,16 @@ import TechBorder from "../components/common/TechBorder";
 import plusIcon from "../assets/resume/plusIcon.svg"
 import Image from "../components/testRestAPI/Image";
 import BasicUI from "../components/PortfolioUI/BasicUI";
-import { UserContext, UserContextType } from "../Context/UserContext";
 import ScrollParallaxUI from "../components/PortfolioUI/ScrollParallaxUI";
 import SlideUI from "../components/PortfolioUI/SlideUI";
 import UI_3D from "../components/PortfolioUI/UI_3D";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
+import { userAtom } from "../recoil/userAtom";
 
 export default function PortfolioFormPage() {
     const router = useNavigate();
-    const { user } = useContext<UserContextType>(UserContext);
+    const user = useRecoilValue(userAtom)
     const [updatePage,setUpdatePage] = useState<boolean>(false);
 
     // state

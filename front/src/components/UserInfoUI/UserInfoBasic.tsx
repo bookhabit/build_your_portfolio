@@ -9,16 +9,17 @@ import { useState,useContext,useEffect,ChangeEvent } from "react"
 import ShowModal from "../ShowModal"
 import { ShowArray } from "../../pages/ResumeFormPage";
 import PortfolioCategory from "../PortfolioCategory";
-import { UserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router";
 import { ResumeType } from "../../Types/ResumeType";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../../recoil/userAtom";
 
 const defaultProfileImg = "https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg"
 
 const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
     // 자신의 게시글인지 구분하기
-    const {user:loggedUser,setUser} = useContext(UserContext)
+    const loggedUser = useRecoilValue(userAtom)
     const [isAuthor,setIsAuthor]=useState<boolean>(false)
     const router = useNavigate();
     const userResume = user?.userResumeDoc as ResumeType
