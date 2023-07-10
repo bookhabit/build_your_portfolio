@@ -63,6 +63,7 @@ export default function Header() {
                         setSearchValue("")
                         setResultValues([])
                         setShowResultValues(false)
+                        window.location.reload
                       }}
                     >
                       <div className="flex items-center gap-3">
