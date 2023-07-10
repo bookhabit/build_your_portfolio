@@ -127,14 +127,14 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                     </div>
                     <div>
                         <span className='text-white font-medium mb-4'>Your Channel</span>
-                        <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p> 
+                        <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium">
                             {user?.userResumeDoc?.channel.map((channel)=>(
-                                    <div className={"flex items-center my-2"} key={channel.channelURL}>
+                                    <div className={"flex sm:flex-row flex-col items-center my-2"} key={channel.channelURL}>
                                         <p className={"mx-2"}>{channel.channelName} :</p>
                                         <p>{channel.channelURL}</p>
                                     </div>
                                 ))}
-                            </p></div>
+                        </div>
                     </div>
                 </div>
 

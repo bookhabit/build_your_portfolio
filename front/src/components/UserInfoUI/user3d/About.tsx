@@ -9,13 +9,13 @@ type ServiceCardType= {
 }
 
 const ServiceCard = ({ index, title }:ServiceCardType) => (
-  <Tilt className='xs:w-[250px] w-full'>
+  <Tilt className='xs:w-[150px] w-full'>
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
       className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
     >
       <div
-        className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[120px] flex justify-evenly items-center flex-col'
+        className='bg-tertiary rounded-[20px]  min-h-[80px] flex justify-evenly items-center flex-col'
       >
         <h3 className='text-white text-[20px] font-bold text-center'>
           {title}
