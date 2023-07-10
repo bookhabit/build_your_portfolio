@@ -5,12 +5,17 @@ import { InputChangeEvent } from "./elements/Input";
 import axios from "axios";
 import { UserInfoType, UserType } from "./Types/userType";
 import ImageUI from "./components/common/ImageUI";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { SearchRedirectAtom } from "./recoil/searchAtom";
 
 export default function Header() {
   const { user } = useContext<UserContextType>(UserContext);
   const [searchValue,setSearchValue] = useState<string>('');
   const [showResultValues,setShowResultValues] = useState<boolean>(false)
   const [resultValues,setResultValues] = useState<UserInfoType[]>([])
+
+  const setRedirect = useSetRecoilState(SearchRedirectAtom)
+  
 
   const searchHandler = async (event:InputChangeEvent)=>{
     setSearchValue(event.target.value)
@@ -33,6 +38,7 @@ export default function Header() {
     setResultValues(response.data)
     setShowResultValues(true)
   }
+
   const router = useNavigate();
   return (
     <header className="flex justify-between h-16 items-center bg-header_bg px-10 py-3">
@@ -59,11 +65,11 @@ export default function Header() {
                       className="hover:bg-gray-200 cursor-pointer p-3 border-b rounded-xl"
                       key={index}
                       onClick={() => {
-                        router(`/user/${user._id}`)
                         setSearchValue("")
                         setResultValues([])
                         setShowResultValues(false)
-                        window.location.reload
+                        setRedirect(true)
+                        router(`/user/${user._id}`)
                       }}
                     >
                       <div className="flex items-center gap-3">

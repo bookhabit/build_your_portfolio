@@ -4,20 +4,31 @@ import axios from 'axios';
 import { UserInfoType } from '../Types/userType';
 import UserInfoBasic from '../components/UserInfoUI/UserInfoBasic';
 import UserUI_3D from '../components/UserInfoUI/UserUI_3D';
+import { useRecoilState } from 'recoil';
+import { SearchRedirectAtom } from '../recoil/searchAtom';
 
 const UserPage = () => {
     const {id:userId} = useParams();
-    console.log(userId)
+    const [redirect,setRedirect] = useRecoilState(SearchRedirectAtom)
     const [userInfo,setUserInfo] = useState<UserInfoType|undefined>();
     useEffect(()=>{
         axios.get(`/user/${userId}`).then((response)=>{
             if(response.status===200){
                 const result = response.data.resultUser as UserInfoType;
                 setUserInfo(result)
+                setRedirect(false)
             }
         })
     },[])
-    console.log('user',userInfo)
+    if(redirect){
+        axios.get(`/user/${userId}`).then((response)=>{
+            if(response.status===200){
+                const result = response.data.resultUser as UserInfoType;
+                setUserInfo(result)
+                setRedirect(false)
+            }
+        })
+    }
     return (
         <div>
             {userInfo?.userResumeDoc===null && 
