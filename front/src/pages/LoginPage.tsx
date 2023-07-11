@@ -12,7 +12,10 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
 import { userAtom } from "../recoil/userAtom";
 
+const CLIENT_ID = "1251dd62543c1d6e0fc6";
+
 export default function LoginPage() {
+  const [rerender,setRerender] = useState(false)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
@@ -23,9 +26,9 @@ export default function LoginPage() {
     password:"",
   })
   const [validateMode,setValidateMode ] = useRecoilState<boolean>(validateModeAtom)
-  useEffect(() => {
-    gsap.fromTo(formRef.current,{x: 1000}, {x: 0} )
-}, [])
+//   useEffect(() => {
+//     gsap.fromTo(formRef.current,{x: 1000}, {x: 0} )
+// }, [])
 
   const onChangeInput = (event:InputChangeEvent)=>{
     if(event.target.name==="email"){
@@ -85,10 +88,32 @@ export default function LoginPage() {
     return <Navigate to="/"/>
   }
 
-  async function registerGithub(event:React.FormEvent){ 
+    // 깃허브 로그인 로직
+  // Forward the user to the github login screen
+  // User is now on the github side and logs in 
+  // When user decides to login ... they get forwarded back to localhost:3000
+  // But localhost:3000/?code=ADSDSAFADSFAFS
+  // Use the code to get the access token
+  async function loginWithGithub(event:React.FormEvent){
     event.preventDefault()
-    console.log('깃허브 로그인 로직')
+    window.location.assign("https://github.com/login/oauth/authorize?client_id="+CLIENT_ID)
   }
+  useEffect(()=>{
+    // 확인 localhost:3000/?code=ADSDSAFADSFAFS
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const codeParam = urlParams.get("code")
+    console.log(codeParam)
+
+    if(codeParam && (localStorage.getItem("accessToken")===null)){
+      async function getAccessToken() {
+        await axios.get(`/githubLogin?code=${codeParam}`).then((response)=>{
+          console.log(response)
+        })
+      }
+      getAccessToken();
+    }
+  },[])
 
   async function registerGoogle(event:React.FormEvent){ 
     event.preventDefault()
@@ -132,7 +157,7 @@ export default function LoginPage() {
             />
             <Button
                 text="Login with Github"
-                _onClick={registerGithub}
+                _onClick={loginWithGithub}
                 sort="social"
                 icon={githubSvg}
                 alt="깃허브 로고"

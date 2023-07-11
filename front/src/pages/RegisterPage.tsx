@@ -1,8 +1,6 @@
 import { useNavigate} from "react-router-dom";
 import {  useEffect, useRef, useState} from "react";
 import axios from "axios";
-import googleSvg from "../assets/auth/google.svg"
-import githubSvg from "../assets/auth/github.svg"
 import { Button, Input } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
 import gsap from 'gsap'
@@ -103,16 +101,6 @@ export default function ReigsterPage() {
     }
   }
 
-  async function registerGithub(event:React.FormEvent){ 
-    event.preventDefault()
-    console.log('깃허브 로그인 로직')
-  }
-
-  async function registerGoogle(event:React.FormEvent){ 
-    event.preventDefault()
-    console.log('구글 로그인 로직')
-  }
-
   if(redirect){
     router('/login')
   }
@@ -175,20 +163,6 @@ export default function ReigsterPage() {
                   text="Sign up"
                   _onClick={registerLocal}
                   sort="auth"
-            />
-            <Button
-                text="Login with Github"
-                _onClick={registerGithub}
-                sort="social"
-                icon={githubSvg}
-                alt="깃허브 로고"
-            />
-            <Button
-                  text="Login with Google"
-                  _onClick={registerGoogle}
-                  sort="social"
-                  icon={googleSvg}
-                  alt="구글로고"
             />
           </div>
         </form>

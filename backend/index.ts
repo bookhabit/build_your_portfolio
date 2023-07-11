@@ -18,6 +18,7 @@ import pathLB from "path"
 import { Error } from "mongoose";
 import { ResumeType } from "./Types/ResumeType";
 import { PortfolioType } from "./Types/PortfolioType";
+import axios from "axios"
 
 dotenv.config();
 const app: Express = express();
@@ -81,6 +82,56 @@ app.post('/login', async (req:Request,res:Response) => {
     res.status(404).json('해당 이메일의 유저를 찾을 수 없습니다');
   }
 });
+
+// 깃허브 로그인
+app.get('/githubLogin',async (req:Request,res:Response)=> {
+  console.log(req.query.code)
+  // 깃허브에 accessToken얻기
+  const baseUrl = "https://github.com/login/oauth/access_token";
+  const body = {
+    client_id: process.env.GITHUB_CLIENT_ID,
+    client_secret: process.env.GITHUB_CLIENT_SECRET,
+    code: req.body.code,
+  };
+  try{
+    const { data: requestToken } = await axios.post(baseUrl, body, {
+      headers: { Accept: "application/json" },
+    });
+    console.log(requestToken)
+    // 깃허브에 있는 user정보 가져오기
+    const { access_token } = requestToken; // ③ ~ ④에 해당
+
+    const apiUrl = "https://api.github.com";
+    const { data: userdata } = await axios.get(`${apiUrl}/user`, {
+      headers: { Authorization: `token ${access_token}` },
+    });
+    // 가져온 user정보를 우리 로컬 데이터베이스에 저장하기
+    // 이메일과 일치하는 유저를 DB 찾음
+    // 이메일과 일치하는 유저가 존재하지 않을 경우 회원가입을 시킴
+
+    // let user = await User.findOne({ where: { email } });
+    // if (!user) {
+    //   user = await User.create({
+    //     email,
+    //     nickname,
+    //     avatarUrl,
+    //     provider: "github",
+    //     snsId: id,
+    //   });
+    // }
+
+    // session에 저장하거나 passport를 이용할 경우에는 req.session.passport.user에 id를 할당
+    // req.session.passport = { user: user.id };
+
+  // 쿠키에 accessToekn저장해주고 user정보 가공해서 넘겨주기
+  }catch(err){
+    console.error(err);
+    return res.redirect(
+      500,
+      "/?loginError=서버 에러로 인해 로그인에 실패하였습니다. 잠시 후에 다시 시도해 주세요",
+    );
+  }
+})
 
 // 로그아웃
 app.post('/logout',(req:Request,res:Response)=>{
