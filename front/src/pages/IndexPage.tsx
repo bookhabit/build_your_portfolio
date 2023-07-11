@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router"
-import { useEffect } from "react";
-import PrfofileUI from "../assets/scrollUI/profileUI.png"
-import ResumeUI from "../assets/scrollUI/resumeUI.png"
-import CoverLetterUI from "../assets/scrollUI/coverLetterUI.png"
-import PortfolioUI from "../assets/scrollUI/PortfolioUI.png"
-import PortfolioForm1 from "../assets/scrollUI/PortfolioForm1.png"
-import PortfolioForm2 from "../assets/scrollUI/PortfolioForm2.png"
-import PortfolioForm3 from "../assets/scrollUI/PortfolioForm3.png"
-import PortfolioForm4 from "../assets/scrollUI/PortfolioForm4.png"
+import { useEffect, useState } from "react";
+import userMainBasic from "../assets/mainPageImg/userMainBasic.png"
+import userMainVideo from "../assets/mainPageImg/userMain3D.mp4"
+import userMainVideoMobile from "../assets/mainPageImg/userMain3dMobile.mp4"
+import PrfofileUI from "../assets/mainPageImg/profileUI.png"
+import ResumeUI from "../assets/mainPageImg/resumeUI.png"
+import CoverLetterUI from "../assets/mainPageImg/coverLetterUI.png"
+import PortfolioUI from "../assets/mainPageImg/PortfolioUI.png"
+import PortfolioForm1 from "../assets/mainPageImg/PortfolioForm1.png"
+import PortfolioForm2 from "../assets/mainPageImg/PortfolioForm2.png"
+import PortfolioForm3 from "../assets/mainPageImg/PortfolioForm3.png"
+import PortfolioForm4 from "../assets/mainPageImg/PortfolioForm4.png"
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../recoil/userAtom";
 
@@ -72,31 +75,44 @@ export default function IndexPage() {
 
   function imgCss(src:string,alt:string){
     return (
-      <img src={src} alt={alt} className="shadow-scrollUI rounded-xl" />
+      <img src={src} alt={alt} className="shadow-scrollUI rounded-xl object-fill" />
     )
   }
   return (
       <div className="px-0 md:px-14 py-20">
         {/* 유저 페이지 */}
-        <div className="preView-resume flex flex-col items-center gap-5">
-          {TitleCss("나만의", "이력서와 포트폴리오", "를 관리해보세요")}
-          <div className="profile">
-            {subTitleCss("프로필 정보를 쉽게 관리할 수 있습니다")}
+        <div className="preView-resume flex flex-col items-center gap-5 mb-80">
+          {TitleCss("나만의", "이력서와 포트폴리오", "를 쉽게 관리할 수 있습니다")}
+          <div className="profile flex flex-col lg:flex-row justify-around items-center">
             <div className="user-profile">
-              {imgCss(PrfofileUI, "프로필 이미지")}
+              {subTitleCss("Basic 디자인")}
+              {imgCss(userMainBasic, "유저페이지 Basic")}
             </div>
-          </div>
-          <div className="resume-cover fadeInContainer">
-            {subTitleCss("이력서와 자기소개서를 관리할 수 있어요")}
-            <div className="flex flex-col items-center justify-center gap-5 md:flex-row ">
-              <img src={ResumeUI} alt="이력서 이미지" className="shadow-scrollUI md:w-1/2" />
-              <img src={CoverLetterUI} alt="자기소개서 이미지" className="shadow-scrollUI md:w-1/2" />
-            </div>
-          </div>
-          <div className="portfoils fadeInContainer">
-            {subTitleCss("포트폴리오를 등록할 수 있어요")}
-            <div className="user-portfolios">
-              {imgCss(PortfolioUI, "포트폴리오 이미지")}
+            <div className="flex flex-col w-full lg:w-1/2 items-center">
+              <div className="user-profile">
+                {subTitleCss("3D 디자인 PC")}
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  width="100%"
+                  height="100%"
+                  className="shadow-scrollUI rounded-xl"
+                ><source src={userMainVideo} type="video/mp4"/></video>
+              </div>
+              <div className="user-profile w-[300px] h-[300px]">
+                {subTitleCss("3D 디자인 Mobile")}
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  width="100%"
+                  height="100%"
+                  className="shadow-scrollUI rounded-xl cursor-pointer"
+                ><source src={userMainVideoMobile} type="video/mp4"/></video>
+              </div>
             </div>
           </div>
         </div>
