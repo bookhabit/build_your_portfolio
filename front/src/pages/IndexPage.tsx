@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import userMainBasic from "../assets/mainPageImg/userMainBasic.png"
 import userMainVideo from "../assets/mainPageImg/userMain3D.mp4"
 import userMainVideoMobile from "../assets/mainPageImg/userMain3dMobile.mp4"
-import PrfofileUI from "../assets/mainPageImg/profileUI.png"
-import ResumeUI from "../assets/mainPageImg/resumeUI.png"
-import CoverLetterUI from "../assets/mainPageImg/coverLetterUI.png"
-import PortfolioUI from "../assets/mainPageImg/PortfolioUI.png"
 import PortfolioForm1 from "../assets/mainPageImg/PortfolioForm1.png"
 import PortfolioForm2 from "../assets/mainPageImg/PortfolioForm2.png"
 import PortfolioForm3 from "../assets/mainPageImg/PortfolioForm3.png"
 import PortfolioForm4 from "../assets/mainPageImg/PortfolioForm4.png"
+import PortfolioDesignA from "/PortfolioDesignA.png"
+import PortfolioDesignB from "/PortfolioDesignB.png"
+import PortfolioDesignC from "/PortfolioDesignC.png"
+import PortfolioDesignD from "/PortfolioDesignD.png"
+
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../recoil/userAtom";
 
@@ -81,14 +82,19 @@ export default function IndexPage() {
   return (
       <div className="px-0 md:px-14 py-20">
         {/* 유저 페이지 */}
-        <div className="preView-resume flex flex-col items-center gap-5 mb-80">
-          {TitleCss("나만의", "이력서와 포트폴리오", "를 쉽게 관리할 수 있습니다")}
-          <div className="profile flex flex-col lg:flex-row justify-around items-center lg:items-start">
+        <div className="preView-resume flex flex-col items-center gap-5 mb-20 px-0 lg:px-40">
+          {TitleCss("나만의", "이력서와 포트폴리오", "를 쉽게 관리해보세요")}
+          <div className="profile flex flex-col lg:flex-row w-full justify-around gap-5">
             <div className="user-profile">
               {subTitleCss("Basic 디자인")}
               {imgCss(userMainBasic, "유저페이지 Basic")}
             </div>
-            <div className="flex flex-col w-full lg:w-1/2 items-center lg:items-end">
+            <div className="fadeInContainer p-10 w-full lg:w-2/3 flex flex-col justify-center items-center">
+              <p className="font-bold text-4xl">포트폴리오를 등록만 하면 </p>
+              <p className="font-bold text-4xl mt-3"><span className="text-5xl text-red-300">디자인</span>은 알아서 꾸며줍니다</p>
+            </div>
+          </div>
+          <div className="fadeInContainer flex flex-col lg:flex-row gap-10 w-full items-center lg:items-end">
               <div className="user-profile">
                 {subTitleCss("3D 디자인 PC")}
                 <video
@@ -101,7 +107,7 @@ export default function IndexPage() {
                   className="shadow-scrollUI rounded-xl"
                 ><source src={userMainVideo} type="video/mp4"/></video>
               </div>
-              <div className="fadeInContainer user-profile w-[350px] h-[300px]">
+              <div className="user-profile ">
                 {subTitleCss("3D 디자인 Mobile")}
                 <video
                   autoPlay
@@ -114,46 +120,62 @@ export default function IndexPage() {
                 ><source src={userMainVideoMobile} type="video/mp4"/></video>
               </div>
             </div>
-          </div>
         </div>
           
 
         {/* 포트폴리오 등록 페이지 */}
         <div className="fadeInContainer preView-portfolio-form flex flex-col items-center gap-5">
           {TitleCss("나만의", "포트폴리오", "를 등록해보세요")}
-          <div className="flex gap-4">
-          <div className=" user-portfolio-form1">
-            {subTitleCss("프로젝트의 설명을 적어주세요")}
-            {imgCss(PortfolioForm1, "포트폴리오 폼 이미지")}
-          </div>
-          <div className=" user-portfolio-form2">
-            {subTitleCss("프로젝트의 이미지와 기술스택들을 적어주세요")}
-            {imgCss(PortfolioForm2, "포트폴리오 폼 이미지")}
-          </div>
-          <div className=" user-portfolio-form3">
-            {subTitleCss("프로젝트의 핵심기능들을 적어주세요")}
-            {imgCss(PortfolioForm3, "포트폴리오 폼 이미지")}
-          </div>
-          <div className=" user-portfolio-form3">
-            {subTitleCss("프로젝트의 카테고리와 원하는 UI를 선택해주세요")}
-            {imgCss(PortfolioForm4, "포트폴리오 폼 이미지")}
-          </div>
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className=" user-portfolio-form1">
+              {subTitleCss("프로젝트의 설명을 적어주세요")}
+              {imgCss(PortfolioForm1, "포트폴리오 폼 이미지")}
+            </div>
+            <div className=" user-portfolio-form2">
+              {subTitleCss("프로젝트의 이미지와 기술스택들을 적어주세요")}
+              {imgCss(PortfolioForm2, "포트폴리오 폼 이미지")}
+            </div>
+            <div className=" user-portfolio-form3">
+              {subTitleCss("프로젝트의 핵심기능들을 적어주세요")}
+              {imgCss(PortfolioForm3, "포트폴리오 폼 이미지")}
+            </div>
+            <div className=" user-portfolio-form3">
+              {subTitleCss("프로젝트의 카테고리와 원하는 UI를 선택해주세요")}
+              {imgCss(PortfolioForm4, "포트폴리오 폼 이미지")}
+            </div>
           </div>
         </div>
 
         {/* 포트폴리오 상세 페이지 */}
-        
-        <div className={'fadeInContainer'} >
-          {TitleCss("선택하신 UI대로", "포트폴리오를", "꾸며줍니다")}
+        <div className="fadeInContainer preView-portfolio-form flex flex-col items-center gap-5 px-0 xl:px-40 2xl:px-80">
+          {TitleCss("선택하신 디자인으로", "포트폴리오를", "꾸며줍니다")}
+          <div className="flex flex-col gap-4 items-center justify-center">
+            <div className=" user-portfolio-form1 h-full">
+              {subTitleCss("A - Basic 디자인")}
+              {imgCss(PortfolioDesignA, "포트폴리오 폼 이미지")}
+            </div>
+            <div className=" user-portfolio-form2 h-full">
+              {subTitleCss("B - Scroll 디자인")}
+              {imgCss(PortfolioDesignB, "포트폴리오 폼 이미지")}
+            </div>
+            <div className=" user-portfolio-form3 h-full">
+              {subTitleCss("C - PPT 디자인 ")}
+              {imgCss(PortfolioDesignC, "포트폴리오 폼 이미지")}
+            </div>
+            <div className=" user-portfolio-form3 h-full">
+              {subTitleCss("D - 3D 디자인")}
+              {imgCss(PortfolioDesignD, "포트폴리오 폼 이미지")}
+            </div>
+          </div>
         </div>
         
 
         {/* 포트폴리오 등록하러 가기 버튼 - router */}
-        <p
-        className="fadeInContainer text-3xl py-14 text-center text-orange-500 cursor-pointer" onClick={handleClick}
+        <div
+        className="fadeInContainer text-3xl py-14 text-center" onClick={handleClick}
         >
-          포트폴리오 등록하러 가기
-        </p>
+          <button className="p-10 rounded-lg bg-orange-500 hover:bg-orange-600 text-white cursor-pointer">포트폴리오 등록하러 가기</button>
+        </div>
         
         {user && (
           <div className="fixed bottom-5 right-5 w-68">

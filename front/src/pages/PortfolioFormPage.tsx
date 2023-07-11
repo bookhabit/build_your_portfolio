@@ -67,19 +67,19 @@ export default function PortfolioFormPage() {
     const PortfolioUIradio = [{
       name:"A",
       desc:"Basic",
-      src:"https://file.miricanvas.com/template_thumb/2022/09/19/21/00/k2oejh1gzpx67va3/thumb.jpg"
+      src:"/PortfolioDesignA.png"
     } , {
       name:"B",
       desc:"Scroll Parallax",
-      src:"https://file.miricanvas.com/template_thumb/2022/10/05/12/10/kchzz44ut2gqscd2/thumb.jpg"
+      src:"/PortfolioDesignB.png"
     } , {
       name:"C",
       desc:"Slide-UI",
-      src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
+      src:"/PortfolioDesignC.png"
     },{
       name:"D",
       desc:"3D-UI",
-      src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
+      src:"/PortfolioDesignD.png"
     }]
 
     // image-view-state
@@ -315,8 +315,9 @@ export default function PortfolioFormPage() {
     }
     return(
       <div className="flex items-center justify-center py-12 px-14">
-        {showPreview ? showPreview && previewForm &&  <div className="absolute inset-0 bg-black min-h-screen">
-            <div className="bg-black p-8 grid gap-4">
+        {showPreview ? showPreview && previewForm &&  
+        <div className="absolute inset-0 min-h-screen">
+            <div className=" p-8 grid gap-4">
               <div>
                 <button onClick={() => setShowPreview(false)} className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -611,6 +612,7 @@ export default function PortfolioFormPage() {
         </div>
         <div className={formItemTextareaClass()}>
           <Label label="포트폴리오 UI" sort="portfolioLabel"/>
+          <p className="font-light text-gray-400">(미리보기 기능 : 해당 디자인을 클릭 후 확대버튼을 클릭하시면 됩니다)</p>
           <div className="flex flex-col gap-8 justify-evenly md:flex-row">
             {PortfolioUIradio.map((kind)=>(
                 <label
@@ -628,8 +630,8 @@ export default function PortfolioFormPage() {
                   className="hidden"
                 />
                 {kind.name}
-                <div className="w-52 h-52 rounded-full overflow-hidden">
-                  <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
+                <div className="w-72 h-72 rounded-full overflow-hidden">
+                  <img src={kind.src} className="w-full h-full object-fill cursor-pointer" alt={kind.name + " 이미지"} />
                 </div>
                 <img 
                   src={PreviewIcon} 

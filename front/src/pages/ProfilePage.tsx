@@ -8,7 +8,6 @@ import UserUI_3D from "../components/UserInfoUI/UserUI_3D";
 import { UserInfoType, userUI } from "../Types/userType";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../recoil/userAtom";
-// import ImageUI from "../components/common/ImageUI";
 
 export default function ProfilePage() {
     const [user,setUser] = useRecoilState(userAtom);
@@ -40,11 +39,11 @@ console.log('user',user)
     const userUIradio = [{
         name:"Basic",
         desc:"기본",
-        src:"https://file.miricanvas.com/template_thumb/2022/09/19/21/00/k2oejh1gzpx67va3/thumb.jpg"
+        src:"/userMainBasic.png"
       } ,{
         name:"3D",
         desc:"3D와 애니메이션",
-        src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb65u-m8PLHvYEJKyQnUKO846ERarRhJzaMfl3d1Rktsf0TMlCQ4xj48uVbKROQpR11U&usqp=CAU"
+        src:"/userMain3D.png"
       }]
 
       // image-view 전체보기
