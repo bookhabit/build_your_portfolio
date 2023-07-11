@@ -147,22 +147,22 @@ export default function IndexPage() {
         </div>
 
         {/* 포트폴리오 상세 페이지 */}
-        <div className="fadeInContainer preView-portfolio-form flex flex-col items-center gap-5 px-0 xl:px-40 2xl:px-80">
+        <div className="preView-portfolio-form flex flex-col items-center gap-5 px-0 xl:px-40 2xl:px-80">
           {TitleCss("선택하신 디자인으로", "포트폴리오를", "꾸며줍니다")}
           <div className="flex flex-col gap-4 items-center justify-center">
-            <div className=" user-portfolio-form1 h-full">
+            <div className="fadeInContainer user-portfolio-form1 h-full">
               {subTitleCss("A - Basic 디자인")}
               {imgCss(PortfolioDesignA, "포트폴리오 폼 이미지")}
             </div>
-            <div className=" user-portfolio-form2 h-full">
+            <div className="fadeInContainer user-portfolio-form2 h-full">
               {subTitleCss("B - Scroll 디자인")}
               {imgCss(PortfolioDesignB, "포트폴리오 폼 이미지")}
             </div>
-            <div className=" user-portfolio-form3 h-full">
+            <div className="fadeInContainer user-portfolio-form3 h-full">
               {subTitleCss("C - PPT 디자인 ")}
               {imgCss(PortfolioDesignC, "포트폴리오 폼 이미지")}
             </div>
-            <div className=" user-portfolio-form3 h-full">
+            <div className="fadeInContainer user-portfolio-form3 h-full">
               {subTitleCss("D - 3D 디자인")}
               {imgCss(PortfolioDesignD, "포트폴리오 폼 이미지")}
             </div>
