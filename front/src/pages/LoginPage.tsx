@@ -15,7 +15,6 @@ import { userAtom } from "../recoil/userAtom";
 const CLIENT_ID = "1251dd62543c1d6e0fc6";
 
 export default function LoginPage() {
-  const [rerender,setRerender] = useState(false)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
@@ -89,32 +88,34 @@ export default function LoginPage() {
   }
 
     // 깃허브 로그인 로직
-  // Forward the user to the github login screen
-  // User is now on the github side and logs in 
-  // When user decides to login ... they get forwarded back to localhost:3000
-  // But localhost:3000/?code=ADSDSAFADSFAFS
-  // Use the code to get the access token
+    // Forward the user to the github login screen
+    // User is now on the github side and logs in 
+    // When user decides to login ... they get forwarded back to localhost:3000
+    // But localhost:3000/?code=ADSDSAFADSFAFS
+    // Use the code to get the access token
 
   useEffect(()=>{
     // 확인 localhost:3000/?code=ADSDSAFADSFAFS
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code")
-    console.log(codeParam)
 
     if(codeParam){
-      async function getAccessToken() {
-        await axios.get(`/githubLogin?code=${codeParam}`).then((response)=>{
-          console.log(response)
-        })
+      async function gitHubLogin() {
+        await axios.get(`/githubLogin?code=${codeParam}`)
+        .then((response) => {
+          console.log(response);
+          // setUser(response.data as UserInfoType);
+        });
       }
-      getAccessToken();
+      gitHubLogin();
     }
   },[])
 
   async function loginWithGithub(event:React.FormEvent){
     event.preventDefault()
-    window.location.assign("https://github.com/login/oauth/authorize?client_id="+CLIENT_ID)
+    const scope = "user user:email"; 
+    window.location.assign(`https://github.com/login/oauth/authorize?scope=${scope}&client_id=${CLIENT_ID}`)
   }
 
   async function registerGoogle(event:React.FormEvent){ 
