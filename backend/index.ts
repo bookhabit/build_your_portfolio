@@ -91,7 +91,7 @@ app.get('/githubLogin',async (req:Request,res:Response)=> {
   const body = {
     client_id: process.env.GITHUB_CLIENT_ID,
     client_secret: process.env.GITHUB_CLIENT_SECRET,
-    code: req.body.code,
+    code: req.query.code,
   };
   try{
     const { data: requestToken } = await axios.post(baseUrl, body, {
@@ -99,12 +99,12 @@ app.get('/githubLogin',async (req:Request,res:Response)=> {
     });
     console.log(requestToken)
     // 깃허브에 있는 user정보 가져오기
-    const { access_token } = requestToken; // ③ ~ ④에 해당
+    // const { access_token } = requestToken; // ③ ~ ④에 해당
 
-    const apiUrl = "https://api.github.com";
-    const { data: userdata } = await axios.get(`${apiUrl}/user`, {
-      headers: { Authorization: `token ${access_token}` },
-    });
+    // const apiUrl = "https://api.github.com";
+    // const { data: userdata } = await axios.get(`${apiUrl}/user`, {
+    //   headers: { Authorization: `token ${access_token}` },
+    // });
     // 가져온 user정보를 우리 로컬 데이터베이스에 저장하기
     // 이메일과 일치하는 유저를 DB 찾음
     // 이메일과 일치하는 유저가 존재하지 않을 경우 회원가입을 시킴

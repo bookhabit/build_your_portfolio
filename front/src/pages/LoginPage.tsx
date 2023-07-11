@@ -94,10 +94,7 @@ export default function LoginPage() {
   // When user decides to login ... they get forwarded back to localhost:3000
   // But localhost:3000/?code=ADSDSAFADSFAFS
   // Use the code to get the access token
-  async function loginWithGithub(event:React.FormEvent){
-    event.preventDefault()
-    window.location.assign("https://github.com/login/oauth/authorize?client_id="+CLIENT_ID)
-  }
+
   useEffect(()=>{
     // 확인 localhost:3000/?code=ADSDSAFADSFAFS
     const queryString = window.location.search;
@@ -105,7 +102,7 @@ export default function LoginPage() {
     const codeParam = urlParams.get("code")
     console.log(codeParam)
 
-    if(codeParam && (localStorage.getItem("accessToken")===null)){
+    if(codeParam){
       async function getAccessToken() {
         await axios.get(`/githubLogin?code=${codeParam}`).then((response)=>{
           console.log(response)
@@ -114,6 +111,11 @@ export default function LoginPage() {
       getAccessToken();
     }
   },[])
+
+  async function loginWithGithub(event:React.FormEvent){
+    event.preventDefault()
+    window.location.assign("https://github.com/login/oauth/authorize?client_id="+CLIENT_ID)
+  }
 
   async function registerGoogle(event:React.FormEvent){ 
     event.preventDefault()
