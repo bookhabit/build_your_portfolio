@@ -120,14 +120,13 @@ app.get('/githubLogin',async (req:Request,res:Response)=> {
       try{
         if(dbEmailUser && dbEmailUser?.email===email){
           // 이미 존재하는 이메일이면 바로 로그인시키기
-          // jwt.sign({
-          //   email:dbEmailUser.email,
-          //   id:dbEmailUser._id
-          // }, jwtSecret, {}, (err,token) => {
-          //   if (err) throw err;
-          //   return res.cookie('token', token).status(200).json(dbEmailUser);
-          // });
-          return res.status(200).json(dbEmailUser);
+          jwt.sign({
+            email:dbEmailUser.email,
+            id:dbEmailUser._id
+          }, jwtSecret, {}, (err,token) => {
+            if (err) throw err;
+            return res.cookie('token', token).status(200).json(dbEmailUser);
+          });
         }else{
           // 존재하지 않는 이메일이면 회원가입 후 로그인시키기
           const userDoc = await User.create({
@@ -136,14 +135,13 @@ app.get('/githubLogin',async (req:Request,res:Response)=> {
             email:email,
           })
           console.log('회원가입할 때 userDoc',userDoc)
-          // jwt.sign({
-          //   email:userDoc.email,
-          //   id:userDoc._id
-          // }, jwtSecret, {}, (err,token) => {
-          //   if (err) throw err;
-          //   res.cookie('token', token).status(200).json(userDoc);
-          // });
-          return res.status(200).json(userDoc);
+          jwt.sign({
+            email:userDoc.email,
+            id:userDoc._id
+          }, jwtSecret, {}, (err,token) => {
+            if (err) throw err;
+            return res.cookie('token', token).status(200).json(userDoc);
+          });
         }
       }catch(e){
         res.status(422)

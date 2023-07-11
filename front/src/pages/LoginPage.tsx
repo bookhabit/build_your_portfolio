@@ -1,4 +1,4 @@
-import { Navigate} from "react-router-dom";
+import { Navigate, useNavigate} from "react-router-dom";
 import { useEffect, useRef, useState} from "react";
 import axios from "axios";
 import googleSvg from "../assets/auth/google.svg"
@@ -15,6 +15,7 @@ import { userAtom } from "../recoil/userAtom";
 const CLIENT_ID = "1251dd62543c1d6e0fc6";
 
 export default function LoginPage() {
+  const router = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
@@ -105,7 +106,10 @@ export default function LoginPage() {
         await axios.get(`/githubLogin?code=${codeParam}`)
         .then((response) => {
           console.log(response);
-          // setUser(response.data as UserInfoType);
+          if(response.status===200){
+            setUser(response.data as UserInfoType);
+            router("/")
+          }
         });
       }
       gitHubLogin();
