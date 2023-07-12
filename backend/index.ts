@@ -177,7 +177,7 @@ app.get("/google/login",async (req: Request, res: Response) => {
   const GOOGLE_USERINFO_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
 
   // email, google id 등의 사용자 구글 계정 정보 가져오기
-  const userData= await axios.get(GOOGLE_USERINFO_URL, {
+  const googleUserData= await axios.get(GOOGLE_USERINFO_URL, {
     // Request Header에 Authorization 추가
     headers: {
         Authorization: `Bearer ${tokenData.data.access_token}`,
@@ -185,15 +185,13 @@ app.get("/google/login",async (req: Request, res: Response) => {
   });
 
   // userData로 email db확인 
-  const dbEmailUser = await User.findOne({email:userData.data.email})
+  const dbEmailUser = await User.findOne({email:googleUserData.data.email})
   console.log('db로찾은 db유저')
-  console.log('구글로그인이메일',userData.data.email)
-  if(dbEmailUser){
-    console.log('db로찾은 db유저 이메일',dbEmailUser.email)
-  }
+  console.log('구글로그인이메일',googleUserData.data.email)
+  
   try{
     // 해당 email이 db에 있으면 토큰발급 후 로그인
-    if(dbEmailUser && dbEmailUser?.email===userData.data.email){
+    if(dbEmailUser && dbEmailUser?.email===googleUserData.data.email){
       jwt.sign({
         email:dbEmailUser.email,
         id:dbEmailUser._id
@@ -202,8 +200,19 @@ app.get("/google/login",async (req: Request, res: Response) => {
         return res.cookie('token', token).status(200).json(dbEmailUser);
       });
     }else{
-    // 해당 email이 db에 없으면 회원가입시키고 토큰발급
-
+      // 해당 email이 db에 없으면 회원가입시키고 토큰발급
+      const userDoc = await User.create({
+        name:googleUserData.data.name,
+        email:googleUserData.data.email,
+      })
+      console.log('회원가입할 때 userDoc',userDoc)
+      jwt.sign({
+        email:userDoc.email,
+        id:userDoc._id
+      }, jwtSecret, {}, (err,token) => {
+        if (err) throw err;
+        return res.cookie('token', token).status(200).json(userDoc);
+      });
     }
   }catch(err){
     res.status(422).json(err)
