@@ -12,6 +12,7 @@ import { validateModeAtom } from "../recoil/validateAtom";
 import { userAtom } from "../recoil/userAtom";
 
 const GITHUB_CLIENT_ID = "1251dd62543c1d6e0fc6";
+const GOOGLE_CLIENT_ID = "454233507421-t57fvs9nsthq9577tkp2eh938cruhvib.apps.googleusercontent.com";
 
 export default function LoginPage() {
   const router = useNavigate();
@@ -25,9 +26,10 @@ export default function LoginPage() {
     password:"",
   })
   const [validateMode,setValidateMode ] = useRecoilState<boolean>(validateModeAtom)
-//   useEffect(() => {
-//     gsap.fromTo(formRef.current,{x: 1000}, {x: 0} )
-// }, [])
+  
+  useEffect(() => {
+    gsap.fromTo(formRef.current,{x: 1000}, {x: 0} )
+}, [])
 
   const onChangeInput = (event:InputChangeEvent)=>{
     if(event.target.name==="email"){
@@ -87,18 +89,11 @@ export default function LoginPage() {
     return <Navigate to="/"/>
   }
 
-    // 깃허브 로그인 로직
-    // Forward the user to the github login screen
-    // User is now on the github side and logs in 
-    // When user decides to login ... they get forwarded back to localhost:3000
-    // But localhost:3000/?code=ADSDSAFADSFAFS
-    // Use the code to get the access token
-
     // 깃허브 로그인
     async function gitHubLoginAPI(code:string) {
       console.log('깃허브 로그인 시작')
       try {
-        const response = await axios.get(`/githubLogin?code=${code}`);
+        const response = await axios.get(`/github/login?code=${code}`);
         console.log(response);
         if (response.status === 200) {
           setUser(response.data as UserInfoType);
@@ -154,11 +149,10 @@ export default function LoginPage() {
     async function loginWithGoogle(event: React.FormEvent) {
       event.preventDefault();
 
-      const googleClientId = "454233507421-t57fvs9nsthq9577tkp2eh938cruhvib.apps.googleusercontent.com";
       const redirectUri = "http://localhost:5173/login/google"
       const scope = "profile email";
       window.location.assign(
-        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`
+        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`
       );
     }
 

@@ -84,7 +84,7 @@ app.post('/login', async (req:Request,res:Response) => {
 });
 
 // 깃허브 로그인
-app.get('/githubLogin',async (req:Request,res:Response)=> {
+app.get('/github/login',async (req:Request,res:Response)=> {
   // 1. 깃허브에 accessToken얻기
   const baseUrl = "https://github.com/login/oauth/access_token";
   const body = {
@@ -186,8 +186,6 @@ app.get("/google/login",async (req: Request, res: Response) => {
 
   // userData로 email db확인 
   const dbEmailUser = await User.findOne({email:googleUserData.data.email})
-  console.log('db로찾은 db유저')
-  console.log('구글로그인이메일',googleUserData.data.email)
   
   try{
     // 해당 email이 db에 있으면 토큰발급 후 로그인
@@ -205,7 +203,6 @@ app.get("/google/login",async (req: Request, res: Response) => {
         name:googleUserData.data.name,
         email:googleUserData.data.email,
       })
-      console.log('회원가입할 때 userDoc',userDoc)
       jwt.sign({
         email:userDoc.email,
         id:userDoc._id
