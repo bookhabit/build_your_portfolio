@@ -161,36 +161,37 @@ app.get("/google/login",async (req: Request, res: Response) => {
   const { code } = req.query;
   console.log(`code: ${code}`);
   // 토큰을 요청하기 위한 구글 인증 서버 url
-  // const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
+  const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
-  // // access_token, refresh_token 등의 구글 토큰 정보 가져오기
-  // const tokenData = await axios.post(GOOGLE_TOKEN_URL, {
-  //     // x-www-form-urlencoded(body)
-  //     code,
-  //     client_id: process.env.GOOGLE_CLIENT_ID,
-  //     client_secret: process.env.GOOGLE_CLIENT_SECRET,
-  //     redirect_uri: process.env.GOOGLE_SIGNUP_REDIRECT_URI,
-  //     grant_type: 'authorization_code',
-  // });
-  // console.log(tokenData)
+  // access_token, refresh_token 등의 구글 토큰 정보 가져오기
+  const tokenData = await axios.post(GOOGLE_TOKEN_URL, {
+      // x-www-form-urlencoded(body)
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+      grant_type: 'authorization_code',
+  });
+  console.log(tokenData)
   
-  // // email, google id 등을 가져오기 위한 url
-  // const GOOGLE_USERINFO_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
+  // email, google id 등을 가져오기 위한 url
+  const GOOGLE_USERINFO_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
 
-  // // email, google id 등의 사용자 구글 계정 정보 가져오기
-  // const userData= await axios.get(GOOGLE_USERINFO_URL, {
-  //   // Request Header에 Authorization 추가
-  //   headers: {
-  //       Authorization: `Bearer ${tokenData}`,
-  //   },
-  // });
-  // console.log(userData)
-  // // userData로 email db확인 - db에 없으면 회원가입시키고 토큰발급
+  // email, google id 등의 사용자 구글 계정 정보 가져오기
+  const userData= await axios.get(GOOGLE_USERINFO_URL, {
+    // Request Header에 Authorization 추가
+    headers: {
+        Authorization: `Bearer ${tokenData.data.access_token}`,
+    },
+  });
+  console.log(userData)
+  // userData로 email db확인 - db에 없으면 회원가입시키고 토큰발급
 
-  // // userData로 email db확인 - db에 있으면 토큰발급 후 로그인
+  // userData로 email db확인 - db에 있으면 토큰발급 후 로그인
 
-  // 	// 구글 인증 서버에서 json 형태로 반환 받은 body 클라이언트에 반환
-  //   res.status(200).json(userData.data);
+  	// 구글 인증 서버에서 json 형태로 반환 받은 body 클라이언트에 반환
+    // res.status(200).json(userData.data);
+    res.json('엑세스 토큰까지 받음')
 
 });
 
