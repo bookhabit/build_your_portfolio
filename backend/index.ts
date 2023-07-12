@@ -159,7 +159,7 @@ app.get('/githubLogin',async (req:Request,res:Response)=> {
 // 구글 로그인
 app.get("/google/login",async (req: Request, res: Response) => {
   const { code } = req.query;
-  console.log(`code: ${code}`);
+  
   // 토큰을 요청하기 위한 구글 인증 서버 url
   const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
@@ -172,7 +172,6 @@ app.get("/google/login",async (req: Request, res: Response) => {
       redirect_uri: process.env.GOOGLE_REDIRECT_URI,
       grant_type: 'authorization_code',
   });
-  console.log(tokenData)
   
   // email, google id 등을 가져오기 위한 url
   const GOOGLE_USERINFO_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
@@ -184,15 +183,31 @@ app.get("/google/login",async (req: Request, res: Response) => {
         Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
-  console.log(userData)
-  // userData로 email db확인 - db에 없으면 회원가입시키고 토큰발급
 
-  // userData로 email db확인 - db에 있으면 토큰발급 후 로그인
+  // userData로 email db확인 
+  const dbEmailUser = await User.findOne({email:userData.data.email})
+  console.log('db로찾은 db유저')
+  console.log('구글로그인이메일',userData.data.email)
+  if(dbEmailUser){
+    console.log('db로찾은 db유저 이메일',dbEmailUser.email)
+  }
+  try{
+    // 해당 email이 db에 있으면 토큰발급 후 로그인
+    if(dbEmailUser && dbEmailUser?.email===userData.data.email){
+      jwt.sign({
+        email:dbEmailUser.email,
+        id:dbEmailUser._id
+      }, jwtSecret, {}, (err,token) => {
+        if (err) throw err;
+        return res.cookie('token', token).status(200).json(dbEmailUser);
+      });
+    }else{
+    // 해당 email이 db에 없으면 회원가입시키고 토큰발급
 
-  	// 구글 인증 서버에서 json 형태로 반환 받은 body 클라이언트에 반환
-    // res.status(200).json(userData.data);
-    res.json('엑세스 토큰까지 받음')
-
+    }
+  }catch(err){
+    res.status(422).json(err)
+  }
 });
 
 // 로그아웃

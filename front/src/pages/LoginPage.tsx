@@ -114,10 +114,10 @@ export default function LoginPage() {
       try {
         const response = await axios.get(`/google/login?code=${code}`);
         console.log(response);
-        // if (response.status === 200) {
-        //   setUser(response.data as UserInfoType);
-        //   router("/");
-        // }
+        if (response.status === 200) {
+          setUser(response.data as UserInfoType);
+          router("/");
+        }
       } catch (error) {
         // 오류 처리
         console.log(error);
