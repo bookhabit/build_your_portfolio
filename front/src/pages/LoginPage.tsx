@@ -5,14 +5,13 @@ import googleSvg from "../assets/auth/google.svg"
 import githubSvg from "../assets/auth/github.svg"
 import { Button } from "../elements";
 import Input, { InputChangeEvent } from "../elements/Input";
-import gsap from 'gsap'
 import { UserInfoType } from "../Types/userType";
 import validateLoginForm, { ValidationLoginForm } from "../components/common/validation/validateLoginForm";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
 import { userAtom } from "../recoil/userAtom";
 
-const CLIENT_ID = "1251dd62543c1d6e0fc6";
+const GITHUB_CLIENT_ID = "1251dd62543c1d6e0fc6";
 
 export default function LoginPage() {
   const router = useNavigate();
@@ -95,37 +94,73 @@ export default function LoginPage() {
     // But localhost:3000/?code=ADSDSAFADSFAFS
     // Use the code to get the access token
 
-  useEffect(()=>{
-    // 확인 localhost:3000/?code=ADSDSAFADSFAFS
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const codeParam = urlParams.get("code")
-
-    if(codeParam){
-      async function gitHubLogin() {
-        await axios.get(`/githubLogin?code=${codeParam}`)
-        .then((response) => {
-          console.log(response);
-          if(response.status===200){
-            setUser(response.data as UserInfoType);
-            router("/")
-          }
-        });
+    // 깃허브 로그인
+    async function gitHubLoginAPI(code:string) {
+      console.log('깃허브 로그인 시작')
+      try {
+        const response = await axios.get(`/githubLogin?code=${code}`);
+        console.log(response);
+        if (response.status === 200) {
+          setUser(response.data as UserInfoType);
+          router("/");
+        }
+      } catch (error) {
+        // 오류 처리
+        console.log(error);
       }
-      gitHubLogin();
     }
-  },[])
 
-  async function loginWithGithub(event:React.FormEvent){
-    event.preventDefault()
-    const scope = "user user:email"; 
-    window.location.assign(`https://github.com/login/oauth/authorize?scope=${scope}&client_id=${CLIENT_ID}`)
-  }
+    async function googleLoginAPI(code:string) {
+      try {
+        const response = await axios.get(`/google/login?code=${code}`);
+        console.log(response);
+        if (response.status === 200) {
+          setUser(response.data as UserInfoType);
+          router("/");
+        }
+      } catch (error) {
+        // 오류 처리
+        console.log(error);
+      }
+    }
 
-  async function registerGoogle(event:React.FormEvent){ 
-    event.preventDefault()
-    console.log('구글 로그인 로직')
-  }
+    useEffect(() => {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const codeParam = urlParams.get("code");
+      
+      if (codeParam && window.location.pathname === "/login") {
+        gitHubLoginAPI(codeParam);
+      }
+
+        // 구글 로그인
+      if (codeParam && window.location.pathname === "/login/google") {
+        googleLoginAPI(codeParam);
+      }
+
+    }, []);
+    
+    
+    
+    async function loginWithGithub(event: React.FormEvent) {
+      event.preventDefault();
+
+      const scope = "user user:email";
+      window.location.assign(
+        `https://github.com/login/oauth/authorize?scope=${scope}&client_id=${GITHUB_CLIENT_ID}`
+      );
+    }
+    
+    async function loginWithGoogle(event: React.FormEvent) {
+      event.preventDefault();
+
+      const googleClientId = "454233507421-t57fvs9nsthq9577tkp2eh938cruhvib.apps.googleusercontent.com";
+      const redirectUri = "http://localhost:5173/login/google"
+      const scope = "profile email";
+      window.location.assign(
+        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`
+      );
+    }
 
   return (
     <div className="flex items-center justify-center h-full">
@@ -171,7 +206,7 @@ export default function LoginPage() {
             />
             <Button
                   text="Login with Google"
-                  _onClick={registerGoogle}
+                  _onClick={loginWithGoogle}
                   sort="social"
                   icon={googleSvg}
                   alt="구글로고"
