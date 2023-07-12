@@ -129,7 +129,7 @@ export default function LoginPage() {
       const urlParams = new URLSearchParams(queryString);
       const codeParam = urlParams.get("code");
       
-      if (codeParam && window.location.pathname === "/login") {
+      if (codeParam && window.location.pathname === "/login/github") {
         gitHubLoginAPI(codeParam);
       }
 
