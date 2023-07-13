@@ -464,6 +464,7 @@ app.get('/portfolio/:id', async (req:Request,res:Response) => {
   
   try{
       const PortfolioDoc = await Portfolio.findById(portfolioId) as PortfolioType | null
+      
       if(PortfolioDoc){
         const userDoc = await User.findById(PortfolioDoc?.author)  as UserType;
         if(userDoc){
@@ -476,7 +477,7 @@ app.get('/portfolio/:id', async (req:Request,res:Response) => {
       }
       
   }catch(err){
-    res.json({err})
+    res.status(404).json('포트폴리오를 찾을 수 없습니다')
   }
 })
 

@@ -8,6 +8,7 @@ import UI_3D from "../components/PortfolioUI/UI_3D";
 import { PortfolioDetailType } from "../Types/PortfolioType";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../recoil/userAtom";
+import ErrorMsg from "../components/ErrorMsg";
 
 
 const PortfolioPage = () => {
@@ -15,22 +16,35 @@ const PortfolioPage = () => {
     const user = useRecoilValue(userAtom)
     const [userPage,setUserPage] = useState<boolean>(false);
     const [portfolio,setPortfolio] = useState<PortfolioDetailType |undefined>();
+    const [errorMsg,setErrorMsg] = useState<string>('');
 
     useEffect(()=>{
-        axios.get(`/portfolio/${portfolioId}`).then((response)=>{
-            if(response.status===200){
+        const fetchUserData = async () => {
+            try {
+              const response = await axios.get(`/portfolio/${portfolioId}`)
+              if (response.status === 200) {
                 const result = response.data.portfolio_detail as PortfolioDetailType
                 setPortfolio(result)
                 if(result.PortfolioDoc.author===user?._id){
                     setUserPage(true)
                 }
+              } else if (response.status === 404) {
+                setErrorMsg(response.data);
+              }
+            } catch (error:any) {
+              console.log('error', error);
+              setErrorMsg(error.response.data);
             }
-        })
+          };
+        
+          fetchUserData();
     },[])
 
 
     return (
         <div>
+            {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
+
             {portfolio?.PortfolioDoc.selectedUI==="A" 
             && <BasicUI portfolio={portfolio} userPage={userPage}/>}
 
