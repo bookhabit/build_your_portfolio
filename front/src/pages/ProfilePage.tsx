@@ -8,6 +8,7 @@ import UserUI_3D from "../components/UserInfoUI/UserUI_3D";
 import { UserInfoType, userUI } from "../Types/userType";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../recoil/userAtom";
+import ShowNullData from "../components/ShowNullData";
 
 export default function ProfilePage() {
     const [user,setUser] = useRecoilState(userAtom);
@@ -80,12 +81,8 @@ export default function ProfilePage() {
             {user?.selectedUserUI==="Basic" && <UserInfoBasic user={user}  />}
             {user?.selectedUserUI==="3D" && <UserUI_3D user={user}  />}
             {/* user가 이력서와 포트폴리오를 등록하지 않았을 때 */}
-            {!user?.userResumeDoc && !user?.userPortfolio && 
-              <div className="bg-UI_user_profile_bg h-full flex items-center justify-center">
-                <p className="text-xl text-gray-600">
-                  {user?.name ? user.name : user?.nickName && user?.nickName } 님은 
-                  이력서와 포트폴리오를 아직 작성하지 않았습니다</p>
-              </div>
+            {user && !user?.userResumeDoc && 
+            <ShowNullData message={user?.name ? user.name+'님은 아직 이력서를 작성하지 않았습니다' : user?.nickName && user?.nickName +'님은 아직 이력서를 작성하지 않았습니다' }  />
             }
             {/* user UI 변경하는 section */}
             <div className={`flex flex-col items-center justify-center px-0 xl:px-80 ${selectedUserUI==="3D" ? 'bg-black' : 'bg-UI_user_profile_bg'}`}>

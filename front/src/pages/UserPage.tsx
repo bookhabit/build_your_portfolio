@@ -7,6 +7,7 @@ import UserUI_3D from '../components/UserInfoUI/UserUI_3D';
 import { useRecoilState } from 'recoil';
 import { SearchRedirectAtom } from '../recoil/searchAtom';
 import ErrorMsg from '../components/ErrorMsg';
+import ShowNullData from '../components/ShowNullData';
 
 const UserPage = () => {
     const {id:userId} = useParams();
@@ -53,11 +54,7 @@ const UserPage = () => {
         <div>
             {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
             {userInfo && !userInfo?.userResumeDoc &&
-              <div className="bg-UI_user_profile_bg h-screen flex items-center justify-center">
-                <p className="text-xl text-gray-600">
-                  {userInfo?.name ? userInfo.name : userInfo?.nickName && userInfo?.nickName } 님은 
-                    아직 이력서를 작성하지 않았습니다</p>
-              </div>
+              <ShowNullData message={userInfo?.name ? userInfo.name+'님은 아직 이력서를 작성하지 않았습니다' : userInfo?.nickName && userInfo?.nickName +'님은 아직 이력서를 작성하지 않았습니다' }  />
             }
             {userInfo?.selectedUserUI==="Basic" && <UserInfoBasic user={userInfo}  />}
             {userInfo?.selectedUserUI==="3D" && <UserUI_3D user={userInfo}  />}
