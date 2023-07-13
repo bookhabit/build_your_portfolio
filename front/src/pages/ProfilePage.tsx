@@ -78,8 +78,8 @@ export default function ProfilePage() {
     return (
         <div>
             {/* user가 선택한 UI 대로 user페이지 렌더링 - 기본값 A  */}
-            {user?.selectedUserUI==="Basic" && <UserInfoBasic user={user}  />}
-            {user?.selectedUserUI==="3D" && <UserUI_3D user={user}  />}
+            {user?.userResumeDoc && user?.selectedUserUI==="Basic" && <UserInfoBasic user={user}  />}
+            {user?.userResumeDoc && user?.selectedUserUI==="3D" && <UserUI_3D user={user}  />}
             {/* user가 이력서와 포트폴리오를 등록하지 않았을 때 */}
             {user && !user?.userResumeDoc && 
             <ShowNullData message={user?.name ? user.name+'님은 아직 이력서를 작성하지 않았습니다' : user?.nickName && user?.nickName +'님은 아직 이력서를 작성하지 않았습니다' }  />

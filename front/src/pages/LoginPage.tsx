@@ -19,7 +19,6 @@ export default function LoginPage() {
   const router = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [redirect, setRedirect] = useState(false);
   const setUser = useSetRecoilState(userAtom);
   const formRef = useRef(null);
   const [errorMessage,setErrorMessage] = useState<ValidationLoginForm>({
@@ -66,7 +65,7 @@ export default function LoginPage() {
         }
         // 비밀번호 validation
         alert('login successful')
-        setRedirect(true)
+        router('/')
       }catch(err:any){
         if(err.response?.status===404){
           setValidateMode(true)
@@ -86,20 +85,19 @@ export default function LoginPage() {
     }
   }
 
-  if(redirect){
-    return <Navigate to="/"/>
-  }
-
     // 깃허브 로그인
     async function gitHubLoginAPI(code:string) {
       console.log('깃허브 로그인 시작')
       try {
         const response = await axios.get(`/github/login?code=${code}`);
-        console.log(response);
-        if (response.status === 200) {
-          setUser(response.data as UserInfoType);
-          router("/");
+        if(response.status === 200){
+          axios.get('/profile')
+          .then(({data}:{data:UserInfoType}) => {
+            setUser(data);
+          });
         }
+        alert('login successful')
+        router('/')
       } catch (error) {
         // 오류 처리
         console.log(error);
@@ -109,11 +107,14 @@ export default function LoginPage() {
     async function googleLoginAPI(code:string) {
       try {
         const response = await axios.get(`/google/login?code=${code}`);
-        console.log(response);
-        if (response.status === 200) {
-          setUser(response.data as UserInfoType);
-          router("/");
+        if(response.status === 200){
+          axios.get('/profile')
+          .then(({data}:{data:UserInfoType}) => {
+            setUser(data);
+          });
         }
+        alert('login successful')
+        router('/')
       } catch (error) {
         // 오류 처리
         console.log(error);
