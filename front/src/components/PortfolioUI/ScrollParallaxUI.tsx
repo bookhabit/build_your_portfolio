@@ -171,7 +171,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                 }
                 </div>
             </div>
-            <div className="p-10 h-full w-full flex flex-col gap-20 justify-around  px-20">
+            <div className="p-10 w-full flex flex-col gap-20 justify-around  px-20">
                 <h1 className="text-5xl mt-14 text-Scroll_UI_SubTitle font-bold text-center fadeInContainer">{portfolio.PortfolioDoc.title}</h1>
                 <div className="flex flex-col justify-evenly lg:flex-row gap-8">
                     <div className="flex flex-col gap-10 w-full lg:w-1/2">
