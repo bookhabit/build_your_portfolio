@@ -63,7 +63,7 @@ export default function Header() {
           value={searchValue}
           onChange={searchHandler}
           />
-            {showResultValues && (
+            {!(searchValue.length===0) &&showResultValues && (
               <div className="absolute top-full bg-white border w-full rounded-xl shadow-lg">
                 <ul>
                   {resultValues.length>0 
