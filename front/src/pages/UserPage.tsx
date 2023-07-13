@@ -6,33 +6,59 @@ import UserInfoBasic from '../components/UserInfoUI/UserInfoBasic';
 import UserUI_3D from '../components/UserInfoUI/UserUI_3D';
 import { useRecoilState } from 'recoil';
 import { SearchRedirectAtom } from '../recoil/searchAtom';
+import ErrorMsg from '../components/ErrorMsg';
 
 const UserPage = () => {
     const {id:userId} = useParams();
     const [redirect,setRedirect] = useRecoilState(SearchRedirectAtom)
     const [userInfo,setUserInfo] = useState<UserInfoType|undefined>();
+    const [errorMsg,setErrorMsg] = useState<string>('');
+
     useEffect(()=>{
-        axios.get(`/user/${userId}`).then((response)=>{
-            if(response.status===200){
+        const fetchUserData = async () => {
+            try {
+              const response = await axios.get(`/user/${userId}`);
+              if (response.status === 200) {
                 const result = response.data.resultUser as UserInfoType;
-                setUserInfo(result)
-                setRedirect(false)
+                setUserInfo(result);
+                setRedirect(false);
+              } else if (response.status === 404) {
+                setErrorMsg(response.data);
+              }
+            } catch (error:any) {
+              console.log('error', error);
+              setErrorMsg(error.response.data);
             }
-        })
+          };
+        
+          fetchUserData();
     },[])
+    // 검색어 입력 후에 다시 한번 API요청
     if(redirect){
         axios.get(`/user/${userId}`).then((response)=>{
             if(response.status===200){
                 const result = response.data.resultUser as UserInfoType;
                 setUserInfo(result)
                 setRedirect(false)
+            }else if(response.status===404){
+                setErrorMsg(response.data)
+            }else if(response.status===500){
+                setErrorMsg(response.data)
             }
         })
     }
+    console.log(userInfo)
+    
     return (
         <div>
-            {userInfo?.userResumeDoc===null && 
-            <div className='mt-20'><p className='text-center'>{userInfo.name}님은 아직 이력서를 작성하지 않았습니다</p></div>}
+            {errorMsg && <ErrorMsg errorMsg={errorMsg} />}
+            {userInfo && !userInfo?.userResumeDoc &&
+              <div className="bg-UI_user_profile_bg h-screen flex items-center justify-center">
+                <p className="text-xl text-gray-600">
+                  {userInfo?.name ? userInfo.name : userInfo?.nickName && userInfo?.nickName } 님은 
+                    아직 이력서를 작성하지 않았습니다</p>
+              </div>
+            }
             {userInfo?.selectedUserUI==="Basic" && <UserInfoBasic user={userInfo}  />}
             {userInfo?.selectedUserUI==="3D" && <UserUI_3D user={userInfo}  />}
         </div>

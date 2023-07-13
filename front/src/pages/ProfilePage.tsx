@@ -16,7 +16,7 @@ export default function ProfilePage() {
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
     const [showPreviewSrc,setShowPreviewSrc] = useState<string>("")
-console.log('user',user)
+
     useEffect(()=>{
       setSelectedUserUI(user?.selectedUserUI as userUI)
     },[])
@@ -79,6 +79,14 @@ console.log('user',user)
             {/* user가 선택한 UI 대로 user페이지 렌더링 - 기본값 A  */}
             {user?.selectedUserUI==="Basic" && <UserInfoBasic user={user}  />}
             {user?.selectedUserUI==="3D" && <UserUI_3D user={user}  />}
+            {/* user가 이력서와 포트폴리오를 등록하지 않았을 때 */}
+            {!user?.userResumeDoc && !user?.userPortfolio && 
+              <div className="bg-UI_user_profile_bg h-full flex items-center justify-center">
+                <p className="text-xl text-gray-600">
+                  {user?.name ? user.name : user?.nickName && user?.nickName } 님은 
+                  이력서와 포트폴리오를 아직 작성하지 않았습니다</p>
+              </div>
+            }
             {/* user UI 변경하는 section */}
             <div className={`flex flex-col items-center justify-center px-0 xl:px-80 ${selectedUserUI==="3D" ? 'bg-black' : 'bg-UI_user_profile_bg'}`}>
               <div className="w-full pt-20 text-center">

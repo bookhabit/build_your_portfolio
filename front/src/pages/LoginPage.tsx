@@ -10,6 +10,7 @@ import validateLoginForm, { ValidationLoginForm } from "../components/common/val
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
 import { userAtom } from "../recoil/userAtom";
+import { gsap } from "gsap";
 
 const GITHUB_CLIENT_ID = "1251dd62543c1d6e0fc6";
 const GOOGLE_CLIENT_ID = "454233507421-t57fvs9nsthq9577tkp2eh938cruhvib.apps.googleusercontent.com";

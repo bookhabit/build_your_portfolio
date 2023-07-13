@@ -254,6 +254,10 @@ app.get('/user/:id', async (req:Request,res:Response) => {
   const {id:userId} = req.params;
   try{
       const userDoc = await User.findById(userId) as UserProfileType;
+      
+      if(!userDoc){
+        return res.status(404).json('사용자를 찾을 수 없습니다')
+      }
       const userResumeDoc = await Resume.findOne({author:userId}) as ResumeType | null
       const userPortfolioDoc = await Portfolio.find({author:userId}) as PortfolioType[] | null
 
@@ -270,7 +274,7 @@ app.get('/user/:id', async (req:Request,res:Response) => {
       
       res.json({resultUser});
   }catch(err){
-    res.json({err})
+    res.status(500).json('서버 오류 발생')
   }
 })
 
