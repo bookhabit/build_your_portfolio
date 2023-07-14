@@ -8,12 +8,20 @@ import {  useRecoilState, useSetRecoilState } from "recoil";
 import { SearchRedirectAtom } from "./recoil/searchAtom";
 import { userAtom } from "./recoil/userAtom";
 import { defaultProfileImg } from "./components/UserInfoUI/UserInfoBasic";
+import NavBarIcon from "../src/assets/navBar.svg"
 
 export default function Header() {
+  const router = useNavigate();
   const [user,setUser] = useRecoilState(userAtom)
   const [searchValue,setSearchValue] = useState<string>('');
   const [showResultValues,setShowResultValues] = useState<boolean>(false)
   const [resultValues,setResultValues] = useState<UserInfoType[]>([])
+  const [isNavBarOpen, setIsNavBarOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsNavBarOpen((prev) => !prev);
+  };
+
   const setRedirect = useSetRecoilState(SearchRedirectAtom)
 
   useEffect(() => {
@@ -46,12 +54,12 @@ export default function Header() {
     setResultValues(response.data)
     setShowResultValues(true)
   }
-
-  const router = useNavigate();
+console.log(isNavBarOpen)
+  
   return (
-    <header className="flex justify-between h-16 items-center bg-header_bg px-10 py-3">
+    <header className="flex justify-between h-16 items-center bg-header_bg px-5 xs:px-10 py-3">
       <Link to={'/'} className="flex items-center ">
-        <span className="font-bold text-xl text-header_element">My Portfolio</span>
+        <span className="font-bold text-header_element">My Portfolio</span>
       </Link>
       <form className="relative xl:w-1/3 lg:w-1/2
       sm:w-1/3 xs:w-32 flex items-center" onSubmit={onSubmit}>
@@ -112,18 +120,33 @@ export default function Header() {
           </div>
         </div>
         ) : 
-        <div className="flex gap-2">
-          <Link to={'/register'} className="flex items-center gap-2 xs:gap-0 ">
-            <p className="text-header_element font-sans text-sm">
-              회원가입
-            </p>
-          </Link>
-          <Link to={'/login'} className="flex items-center gap-2 xs:gap-0 ">
-            <p className="text-header_element font-sans text-sm ml-5">
-              로그인
-            </p>
-          </Link>
-        </div>
+          <div className="">
+            <div className="hidden xs:flex gap-2">
+                <Link to="/register" className="flex items-center gap-2 xs:gap-0">
+                    <p className="text-header_element font-sans text-sm">회원가입</p>
+                </Link>
+                <Link to="/login" className="flex items-center gap-2 xs:gap-0">
+                  <p className="text-header_element font-sans text-sm ml-5">로그인</p>
+                </Link>
+            </div>
+            <div className="xs:hidden flex relative">
+                  {isNavBarOpen && (
+                    <div className="absolute w-20 right-[-20px] top-8 flex items-center justify-center bg-black">
+                      <div className="flex flex-col p-2">
+                        <Link to="/register" className="block py-2 text-white hover:bg-gray-200">
+                          회원가입
+                        </Link>
+                        <Link to="/login" className="block py-2 text-white hover:bg-gray-200">
+                          로그인
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                <button className="flex items-center gap-2" onClick={toggleModal}>
+                  <img src={NavBarIcon} alt="Nav Bar Icon" className="w-4 h-4" />
+                </button>
+            </div>
+          </div>
         }      
          </header>
   );

@@ -89,7 +89,7 @@ export default function IndexPage() {
     )
   }
   return (
-      <div className="px-0 md:px-14 py-20">
+      <div className="px-0 md:px-14 py-0 sm:py-20">
         {/* 유저 페이지 */}
         <div className="preView-resume flex flex-col items-center gap-5 mb-20 px-0 lg:px-40">
           <div className="profile flex flex-col lg:flex-row w-full justify-around gap-5">
@@ -99,7 +99,7 @@ export default function IndexPage() {
             </div>
             <div className="fadeInContainer p-10 w-full lg:w-2/3 flex flex-col justify-center items-center">
               {TitleCss("나만의", "이력서와 포트폴리오", "를 관리해보세요")}
-              <div className="mt-20">
+              <div className="mt-20 flex flex-col items-center">
                 <p className="font-light text-4xl">포트폴리오를 등록만 하면 </p>
                 <p className="font-light text-4xl mt-3"><span className="text-5xl font-bold text-red-300">디자인</span>은 알아서 꾸며줍니다</p>
 
