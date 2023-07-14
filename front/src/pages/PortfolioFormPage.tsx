@@ -1,4 +1,4 @@
-import {  ChangeEvent, useContext, useEffect, useState } from "react";
+import {  ChangeEvent, useEffect, useState } from "react";
 import PhotosUploader from "../components/testRestAPI/PhotosUploader";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
@@ -307,7 +307,7 @@ export default function PortfolioFormPage() {
     }
 
     function formItemTextareaClass():string{
-      return "flex flex-col mt-6 gap-3"
+      return "flex flex-col mt-8 gap-3"
     }
 
     function demoLinkFlex():string{
@@ -568,25 +568,23 @@ export default function PortfolioFormPage() {
             </div>
         </div>
         {important_functionArr.length > 0 && (
-          <ShowArray>
-            {important_functionArr.map((data,index)=>(
-              <div key={index} className="flex flex-col lg:flex-row gap-3 border p-10 w-full shadow-sm">
-                <div className="flex flex-col justify-evenly w-2/3">
+            important_functionArr.map((data,index)=>(
+              <div key={index} className="flex flex-col lg:flex-row gap-3 border p-10 w-full shadow-sm items-center">
+                <div className="flex flex-col justify-center gap-5 w-full lg:w-2/3">
                   <p className="mb-3">핵심기능 {index+1} 설명
                   </p>
                   {data.important_function_desc}
                 </div>
-                <div className="flex flex-col w-1/3">
+                <div className="flex flex-col w-full lg:w-1/3">
                   <p className="my-3">핵심기능 {index+1} 이미지</p>
                   {data.important_function_photo.length>0 ? 
                     <Image className="rounded-2xl w-full h-40 object-cover" src={data.important_function_photo[0]}/>
                     : "선택한 이미지 없음"
                   }
                 </div>
-                <button className=" w-24 bg-gray-100 rounded-md hover:bg-gray-50" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
+                <button className="w-24 p-3 bg-gray-100 rounded-md hover:bg-gray-50 items-end" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
               </div>
-            ))}    
-          </ShowArray>
+            ))    
         )}
         <div className={formItemTextareaClass()}>
           <Label label="카테고리" sort="portfolioLabel"/>
