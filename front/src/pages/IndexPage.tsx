@@ -22,7 +22,7 @@ export default function IndexPage() {
 
   // 페이드인
   const fadeIn = (element:Element) =>{
-    gsap.to(element,3,{
+    gsap.to(element,1,{
         opacity:1,
     })
   }

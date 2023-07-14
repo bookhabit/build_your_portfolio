@@ -6,7 +6,6 @@ import axios from 'axios';
 import LoginPage from './pages/LoginPage';
 import ReigsterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
-import 'animate.css'
 import PortfolioFormPage from './pages/PortfolioFormPage';
 import ResumeFormPage from './pages/ResumeFormPage';
 import UserPage from './pages/UserPage';
