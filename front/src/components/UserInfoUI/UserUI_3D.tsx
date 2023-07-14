@@ -69,6 +69,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                                 <ImageUI
                                     src={user?.profileImg}
                                     className='w-[250px] h-[250px] object-cover rounded-2xl'
+                                    alt="프로필 이미지"
                                 />
                             }
                         </div>

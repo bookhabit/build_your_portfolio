@@ -7,6 +7,7 @@ import ImageUI from "./components/common/ImageUI";
 import {  useRecoilState, useSetRecoilState } from "recoil";
 import { SearchRedirectAtom } from "./recoil/searchAtom";
 import { userAtom } from "./recoil/userAtom";
+import { defaultProfileImg } from "./components/UserInfoUI/UserInfoBasic";
 
 export default function Header() {
   const [user,setUser] = useRecoilState(userAtom)
@@ -81,10 +82,13 @@ export default function Header() {
                     >
                       <div className="flex items-center gap-3">
                         <div className=" bg-slate-50 rounded-full w-8 h-8 flex justify-center items-center">
-                          {user.profileImg && 
-                          <ImageUI src={user.profileImg} className="w-7 h-7" />}
+                          {user.profileImg ?
+                          <ImageUI src={user.profileImg} className="w-7 h-7" alt="사용자 프로필 이미지" /> 
+                          : 
+                            <img src={defaultProfileImg} alt="기본 프로필 이미지" className="rounded-full w-7 h-7" />
+                          }
                         </div>
-                        {user.name} ({user.nickName})
+                        {user.name} {user.nickName && '('+ user.nickName+')'}
                       </div>
                     </li>
                   )))

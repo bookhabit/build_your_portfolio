@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { PortfolioDetailType, PortfolioType } from "../../Types/PortfolioType";
+import { PortfolioDetailType } from "../../Types/PortfolioType";
 import ImageUI from "../common/ImageUI";
 import convertCategory from "../common/convertCategory";
 import { Link } from "react-router-dom";
@@ -32,7 +32,7 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                   Close Preview
                 </button>
               </div>
-              <ImageUI src={showPreviewSrc} />
+              <ImageUI src={showPreviewSrc} alt="이미지 전체보기" />
             </div>
           </div>
           );
@@ -82,7 +82,9 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                     </div>
                     <div className="w-full lg:w-1/2 shadow-xl">
                         {portfolio?.PortfolioDoc.photos.length > 0 && 
-                            <ImageUI className="w-full aspect-square object-fill" src={portfolio?.PortfolioDoc.photos[0]}/>
+                            <ImageUI className="w-full aspect-square object-fill" src={portfolio?.PortfolioDoc.photos[0]}
+                            alt="포트폴리오 이미지"
+                            />
                         }
                     </div>
                 </div>
@@ -96,7 +98,9 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                                 setShowPreview(true)
                                 setShowPreviewSrc(importantData.important_function_photo[0])
                             }}>
-                                <ImageUI className=" h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
+                                <ImageUI className=" h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}
+                                alt="핵심기능 이미지"
+                                />
                             </div>
                             <div className="w-full lg:w-2/3">
                                 <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>
@@ -148,7 +152,7 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                                 setShowPreview(true)
                                 setShowPreviewSrc(photo)
                             }}>
-                                <ImageUI className="h-full object-cover border shadow-lg cursor-pointer hover:shadow-2xl"  src={photo}  />
+                                <ImageUI className="h-full object-cover border shadow-lg cursor-pointer hover:shadow-2xl"  src={photo} alt="포트폴리오 이미지" />
                             </div>
                         ))}
                     </div>

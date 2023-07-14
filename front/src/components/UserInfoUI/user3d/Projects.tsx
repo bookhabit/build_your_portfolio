@@ -1,4 +1,3 @@
-import React from "react";
 import {Tilt} from "react-tilt";
 import { motion } from "framer-motion";
 import { styles } from "../UserUI_3D";
@@ -37,6 +36,7 @@ const ProjectCard = ({ portfolio, index }:ProjectCardType) => {
             <ImageUI
               src={portfolio.photos[0]}
               className='w-full h-full object-cover rounded-2xl'
+              alt="포트폴리오 이미지"
             />
           }
 

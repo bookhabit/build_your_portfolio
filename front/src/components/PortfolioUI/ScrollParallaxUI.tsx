@@ -167,7 +167,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                 </h2>
                 <div className="flex justify-center items-center w-full">
                 {portfolio?.PortfolioDoc.photos.length > 0 && 
-                    <ImageUI className="h-42 w-42 md:h-96 md:w-96 shadow-2xl mb-20  md:mb-0 aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]}/>
+                    <ImageUI className="h-42 w-42 md:h-96 md:w-96 shadow-2xl mb-20  md:mb-0 aspect-square object-fill imageContainer" src={portfolio?.PortfolioDoc.photos[0]} alt="포트폴리오 이미지1" />
                 }
                 </div>
             </div>
@@ -210,7 +210,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     <div className=" flex flex-col items-center gap-5">
                         {portfolio.PortfolioDoc.photos.length>1 && portfolio.PortfolioDoc.photos.slice(1).map((photo)=>(
                             <div key={photo} className="w-full">
-                                <ImageUI className="w-96 h-96 md:x-42 md:h-42 object-fill border shadow-lg cursor-pointer hover:shadow-2xl fadeInContainer"  src={photo}  />
+                                <ImageUI className="w-96 h-96 md:x-42 md:h-42 object-fill border shadow-lg cursor-pointer hover:shadow-2xl fadeInContainer"  src={photo}  alt="포트폴리오 이미지2" />
                             </div>
                         ))}
                     </div>
@@ -223,7 +223,9 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                         <h1 className="text-2xl text-Scroll_UI_SubTitle font-bold text-center mb-10 textContainer">프로젝트의 핵심기능 {index+1}</h1>
                         <div className="flex flex-col gap-10 lg:flex-row">
                             <div className="w-full lg:w-1/3 border border-gray-200 shadow-lg" >
-                                <ImageUI className="w-full h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}/>
+                                <ImageUI className="w-full h-80 object-fill border shadow-lg cursor-pointer hover:shadow-2xl" src={importantData.important_function_photo[0]}
+                                alt="핵심기능 이미지1"
+                                />
                             </div>
                             <div className="w-full lg:w-2/3">
                                 <p className="text-md text-gray-600 leading-10">{importantData.important_function_desc}</p>

@@ -20,7 +20,7 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
                 <h2 className="text-3xl font-bold">{portfolio.PortfolioDoc.title}</h2>
             </div>
             <div className="w-full px-0 lg:px-40 h-3/4 mt-10">
-                {portfolio.PortfolioDoc.photos[0] && <ImageUI className="border shadow-2xl" src={portfolio.PortfolioDoc.photos[0]} />}
+                {portfolio.PortfolioDoc.photos[0] && <ImageUI className="border shadow-2xl" src={portfolio.PortfolioDoc.photos[0]} alt="포트폴리오 이미지1" />}
             </div>
         </div>
     )
@@ -32,7 +32,7 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
             <div className="w-full flex flex-col lg:flex-row gap-5 justify-center items-center mb-10 px-20 h-full">
                 <p className="leading-10 pr-10 w-full lg:w-1/2">{portfolio.PortfolioDoc.purpose}</p>
                 <div className="w-full sm:w-1/2">
-                    {portfolio.PortfolioDoc.photos[1] && <ImageUI className="border shadow-2xl h-full object-fill aspect-square" src={portfolio.PortfolioDoc.photos[1]} />}
+                    {portfolio.PortfolioDoc.photos[1] && <ImageUI className="border shadow-2xl h-full object-fill aspect-square" src={portfolio.PortfolioDoc.photos[1]} alt="포트폴리오 이미지2" />}
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
             <div className="w-full flex flex-col lg:flex-row gap-5 justify-center items-center mb-10 px-20 h-full">
                 <p className="leading-10 pr-10 w-full lg:w-1/2">{portfolio.PortfolioDoc.introduce}</p>
                 <div className="w-full sm:w-1/2">
-                    {portfolio.PortfolioDoc.photos[2] && <ImageUI className="border shadow-2xl h-full object-fill aspect-square" src={portfolio.PortfolioDoc.photos[2]} />}
+                    {portfolio.PortfolioDoc.photos[2] && <ImageUI className="border shadow-2xl h-full object-fill aspect-square" src={portfolio.PortfolioDoc.photos[2]} alt="포트폴리오 이미지3" />}
                 </div>
             </div>
         </div>
@@ -137,6 +137,7 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
                   <ImageUI
                     className="border shadow-2xl h-full w-full object-fill aspect-square"
                     src={importantData.important_function_photo[0]}
+                    alt="핵심기능 이미지1"
                   />
                 )}
               </div>

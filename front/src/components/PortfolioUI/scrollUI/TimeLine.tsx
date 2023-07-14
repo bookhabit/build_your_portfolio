@@ -1,4 +1,3 @@
-import React from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -6,8 +5,7 @@ import {
 import { motion } from "framer-motion";
 
 import "react-vertical-timeline-component/style.min.css";
-import { fadeIn, textVariant } from "../../utils/motion";
-import { activityType, carrerType } from "../../../Types/ResumeType";
+import {  textVariant } from "../../utils/motion";
 import { styles } from "../../UserInfoUI/UserUI_3D";
 
 

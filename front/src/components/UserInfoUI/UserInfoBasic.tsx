@@ -5,7 +5,7 @@ import linkIcon from "../../assets/resume/linkIcon.svg"
 import phoneIcon from "../../assets/resume/phoneIcon.svg"
 import TechBorder from "../common/TechBorder";
 import { UserInfoType } from "../../Types/userType"
-import { useState,useContext,useEffect,ChangeEvent } from "react"
+import { useState,useEffect,ChangeEvent } from "react"
 import ShowModal from "../ShowModal"
 import { ShowArray } from "../../pages/ResumeFormPage";
 import PortfolioCategory from "../PortfolioCategory";
@@ -15,7 +15,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../../recoil/userAtom";
 
-const defaultProfileImg = "https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg"
+export const defaultProfileImg = "https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg"
 
 const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
     // 자신의 게시글인지 구분하기

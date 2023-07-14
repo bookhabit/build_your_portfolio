@@ -26,7 +26,13 @@ const ProjectCard = ({ important_function, index }:ProjectCardType) => {
             <ImageUI
               src={important_function.important_function_photo[0]}
               className='w-full h-full object-cover rounded-2xl'
+              alt="핵심기능 이미지"
             />
+          }
+          {!important_function.important_function_photo[0] && 
+            <div
+                className='bg-gray-300 w-full h-full object-fill rounded-2xl flex justify-center items-center'
+            >등록된 이미지가 없습니다</div>
           }
         </div>
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import ImageUI from '../../common/ImageUI';
 import { styles } from '../../UserInfoUI/UserUI_3D';
 
@@ -16,12 +15,18 @@ const IntroduceCard = ({title,src,portfolioTitle,desc}:IProps) => {
                     {title}
                 </h2>
                 <div className='bg-tertiary p-5 rounded-2xl sm:w-[900px] h-full w-full'>
-                        <div className='relative w-full h-[380px] cursor-pointer flex items-center justify-center'>
-                            {src&& 
+                        <div className='relative w-full h-[380px] flex items-center justify-center'>
+                            {src && 
                                 <ImageUI
                                     src={src}
                                     className='w-full h-[380px] object-fill rounded-2xl'
+                                    alt="포트폴리오 이미지"
                                 />
+                            }
+                            {!src && 
+                                <div
+                                    className='bg-gray-300 w-full h-[380px] object-fill rounded-2xl flex justify-center items-center'
+                                >등록된 이미지가 없습니다</div>
                             }
                         </div>
 

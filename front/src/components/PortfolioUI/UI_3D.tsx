@@ -1,15 +1,11 @@
-import { useNavigate } from "react-router";
-import { PortfolioDetailType, PortfolioType } from "../../Types/PortfolioType";
+import { PortfolioDetailType } from "../../Types/PortfolioType";
 import { styles } from "../UserInfoUI/UserUI_3D";
 import ComputersCanvas from "../canvas/Computers";
-import ImageUI from "../common/ImageUI";
 import { staggerContainer } from "../utils/motion";
 import { motion } from 'framer-motion';
-import Experience from "../UserInfoUI/user3d/Experience";
 import About from "../UserInfoUI/user3d/About";
 import ImportantFunc from "./scrollUI/ImportantFunc";
 import TimeLine from "./scrollUI/TimeLine";
-import { Link } from "react-router-dom";
 import IntroduceCard from "./scrollUI/IntroduceCard";
 import FinishCard from "./scrollUI/FinishCard";
 
@@ -18,8 +14,7 @@ interface IProps{
     userPage:boolean
 }
 {/* <button onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button> */}
-const UI_3D = ({portfolio,userPage}:IProps) => {
-    const router = useNavigate();
+const UI_3D = ({portfolio}:IProps) => {
     return (
         <div className='relative z-0 bg-black'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
