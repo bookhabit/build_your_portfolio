@@ -106,7 +106,7 @@ export default function ProfilePage() {
                         className="hidden"
                       />
                       {kind.name}
-                      <div className="w-52 h-52 rounded-full overflow-hidden">
+                      <div className={`w-52 h-52 rounded-full overflow-hidden ${selectedUserUI==="Basic" && 'border border-1 border-gray-300'}`}>
                         <img src={kind.src} className="w-full h-full object-cover cursor-pointer" alt={kind.name + " 이미지"} />
                       </div>
                       <img 

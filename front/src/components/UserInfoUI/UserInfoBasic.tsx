@@ -127,7 +127,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
         </div>
         );
       }
-      console.log(user)
+      console.log('자식 컴포넌트 UserInfoBasic 렌더링')
     return (
         <div className="flex flex-col items-center justify-center px-0 xl:px-80 bg-UI_user_profile_bg py-10">
             <div className="w-full">

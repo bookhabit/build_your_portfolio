@@ -73,7 +73,7 @@ export default function IndexPage() {
   // 중복 css
   function TitleCss(firstText:string,centerText:string,rightText:string):JSX.Element{
     return(
-      <h2 className="text-3xl py-14 text-center">{firstText} <span className=" text-blue-500 font-bold text-5xl">{centerText}</span>{rightText}</h2>
+      <h2 className="text-3xl py-14 text-center">{firstText} <span className=" text-orange-300 font-bold text-5xl">{centerText}</span>{rightText}</h2>
     )
   }
 
@@ -92,15 +92,18 @@ export default function IndexPage() {
       <div className="px-0 md:px-14 py-20">
         {/* 유저 페이지 */}
         <div className="preView-resume flex flex-col items-center gap-5 mb-20 px-0 lg:px-40">
-          {TitleCss("나만의", "이력서와 포트폴리오", "를 쉽게 관리해보세요")}
           <div className="profile flex flex-col lg:flex-row w-full justify-around gap-5">
             <div className="user-profile flex flex-col items-center lg:items-start">
               {subTitleCss("Basic 디자인")}
               {imgCss(userMainBasic, "유저페이지 Basic")}
             </div>
             <div className="fadeInContainer p-10 w-full lg:w-2/3 flex flex-col justify-center items-center">
-              <p className="font-bold text-4xl">포트폴리오를 등록만 하면 </p>
-              <p className="font-bold text-4xl mt-3"><span className="text-5xl text-red-300">디자인</span>은 알아서 꾸며줍니다</p>
+              {TitleCss("나만의", "이력서와 포트폴리오", "를 관리해보세요")}
+              <div className="mt-20">
+                <p className="font-light text-4xl">포트폴리오를 등록만 하면 </p>
+                <p className="font-light text-4xl mt-3"><span className="text-5xl font-bold text-red-300">디자인</span>은 알아서 꾸며줍니다</p>
+
+              </div>
             </div>
           </div>
           <div className="fadeInContainer flex flex-col lg:flex-row gap-10 w-full items-center lg:items-end">

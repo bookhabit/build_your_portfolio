@@ -48,7 +48,7 @@ const UserPage = () => {
             }
         })
     }
-    console.log(userInfo)
+    console.log('부모컴포넌트 렌더링')
     
     return (
         <div>

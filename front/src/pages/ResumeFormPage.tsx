@@ -74,7 +74,7 @@ export default function ResumeFormPage() {
     const [technologyArr,setTechnologyArr] = useState<string[]>([]);
     const [careerArr,setCareerArr] = useState<carrerType[]>([]);
     const [activityArr,setActivityArr] = useState<activityType[]>([]);
-console.log(careerArr)
+
     // error handling
     const [errorMessage,setErrorMessage] = useState<ValidateResume>({
       name:"",

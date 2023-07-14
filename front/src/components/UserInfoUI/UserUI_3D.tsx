@@ -6,6 +6,8 @@ import {staggerContainer } from "../utils/motion";
 import Experience from "./user3d/Experience";
 import Projects from "./user3d/Projects";
 import ImageUI from "../common/ImageUI";
+import { useEffect } from "react";
+import { gsap } from "gsap";
 
 export const styles = {
     paddingX: "sm:px-16 px-6",
@@ -26,6 +28,37 @@ export const styles = {
 
 const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
     console.log('3dui',user)
+        // 페이드인
+        const fadeIn = (element:Element) =>{
+            gsap.to(element,1,{
+                opacity:1,
+            })
+        }
+    
+        // 관찰자 생성
+        useEffect(() => {
+    
+            const options = {
+            root: null, // viewport
+            rootMargin: "0px",
+            threshold: 0.8 // 50%가 viewport에 들어와 있어야 callback 실행
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                return
+            }
+            if (entry.isIntersecting) {
+                fadeIn(entry.target);
+            }
+            });
+            }, options);
+    
+            // 반복문을 돌려 모든 DOM에 적용
+            const boxList = document.querySelectorAll(".fadeInContainer");
+            boxList.forEach((el) => observer.observe(el));    
+        }, []);
     
     return (
         <div className='relative z-0 bg-black'>
@@ -59,7 +92,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
             </div>
             {/* 페이지2 -Testimonials>> 학력,생년월일 
                     자기소개  */}
-            <div className={'sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
+            <div className={'fadeInContainer sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
                 <h2 className={`${styles.sectionHeadText} mb-10`}>
                     자기소개
                 </h2>
@@ -109,7 +142,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 <Projects portfolios={user?.userPortfolio}/>
             </motion.section>
             {/* Contact >> 연락처  */}
-            <div className={'pb-40 sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
+            <div className={'fadeInContainer pb-40 sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
                 <h2 className={`${styles.sectionHeadText} mb-10`}>
                     Contact
                 </h2>

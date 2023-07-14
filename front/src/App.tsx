@@ -5,9 +5,7 @@ import IndexPage from './pages/IndexPage';
 import axios from 'axios';
 import LoginPage from './pages/LoginPage';
 import ReigsterPage from './pages/RegisterPage';
-import PostDetail from './pages/PostDetail';
 import ProfilePage from './pages/ProfilePage';
-import UserPostsPage from './pages/UserPostsPage';
 import 'animate.css'
 import PortfolioFormPage from './pages/PortfolioFormPage';
 import ResumeFormPage from './pages/ResumeFormPage';
@@ -32,11 +30,9 @@ function App() {
               <Route path={'/resume/update/:id'} element={<ResumeFormPage/>}/>
               <Route path={'/portfolio/create'} element={<PortfolioFormPage/>}/>
               <Route path={'/portfolio/update/:id'} element={<PortfolioFormPage/>}/>
-              <Route path={'/portfolio/:id'} element={<PortfolioPage/>}/>
-              <Route path={'/post/:id'} element={<PostDetail/>}/>
               <Route path={'/user/:id'} element={<UserPage/>}/>
+              <Route path={'/portfolio/:id'} element={<PortfolioPage/>}/>
               <Route path="/account" element={<ProfilePage />} />
-              <Route path="/account/posts" element={<UserPostsPage />} />
             </Route>
           </Routes>
     </RecoilRoot>
