@@ -231,18 +231,21 @@ app.get('/profile', (req:Request,res:Response) => {
         const userDoc = await User.findById(userData.id) as UserProfileType;
         const userResumeDoc = await Resume.findOne({author:userData.id}) as ResumeType | null
         const userPortfolioDoc = await Portfolio.find({author:userData.id}) as PortfolioType[] | null
-
-        const resultUser:UserProfileType = {
-          selectedUserUI:userDoc.selectedUserUI,
-          nickName:userDoc.nickName,
-          email:userDoc.email,
-          name:userDoc.name,
-          _id:userDoc._id,
-          profileImg:userDoc.profileImg,
-          userResumeDoc:userResumeDoc,
-          userPortfolio:userPortfolioDoc,
+        try{
+          const resultUser:UserProfileType = {
+            selectedUserUI:userDoc.selectedUserUI,
+            nickName:userDoc.nickName,
+            email:userDoc.email,
+            name:userDoc.name,
+            _id:userDoc._id,
+            profileImg:userDoc.profileImg,
+            userResumeDoc:userResumeDoc,
+            userPortfolio:userPortfolioDoc,
+          }
+          res.status(200).json(resultUser);
+        }catch(e){
+          res.status(500).json("유저 정보 요청 실패")
         }
-        res.json(resultUser);
       });
   } else {
       res.json(null);
