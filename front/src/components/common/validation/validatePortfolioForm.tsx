@@ -22,8 +22,7 @@ function validatePortfolioForm(portfolioForm:PortfolioType,setErrorMessage:React
   // 전체 input validation
   const {title,purpose,
     introduce, process,learned,usedTechnology,developPeriod,category,selectedUI,important_functions
-    } = portfolioForm
-    console.log('유효성검사 props',portfolioForm)
+    } = portfolioForm    
 
     const requiredMsg = "필수입력"
 

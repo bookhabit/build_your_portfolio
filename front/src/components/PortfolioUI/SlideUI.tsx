@@ -11,7 +11,6 @@ interface IProps{
 }
 
 const SlideUI = ({portfolio,userPage}:IProps) => {
-    console.log(portfolio,userPage)
     const router = useNavigate();
     const slide1 = (
         <div className="w-full h-full flex flex-col items-center justify-between gap-5 py-40 sm:py-10">

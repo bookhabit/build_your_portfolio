@@ -12,7 +12,6 @@ interface IProps{
 
 const BasicUI = ({portfolio,userPage}:IProps) => {
     const router = useNavigate();
-    console.log(portfolio)
 
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)

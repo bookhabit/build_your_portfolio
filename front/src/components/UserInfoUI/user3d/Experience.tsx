@@ -54,7 +54,6 @@ const CareerCard = ({ career }:CareerCardType) => {
 };
 
 const AcitivityCard = ({ activity }:ActivityCardType) => {
-  console.log(activity)
   return (
     <VerticalTimelineElement
       contentStyle={{
@@ -94,7 +93,6 @@ type ExperienceProps = {
 };
 
 const Experience = ({careers,activities}:ExperienceProps) => {
-  console.log(activities)
   return (
     <>
       <motion.div variants={textVariant()}>

@@ -319,7 +319,7 @@ export default function ResumeFormPage() {
           activity:activityArr,
           myselfSentence,reasonForCoding,coverLetter,
         };
-        console.log(resumeForm);
+        
         const validateForm:boolean = validateResumeForm(resumeForm,setErrorMessage)
         
         if(validateForm){

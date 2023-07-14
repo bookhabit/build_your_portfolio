@@ -19,7 +19,6 @@ export type ValidateResume = {
 function validateResumeForm(resumeForm:ResumeType,setErrorMessage:React.Dispatch<React.SetStateAction<ValidateResume>>):boolean {
   // 전체 input validation
   const {birth,finalEducation,phone,myselfSentence,reasonForCoding,coverLetter,technology} = resumeForm
-    console.log('유효성검사 props',resumeForm)
 
     const requiredMsg = "필수입력"
 

@@ -27,7 +27,6 @@ export const styles = {
 
 
 const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
-    console.log('3dui',user)
         // 페이드인
         const fadeIn = (element:Element) =>{
             gsap.to(element,1,{

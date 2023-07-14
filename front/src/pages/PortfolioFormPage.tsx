@@ -241,8 +241,6 @@ export default function PortfolioFormPage() {
     }
     // 수정페이지에서 데이터 채워넣기
     useEffect(() => {
-      console.log('useEffect시작')
-      console.log('useEffect 포트폴리오',portfolioId)
       if(portfolioId){
         setUpdatePage(true)
         axios.get('/portfolio/'+portfolioId).then(response => {
@@ -286,7 +284,7 @@ export default function PortfolioFormPage() {
           important_functions:important_functionArr
         };
         const validateForm:boolean = validatePortfolioForm(portfolioForm,setErrorMessage)
-        console.log(portfolioForm)
+        
         if(validateForm){
           if (portfolioId) {
               // update

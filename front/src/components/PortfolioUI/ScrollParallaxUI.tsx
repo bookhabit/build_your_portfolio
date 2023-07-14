@@ -12,7 +12,6 @@ interface IProps{
 }
 
 const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
-    console.log(portfolio)
     const router = useNavigate();
 
     const fadeIn = (element:Element) =>{

@@ -8,7 +8,6 @@ interface SlideshowProps {
 
 const Slideshow: React.FC<SlideshowProps> = ({ slides }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-    console.log(currentSlide)
   const showSlide = (n: number): void => {
     setCurrentSlide((n + slides.length) % slides.length);
   };

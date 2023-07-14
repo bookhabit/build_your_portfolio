@@ -73,13 +73,11 @@ export default function ReigsterPage() {
           email:email,
           password:password
         })
-        console.log('res',res)
         if(res.status===200){
           alert('register successful.')
           setRedirect(true)
         }
       }catch(err:any){
-        console.log(err)
         if(err.response?.status===409&&err.response?.data==="이미 존재하는 닉네임입니다."){
           setValidateMode(true)
           setErrorMessage((prevState) => ({

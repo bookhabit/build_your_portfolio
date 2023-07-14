@@ -29,7 +29,7 @@ const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads/',express.static(__dirname+'/uploads'))
-app.use(cors({credentials:true,origin:'http://localhost:5173'}));
+app.use(cors({credentials:true,origin:'https://build-your-portfolio.netlify.app'}));
 
 // 몽고DB 연결
 connectToMongoDB();
@@ -285,7 +285,7 @@ app.get('/user/:id', async (req:Request,res:Response) => {
 app.put('/profile-image', async (req: Request, res: Response) => {
   const { token } = req.cookies;
   const { profileImg } = req.body;
-  console.log(profileImg)
+  
   if (token) {
     try {
       jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {

@@ -32,7 +32,6 @@ const PortfolioPage = () => {
                 setErrorMsg(response.data);
               }
             } catch (error:any) {
-              console.log('error', error);
               setErrorMsg(error.response.data);
             }
           };

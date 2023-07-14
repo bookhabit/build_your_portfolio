@@ -87,7 +87,6 @@ export default function LoginPage() {
 
     // 깃허브 로그인
     async function gitHubLoginAPI(code:string) {
-      console.log('깃허브 로그인 시작')
       try {
         const response = await axios.get(`/github/login?code=${code}`);
         if(response.status === 200){
@@ -101,6 +100,7 @@ export default function LoginPage() {
       } catch (error) {
         // 오류 처리
         console.log(error);
+        alert("로그인 실패")
       }
     }
 
@@ -118,6 +118,7 @@ export default function LoginPage() {
       } catch (error) {
         // 오류 처리
         console.log(error);
+        alert("로그인 실패")
       }
     }
 
@@ -151,7 +152,7 @@ export default function LoginPage() {
     async function loginWithGoogle(event: React.FormEvent) {
       event.preventDefault();
 
-      const redirectUri = "http://localhost:5173/login/google"
+      const redirectUri = "https://build-your-portfolio.netlify.app/login/google"
       const scope = "profile email";
       window.location.assign(
         `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`

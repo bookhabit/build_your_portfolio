@@ -27,7 +27,6 @@ const UserPage = () => {
                 setErrorMsg(response.data);
               }
             } catch (error:any) {
-              console.log('error', error);
               setErrorMsg(error.response.data);
             }
           };
@@ -48,7 +47,6 @@ const UserPage = () => {
             }
         })
     }
-    console.log('부모컴포넌트 렌더링')
     
     return (
         <div>

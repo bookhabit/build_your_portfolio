@@ -36,7 +36,6 @@ function validateRegisterForm(nickName:string,name:string,email:string,password:
       return false
     }
     if(!nameRegex.test(name)){
-      console.log('숫자포함됌')
       setErrorMessage((prevState) => ({
         ...prevState,
         name: "이름에 숫자를 포함할 수 없습니다",

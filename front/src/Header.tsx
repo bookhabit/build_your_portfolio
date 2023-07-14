@@ -35,7 +35,7 @@ export default function Header() {
   const onSubmit = async (event:FormEvent<HTMLFormElement>)=>{
     event.preventDefault();
     const response = await axios.get(`/search?search=${searchValue}`)
-    console.log(response)
+    
     setResultValues(response.data)
     setShowResultValues(true)
   }
