@@ -10,7 +10,7 @@ type IProps={
 
 const IntroduceCard = ({title,src,portfolioTitle,desc}:IProps) => {
     return (
-        <div className={'sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto flex flex-col items-center'}>
+        <div className={'sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto flex flex-col items-center fadeInContainer'}>
                 <h2 className={`${styles.sectionHeadText} mb-10`}>
                     {title}
                 </h2>

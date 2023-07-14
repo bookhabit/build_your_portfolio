@@ -8,13 +8,50 @@ import ImportantFunc from "./scrollUI/ImportantFunc";
 import TimeLine from "./scrollUI/TimeLine";
 import IntroduceCard from "./scrollUI/IntroduceCard";
 import FinishCard from "./scrollUI/FinishCard";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { gsap } from "gsap";
 
 interface IProps{
     portfolio:PortfolioDetailType
     userPage:boolean
 }
-{/* <button onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button> */}
-const UI_3D = ({portfolio}:IProps) => {
+
+const UI_3D = ({portfolio,userPage}:IProps) => {
+    const router = useNavigate();
+    
+    // 페이드인
+    const fadeIn = (element:Element) =>{
+        gsap.to(element,1,{
+            opacity:1,
+        })
+    }
+
+    // 관찰자 생성
+    useEffect(() => {
+
+        const options = {
+        root: null, // viewport
+        rootMargin: "0px",
+        threshold: 0.8 // 50%가 viewport에 들어와 있어야 callback 실행
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+            return
+        }
+        if (entry.isIntersecting) {
+            fadeIn(entry.target);
+        }
+        });
+        }, options);
+
+        // 반복문을 돌려 모든 DOM에 적용
+        const boxList = document.querySelectorAll(".fadeInContainer");
+        boxList.forEach((el) => observer.observe(el));    
+    }, []);
+
     return (
         <div className='relative z-0 bg-black'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
@@ -82,6 +119,11 @@ const UI_3D = ({portfolio}:IProps) => {
                 category={portfolio.PortfolioDoc.category}
                 demoLink={portfolio.PortfolioDoc.demoLink}
             />
+            <div className="sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto flex flex-col items-center">
+                {userPage && 
+                    <button className="bg-white text-tertiary p-5 rounded-xl" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>
+                }
+            </div>
         </div>
     );
 };

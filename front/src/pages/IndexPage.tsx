@@ -25,7 +25,7 @@ export default function IndexPage() {
     gsap.to(element,3,{
         opacity:1,
     })
-}
+  }
 
   // 관찰자 생성
   useEffect(() => {
