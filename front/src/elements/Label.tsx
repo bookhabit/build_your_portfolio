@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler } from "react";
+import React from "react";
 import tw from "tailwind-styled-components";
 
 const ResumeLabel = tw.label`

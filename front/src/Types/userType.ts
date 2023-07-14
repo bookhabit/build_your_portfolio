@@ -1,4 +1,4 @@
-import { PortfolioType, SelectedUI } from "./PortfolioType";
+import { PortfolioType } from "./PortfolioType";
 import { ResumeType } from "./ResumeType";
 
 export type UserType = {

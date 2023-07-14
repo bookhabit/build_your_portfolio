@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { PortfolioDetailType, PortfolioType } from "../../Types/PortfolioType";
+import { PortfolioDetailType } from "../../Types/PortfolioType";
 import Slideshow from "./slideUI/SlideShow";
 import ImageUI from "../common/ImageUI";
 import { Link } from "react-router-dom";

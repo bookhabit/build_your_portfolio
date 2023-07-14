@@ -3,7 +3,7 @@ import { PortfolioDetailType } from "../../Types/PortfolioType";
 import ImageUI from "../common/ImageUI";
 import convertCategory from "../common/convertCategory";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { gsap } from "gsap";
 
 interface IProps{
@@ -25,11 +25,11 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     }
     
     const moveToLeft = (element:Element, distance:number) => {
-        gsap.fromTo(element,{x:0},{x:-100})
+        gsap.fromTo(element,{x:0},{x:distance})
       };
     
     const moveToRight = (element:Element, distance:number) => {
-        gsap.fromTo(element,{x:0},{x:100})
+        gsap.fromTo(element,{x:0},{x:distance})
     };
     
     const increaseTextSize = (element:Element, size:number) => {
@@ -100,7 +100,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                     return
                 }
                 if (entry.isIntersecting) {
-                    moveToLeft(entry.target,100);
+                    moveToLeft(entry.target,-100);
                     leftObserver.unobserve(entry.target)
                 }
             });
