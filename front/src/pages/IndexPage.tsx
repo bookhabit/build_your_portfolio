@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import userMainBasic from "../assets/mainPageImg/userMainBasic.png"
 import userMainVideo from "../assets/mainPageImg/userMain3D.mp4"
 import userMainVideoMobile from "../assets/mainPageImg/userMain3dMobile.mp4"
@@ -14,10 +14,18 @@ import PortfolioDesignD from "/PortfolioDesignD.png"
 
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../recoil/userAtom";
+import { gsap } from "gsap";
 
 export default function IndexPage() {
   const router = useNavigate();
   const user = useRecoilValue(userAtom)
+
+  // 페이드인
+  const fadeIn = (element:Element) =>{
+    gsap.to(element,3,{
+        opacity:1,
+    })
+}
 
   // 관찰자 생성
   useEffect(() => {
@@ -25,16 +33,17 @@ export default function IndexPage() {
     const options = {
       root: null, // viewport
       rootMargin: "0px",
-      threshold: 0.5 // 50%가 viewport에 들어와 있어야 callback 실행
+      threshold: 0.8 // 50%가 viewport에 들어와 있어야 callback 실행
     };
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.intersectionRatio > 0) {
-          entry.target.classList.add("inView");
-        } else {
-          entry.target.classList.remove("inView");
-        }
+        if (!entry.isIntersecting) {
+          return
+      }
+      if (entry.isIntersecting) {
+          fadeIn(entry.target);
+      }
       });
     }, options);
 
@@ -94,8 +103,8 @@ export default function IndexPage() {
               <p className="font-bold text-4xl mt-3"><span className="text-5xl text-red-300">디자인</span>은 알아서 꾸며줍니다</p>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row gap-10 w-full items-center lg:items-end">
-              <div className="user-profile fadeInContainer">
+          <div className="fadeInContainer flex flex-col lg:flex-row gap-10 w-full items-center lg:items-end">
+              <div className="user-profile">
                 {subTitleCss("3D 디자인 PC")}
                 <video
                   autoPlay
@@ -107,7 +116,7 @@ export default function IndexPage() {
                   className="shadow-scrollUI rounded-xl"
                 ><source src={userMainVideo} type="video/mp4"/></video>
               </div>
-              <div className="user-profile fadeInContainer">
+              <div className="user-profile">
                 {subTitleCss("3D 디자인 Mobile")}
                 <video
                   autoPlay
@@ -124,7 +133,7 @@ export default function IndexPage() {
           
 
         {/* 포트폴리오 등록 페이지 */}
-        <div className="preView-portfolio-form flex flex-col items-center gap-5">
+        <div className="fadeInContainer preView-portfolio-form flex flex-col items-center gap-5">
           {TitleCss("나만의", "포트폴리오", "를 등록해보세요")}
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="fadeInContainer user-portfolio-form1">
