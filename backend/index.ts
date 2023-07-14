@@ -29,7 +29,7 @@ const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads/',express.static(__dirname+'/uploads'))
-app.use(cors({credentials:true,origin:'https://build-your-portfolio.netlify.app'}));
+app.use(cors({credentials:true,origin:['https://build-your-portfolio.netlify.app','http://localhost:5173']}));
 
 // 몽고DB 연결
 connectToMongoDB();
@@ -73,7 +73,7 @@ app.post('/login', async (req:Request,res:Response) => {
         id:userDoc._id
       }, jwtSecret, {}, (err,token) => {
         if (err) throw err;
-        res.cookie('token', token).json(userDoc);
+        res.cookie('token', token,{ sameSite: 'none', secure: true }).json(userDoc);
       });
     } else {
       res.status(400).json('비밀번호가 일치하지 않습니다');
@@ -115,7 +115,7 @@ app.get('/github/login',async (req:Request,res:Response)=> {
     
     // 3. 이메일과 일치하는 유저를 DB 찾음
     const dbEmailUser = await User.findOne({email:email})
-    console.log('db로찾은 db유저')
+    
     // 4. 이메일과 일치하는 유저인지에 따라 회원가입 또는 로그인
       try{
         if(dbEmailUser && dbEmailUser?.email===email){
@@ -125,7 +125,8 @@ app.get('/github/login',async (req:Request,res:Response)=> {
             id:dbEmailUser._id
           }, jwtSecret, {}, (err,token) => {
             if (err) throw err;
-            return res.cookie('token', token).status(200).json(dbEmailUser);
+            console.log('db로찾은 db유저',dbEmailUser)
+            return res.cookie('token', token,{ sameSite: 'none', secure: true }).status(200).json(dbEmailUser);
           });
         }else{
           // 존재하지 않는 이메일이면 회원가입 후 로그인시키기
@@ -140,7 +141,7 @@ app.get('/github/login',async (req:Request,res:Response)=> {
             id:userDoc._id
           }, jwtSecret, {}, (err,token) => {
             if (err) throw err;
-            return res.cookie('token', token).status(200).json(userDoc);
+            return res.cookie('token', token,{ sameSite: 'none', secure: true }).status(200).json(userDoc);
           });
         }
       }catch(e){
@@ -195,7 +196,7 @@ app.get("/google/login",async (req: Request, res: Response) => {
         id:dbEmailUser._id
       }, jwtSecret, {}, (err,token) => {
         if (err) throw err;
-        return res.cookie('token', token).status(200).json(dbEmailUser);
+        return res.cookie('token', token,{ sameSite: 'none', secure: true }).status(200).json(dbEmailUser);
       });
     }else{
       // 해당 email이 db에 없으면 회원가입시키고 토큰발급
@@ -208,7 +209,7 @@ app.get("/google/login",async (req: Request, res: Response) => {
         id:userDoc._id
       }, jwtSecret, {}, (err,token) => {
         if (err) throw err;
-        return res.cookie('token', token).status(200).json(userDoc);
+        return res.cookie('token', token,{ sameSite: 'none', secure: true }).status(200).json(userDoc);
       });
     }
   }catch(err){
