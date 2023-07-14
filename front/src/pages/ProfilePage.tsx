@@ -3,7 +3,7 @@ import {  useNavigate} from "react-router-dom";
 import axios from "axios";
 import UserInfoBasic from "../components/UserInfoUI/UserInfoBasic";
 import { InputChangeEvent } from "../elements/Input";
-import PreviewIcon from "../assets/portfolio/imgPreview.svg"
+import PreviewIcon from "../assets/portfolio/imgpreview.svg"
 import UserUI_3D from "../components/UserInfoUI/UserUI_3D";
 import { UserInfoType, userUI } from "../Types/userType";
 import { useRecoilState } from "recoil";
