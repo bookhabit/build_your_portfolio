@@ -11,6 +11,11 @@ import FinishCard from "./scrollUI/FinishCard";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { gsap } from "gsap";
+import axios from "axios";
+import { UserInfoType } from "../../Types/userType";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "../../recoil/userAtom";
+import Swal from "sweetalert2";
 
 interface IProps{
     portfolio:PortfolioDetailType
@@ -19,6 +24,7 @@ interface IProps{
 
 const UI_3D = ({portfolio,userPage}:IProps) => {
     const router = useNavigate();
+    const setUser = useSetRecoilState(userAtom);
     
     // 페이드인
     const fadeIn = (element:Element) =>{
@@ -121,7 +127,26 @@ const UI_3D = ({portfolio,userPage}:IProps) => {
             />
             <div className="sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto flex flex-col items-center">
                 {userPage && 
-                    <button className="bg-white text-tertiary p-5 rounded-xl" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>
+                    <div className="flex gap-5">
+                        <button className="bg-white text-tertiary p-5 rounded-xl hover:bg-tertiary hover:text-white" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>포트폴리오 수정하기</button>
+                        <button className="bg-white text-tertiary p-5 rounded-xl hover:bg-tertiary hover:text-white" onClick={()=>
+                            axios.delete(`/portfolio/delete/${portfolio.PortfolioDoc._id}`)
+                            .then((response)=>{
+                                if(response.status===200){
+                            Swal.fire('성공','포트폴리오를 삭제하였습니다.','success')
+                            axios.get('/profile')
+                            .then(({data}:{data:UserInfoType}) => {
+                                setUser(data);
+                            });
+                            router("/account")
+                        }
+                    }).catch(()=>{
+                        Swal.fire('실패','포트폴리오를 삭제하는 데 실패하였습니다','error')
+                    })
+                    }>
+                        포트폴리오 삭제하기
+                </button>
+                </div>
                 }
             </div>
         </div>
