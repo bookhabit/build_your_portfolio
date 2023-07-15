@@ -22,7 +22,7 @@ import axios, { AxiosResponse } from "axios"
 
 dotenv.config();
 const app: Express = express();
-const port = 4000 || process.env.PORT
+const port = 4000 || process.env.PORT;
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
@@ -38,7 +38,7 @@ connectToMongoDB();
 // 회원가입
 app.post('/register', async (req:Request,res:Response) => {
       const {nickName,name,email,password} = req.body;
-      console.log(nickName,name,email,password)
+      
       // validation
       const dbEmail=await User.findOne({email:email})
       const dbNickName = await User.findOne({ nickName: nickName });
@@ -66,18 +66,23 @@ app.post('/register', async (req:Request,res:Response) => {
 app.post('/login', async (req:Request,res:Response) => {
   const {email,password} = req.body;
   const userDoc = await User.findOne({email}) as UserType;
+  
   if (userDoc) {
-    const passOk = bcrypt.compareSync(password, userDoc.password);
-    if (passOk) {
-      jwt.sign({
-        email:userDoc.email,
-        id:userDoc._id
-      }, jwtSecret, {}, (err,token) => {
-        if (err) throw err;
-        res.cookie('token', token,{ sameSite: 'none', secure: true }).json(userDoc);
-      });
-    } else {
-      res.status(400).json('비밀번호가 일치하지 않습니다');
+    try{
+      const passOk = bcrypt.compareSync(password, userDoc.password);
+      if (passOk) {
+        jwt.sign({
+          email:userDoc.email,
+          id:userDoc._id
+        }, jwtSecret, {}, (err,token) => {
+          if (err) throw err;
+          res.cookie('token', token,{ sameSite: 'none', secure: true }).json(userDoc);
+        });
+      } else {
+        res.status(400).json('비밀번호가 일치하지 않습니다');
+      }
+    }catch(err){
+      res.status(500).json({errMsg:'password 정보가 없습니다.', errinfo:'혹시 구글이나 깃허브 회원가입하셨다면 구글,깃허브 로그인을 이용해주시면 감사하겠습니다'})
     }
   } else {
     res.status(404).json('해당 이메일의 유저를 찾을 수 없습니다');
