@@ -13,11 +13,13 @@ const PhotosUploader: React.FC<PhotosUploaderProps> = ({ addedPhotos, onChange }
 
   async function addPhotoByLink(ev:React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     ev.preventDefault();
-    const { data: filename } = await axios.post<string>('/upload-by-link', { link: photoLink });
-    onChange((prev) => {
-      return [...prev, filename];
-    });
-    setPhotoLink('');
+    if(photoLink){
+      const { data: filename } = await axios.post<string>('/upload-by-link', { link: photoLink });
+      onChange((prev) => {
+        return [...prev, filename];
+      });
+      setPhotoLink('');
+    }
   }
 
   function uploadPhoto(ev: ChangeEvent<HTMLInputElement>) {

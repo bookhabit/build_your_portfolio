@@ -16,14 +16,16 @@ import BasicUI from "../components/PortfolioUI/BasicUI";
 import ScrollParallaxUI from "../components/PortfolioUI/ScrollParallaxUI";
 import SlideUI from "../components/PortfolioUI/SlideUI";
 import UI_3D from "../components/PortfolioUI/UI_3D";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
 import { userAtom } from "../recoil/userAtom";
 import Swal from "sweetalert2";
+import { UserInfoType } from "../Types/userType";
 
 export default function PortfolioFormPage() {
     const router = useNavigate();
     const user = useRecoilValue(userAtom)
+    const setUser = useSetRecoilState(userAtom);
     const [updatePage,setUpdatePage] = useState<boolean>(false);
 
     // state
@@ -297,9 +299,16 @@ export default function PortfolioFormPage() {
               }
           } else {
               // new post
-              await axios.post('/portfolio/create', portfolioForm);
-              Swal.fire("성공",'포트폴리오를 등록하였습니다','success')
-              router("/")
+              
+              const response = await axios.post('/portfolio/create', portfolioForm);
+              if(response.status===200){
+                Swal.fire("성공",'포트폴리오를 등록하였습니다','success')
+                axios.get('/profile')
+                .then(({data}:{data:UserInfoType}) => {
+                    setUser(data);
+                });
+                router("/")
+            }
           }
         }
     }

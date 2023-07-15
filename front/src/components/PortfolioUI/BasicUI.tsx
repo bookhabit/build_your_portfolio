@@ -4,6 +4,11 @@ import ImageUI from "../common/ImageUI";
 import convertCategory from "../common/convertCategory";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { UserInfoType } from "../../Types/userType";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "../../recoil/userAtom";
 
 interface IProps{
     portfolio:PortfolioDetailType
@@ -12,6 +17,7 @@ interface IProps{
 
 const BasicUI = ({portfolio,userPage}:IProps) => {
     const router = useNavigate();
+    const setUser = useSetRecoilState(userAtom);
 
     // image-view-state
     const [showPreview,setShowPreview] = useState<boolean>(false)
@@ -36,6 +42,17 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
           </div>
           );
     }
+
+    // 포트폴리오 삭제 
+    const deletePortfolio = async (portfolioId:string|undefined)=>{
+        const response = await axios.delete(`/portfolio/delete/${portfolioId}`)
+        if(response.status===200){
+            Swal.fire('성공','포트폴리오를 삭제하였습니다.','success')
+            router("/account")
+        }else{
+            Swal.fire('실패','포트폴리오를 삭제하는 데 실패하였습니다','error')
+        }
+    }
       
 
     return (
@@ -43,7 +60,26 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
             <div className="flex justify-between items-center border-b mb-10  p-3 ">
                 <h2 className="text-md w-full"><span className="text-xl text-cyan-500 ">{portfolio?.author_name}</span> 님의 포트폴리오</h2>
                 {userPage &&
-                <button className="bg-gray-100 hover:bg-cyan-100 w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
+                <div className="flex items-center gap-5">
+                    <button className="bg-gray-100 hover:bg-cyan-100 w-24 p-2 rounded-lg" onClick={()=>router(`/portfolio/update/${portfolio.PortfolioDoc._id}`)}>수정하기</button>
+                    <button className="bg-gray-100 hover:bg-cyan-100 w-24 p-2 rounded-lg" onClick={()=>
+                        axios.delete(`/portfolio/delete/${portfolio.PortfolioDoc._id}`)
+                        .then((response)=>{
+                            if(response.status===200){
+                                Swal.fire('성공','포트폴리오를 삭제하였습니다.','success')
+                                axios.get('/profile')
+                                .then(({data}:{data:UserInfoType}) => {
+                                    setUser(data);
+                                });
+                                router("/account")
+                            }
+                        }).catch(()=>{
+                            Swal.fire('실패','포트폴리오를 삭제하는 데 실패하였습니다','error')
+                        })
+                        }>
+                            삭제하기
+                    </button>
+                </div>
                 }
             </div>
             <div className="p-10 min-h-screen">

@@ -76,7 +76,7 @@ app.post('/login', async (req:Request,res:Response) => {
           id:userDoc._id
         }, jwtSecret, {}, (err,token) => {
           if (err) throw err;
-          res.cookie('token', token,{ sameSite: 'none', secure: true }).json(userDoc);
+          res.cookie('token', token,{ sameSite: 'none', secure: true }).status(200).json(userDoc);
         });
       } else {
         res.status(400).json('비밀번호가 일치하지 않습니다');
@@ -348,12 +348,15 @@ app.post('/upload-by-link', async (req: Request, res: Response) => {
   const { link }: { link: string } = req.body;
   const newName = 'photo' + Date.now() + '.jpg';
   const uploadPath = pathLB.join(__dirname, 'uploads', newName); // 경로 수정
-  console.log(uploadPath);
-  await imageDownloader.image({
-    url: link,
-    dest: uploadPath,
-  });
-  res.json(newName);
+  try{
+    await imageDownloader.image({
+      url: link,
+      dest: uploadPath,
+    });
+    res.json(newName);
+  }catch(err){
+    res.json('url을 입력해주세요')
+  }
 });
 
 // input file로 파일업로드
@@ -438,7 +441,7 @@ app.post('/portfolio/create',(req:Request,res:Response)=>{
       author:userData.id,
       title,purpose,introduce, process,learned,photos,   usedTechnology,developPeriod,demoLink,category,selectedUI,important_functions
     })
-    res.json({portfolioDoc})
+    res.status(200).json({portfolioDoc})
   });
 })
 
@@ -467,6 +470,30 @@ app.put('/portfolio/update',async (req,res)=>{
     }
   });  
 })
+
+// 포트폴리오 삭제
+app.delete('/portfolio/delete/:id',async (req:Request,res:Response)=>{
+  const {id:portfolioId} = req.params;
+  
+  const {token} = req.cookies;
+  jwt.verify(token, jwtSecret, {}, async (err, userDataCallback) => {
+    const userData = userDataCallback as UserTokenDataType
+    if(err) throw err;
+    const portfolioDoc = await Portfolio.findById(portfolioId)
+    
+    if(portfolioDoc){
+      if(portfolioDoc.author){
+        if(userData.id === portfolioDoc.author.toString()){
+          const resultPortfolio = await Portfolio.findOneAndDelete({_id:portfolioId})
+          res.status(200).json('포트폴리오 삭제')
+        }else{
+          return res.status(404).json("포트폴리오의 author가 일치하지 않습니다")
+        }
+      }
+    }
+  });  
+})
+
 
 // id값으로 포트폴리오 찾기
 app.get('/portfolio/:id', async (req:Request,res:Response) => {
