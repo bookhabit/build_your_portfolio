@@ -14,6 +14,7 @@ import { ResumeType } from "../../Types/ResumeType";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../../recoil/userAtom";
+import Swal from "sweetalert2";
 
 export const defaultProfileImg = "https://png.pngtree.com/png-vector/20191115/ourmid/pngtree-beautiful-profile-line-vector-icon-png-image_1990469.jpg"
 
@@ -73,14 +74,14 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                 profileImg:profileImg
             })
             if(response.status===200){
-                alert("프로필 이미지 수정 완료")
+                Swal.fire("성공",'프로필 이미지를 수정하였습니다','success')
                 setShowUpdateProfile(false)
                 setProfileImg('')
                 window.location.reload();
             }
         }catch(err:any){
             console.log(err)
-            alert("프로필 이미지 수정 실패")
+            Swal.fire("실패",'프로필 이미지를 수정하는데 실패하였습니다','error')
         }
     }
     

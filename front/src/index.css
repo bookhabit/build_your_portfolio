@@ -35,7 +35,7 @@ a{
   color:gray;
   
 }
-a:hover{
+.demoLink:hover{
   font-size:18px;
   color:black
 }

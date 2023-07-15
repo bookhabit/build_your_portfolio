@@ -8,6 +8,7 @@ import Projects from "./user3d/Projects";
 import ImageUI from "../common/ImageUI";
 import { useEffect } from "react";
 import { gsap } from "gsap";
+import { Link } from "react-router-dom";
 
 export const styles = {
     paddingX: "sm:px-16 px-6",
@@ -164,7 +165,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                             {user?.userResumeDoc?.channel.map((channel)=>(
                                     <div className={"flex sm:flex-row flex-col items-center my-2"} key={channel.channelURL}>
                                         <p className={"mx-2"}>{channel.channelName} :</p>
-                                        <p>{channel.channelURL}</p>
+                                        <Link className="demoLink text-secondary  hover:text-white" target="_blank" to={channel.channelURL}>{channel.channelURL}</Link>
                                     </div>
                                 ))}
                         </div>

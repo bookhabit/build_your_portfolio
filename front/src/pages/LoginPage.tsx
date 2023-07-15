@@ -11,6 +11,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
 import { userAtom } from "../recoil/userAtom";
 import { gsap } from "gsap";
+import Swal from "sweetalert2";
 
 const GITHUB_CLIENT_ID = "1251dd62543c1d6e0fc6";
 const GOOGLE_CLIENT_ID = "454233507421-t57fvs9nsthq9577tkp2eh938cruhvib.apps.googleusercontent.com";
@@ -61,12 +62,12 @@ export default function LoginPage() {
           axios.get('/profile')
           .then(({data}:{data:UserInfoType}) => {
             setUser(data);
+            Swal.fire('로그인 성공', data.name+'님 안녕하세요', 'success');
+            router('/')
           });
         }
-        // 비밀번호 validation
-        alert('login successful')
-        router('/')
       }catch(err:any){
+        console.log(err)
         if(err.response?.status===404){
           setValidateMode(true)
           setErrorMessage((prevState) => ({
@@ -80,6 +81,8 @@ export default function LoginPage() {
             ...prevState,
             password: err.response.data
           }));
+        }else if(err.response?.status===500){
+          Swal.fire(err.response?.data.errMsg, err.response.data.errinfo, 'error');
         }
       }
     }
@@ -93,14 +96,14 @@ export default function LoginPage() {
           axios.get('/profile')
           .then(({data}:{data:UserInfoType}) => {
             setUser(data);
+            Swal.fire('로그인 성공', data.name+'님 안녕하세요', 'success');
+            router('/')
           });
         }
-        alert('login successful')
-        router('/')
       } catch (error) {
         // 오류 처리
         console.log(error);
-        alert("로그인 실패")
+        Swal.fire('로그인 실패', '', 'error');
       }
     }
 
@@ -111,14 +114,14 @@ export default function LoginPage() {
           axios.get('/profile')
           .then(({data}:{data:UserInfoType}) => {
             setUser(data);
+            Swal.fire('로그인 성공', data.name+'님 안녕하세요', 'success');
+            router('/')
           });
         }
-        alert('login successful')
-        router('/')
       } catch (error) {
         // 오류 처리
         console.log(error);
-        alert("로그인 실패")
+        Swal.fire('로그인 실패', '', 'error');
       }
     }
 

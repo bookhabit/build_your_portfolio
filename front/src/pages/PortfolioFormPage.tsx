@@ -20,6 +20,7 @@ import UI_3D from "../components/PortfolioUI/UI_3D";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
 import { userAtom } from "../recoil/userAtom";
+import Swal from "sweetalert2";
 
 export default function PortfolioFormPage() {
     const router = useNavigate();
@@ -292,13 +293,13 @@ export default function PortfolioFormPage() {
                   portfolioId, ...portfolioForm
               });
               if(response.status===200){
-                alert('포트폴리오 수정 성공!')
+                Swal.fire("성공",'포트폴리오를 수정하였습니다','success')
                 router("/")
               }
           } else {
               // new post
               await axios.post('/portfolio/create', portfolioForm);
-              alert('포트폴리오 등록 성공!')
+              Swal.fire("성공",'포트폴리오를 등록하였습니다','success')
               router("/")
           }
         }

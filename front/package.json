@@ -26,6 +26,7 @@
     "react-use": "^17.4.0",
     "react-vertical-timeline-component": "^3.6.0",
     "recoil": "^0.7.7",
+    "sweetalert2": "^11.7.16",
     "tailwind-styled-components": "^2.2.0",
     "three": "^0.154.0"
   },

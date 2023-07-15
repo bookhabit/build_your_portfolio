@@ -19,6 +19,7 @@ import TechBorder from "../components/common/TechBorder";
 import { validateModeAtom } from "../recoil/validateAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "../recoil/userAtom";
+import Swal from "sweetalert2";
 
 export const ShowArray = tw.div`
   bg-inherit p-1 min-w-full flex flex-wrap gap-3
@@ -329,13 +330,13 @@ export default function ResumeFormPage() {
                   resumeId, ...resumeForm
               });
               if(response.status===200){
-                alert("이력서 수정완료")
+                Swal.fire("성공",'이력서를 수정하였습니다','success')
                 setRedirect(true);
               }
           } else {
               // new post
               await axios.post('/resume/create', resumeForm);
-              alert('이력서 등록 완료')
+              Swal.fire("성공",'이력서를 등록하였습니다','success')
               setRedirect(true);
           }
         }

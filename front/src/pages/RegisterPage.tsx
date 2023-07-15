@@ -7,6 +7,7 @@ import gsap from 'gsap'
 import validateRegisterForm, { ValidationRegisterForm } from "../components/common/validation/validateRegisterForm";
 import { useRecoilState } from "recoil";
 import { validateModeAtom } from "../recoil/validateAtom";
+import Swal from "sweetalert2";
 
 
 export default function ReigsterPage() {
@@ -74,7 +75,7 @@ export default function ReigsterPage() {
           password:password
         })
         if(res.status===200){
-          alert('register successful.')
+          Swal.fire('회원가입 성공', res.data.userDoc.name+'님 안녕하세요', 'success');
           setRedirect(true)
         }
       }catch(err:any){
@@ -93,7 +94,7 @@ export default function ReigsterPage() {
           }));
         }
         else{
-            alert('회원가입에 실패하였습니다')
+          Swal.fire('회원가입 실패', '', 'error');
           }
       }
     }

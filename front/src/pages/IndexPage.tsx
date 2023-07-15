@@ -15,6 +15,7 @@ import PortfolioDesignD from "/PortfolioDesignD.png"
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../recoil/userAtom";
 import { gsap } from "gsap";
+import Swal from "sweetalert2"
 
 export default function IndexPage() {
   const router = useNavigate();
@@ -57,14 +58,14 @@ export default function IndexPage() {
   const handleClick = ()=>{
     // user가 로그인했는지 확인 
     if(!user){
-      alert('로그인 먼저 진행해주세요')
+      Swal.fire('로그인 필요', '로그인 먼저 진행해주세요', 'warning');
       router("/register")
     }else{
       // api 요청 : 데이터베이스에 유저의 포트폴리오 정보가 있는지 확인
       if(user?.userResumeDoc){
         router('/portfolio/create')
       }else{
-        alert('아직 이력서가 작성되지 않았습니다\n이력서를 작성해주세요')
+        Swal.fire('아직 이력서가 작성되지 않았습니다', '이력서를 작성해주세요', 'warning');
         router('/resume/create')
       }
     }

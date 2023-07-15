@@ -9,6 +9,7 @@ import { UserInfoType, userUI } from "../Types/userType";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../recoil/userAtom";
 import ShowNullData from "../components/ShowNullData";
+import Swal from "sweetalert2";
 
 export default function ProfilePage() {
     const [user,setUser] = useRecoilState(userAtom);
@@ -70,7 +71,7 @@ export default function ProfilePage() {
     // 로그아웃
     async function logout(){
         await axios.post('/logout')
-        alert('로그아웃')
+        Swal.fire("로그아웃",'','success')
         setUser(null)
         router('/')
     }

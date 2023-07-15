@@ -97,25 +97,25 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
                         {portfolio.PortfolioDoc.demoLink.projectURL&&
                             <div className="flex gap-3 w-full items-center">
                                 <p>Project : </p>
-                                <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.projectURL}>프로젝트 URL</Link>
+                                <Link className="demoLink" target="_blank" to={portfolio.PortfolioDoc.demoLink.projectURL}>프로젝트 URL</Link>
                             </div>
                         }
                         {portfolio.PortfolioDoc.demoLink.githubURL&&
                             <div className="flex gap-3 w-full items-center">
                                 <p>Github : </p>
-                                <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.githubURL}>깃허브 URL</Link>
+                                <Link className="demoLink" target="_blank" to={portfolio.PortfolioDoc.demoLink.githubURL}>깃허브 URL</Link>
                             </div>
                         }
                         {portfolio.PortfolioDoc.demoLink.documentURL&&
                             <div className="flex gap-3 w-full items-center">
                                 <p>Document : </p>
-                                <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.documentURL}>관련 문서 URL</Link>
+                                <Link className="demoLink" target="_blank" to={portfolio.PortfolioDoc.demoLink.documentURL}>관련 문서 URL</Link>
                             </div>
                         }
                         {portfolio.PortfolioDoc.demoLink.designURL&&
                             <div className="flex gap-3 w-full items-center">
                                 <p>Design : </p>
-                                <Link target="_blank" to={portfolio.PortfolioDoc.demoLink.designURL}>디자인 관련 URL</Link>
+                                <Link className="demoLink" target="_blank" to={portfolio.PortfolioDoc.demoLink.designURL}>디자인 관련 URL</Link>
                             </div>
                         }
             </div>

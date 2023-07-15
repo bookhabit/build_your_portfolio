@@ -38,25 +38,25 @@ const FinishCard = ({period,category,demoLink}:IProps) => {
                                 {demoLink.projectURL&&
                                     <div className="flex gap-3 w-full items-center text-secondary ">
                                         <p>Project : </p>
-                                        <Link className="hover:text-white text-gray-300" target="_blank" to={demoLink.projectURL}>프로젝트 URL</Link>
+                                        <Link className="hover:text-white text-gray-300 demoLink" target="_blank" to={demoLink.projectURL}>프로젝트 URL</Link>
                                     </div>
                                 }
                                 {demoLink.githubURL&&
                                     <div className="flex gap-3 w-full items-center text-secondary">
                                         <p>Github : </p>
-                                        <Link className="hover:text-white text-gray-300" target="_blank" to={demoLink.githubURL}>깃허브 URL</Link>
+                                        <Link className="hover:text-white text-gray-300 demoLink" target="_blank" to={demoLink.githubURL}>깃허브 URL</Link>
                                     </div>
                                 }
                                 {demoLink.documentURL&&
                                     <div className="flex gap-3 w-full items-center text-secondary">
                                         <p>Document : </p>
-                                        <Link className="hover:text-white text-gray-300" target="_blank" to={demoLink.documentURL}>관련 문서 URL</Link>
+                                        <Link className="hover:text-white text-gray-300demoLink " target="_blank" to={demoLink.documentURL}>관련 문서 URL</Link>
                                     </div>
                                 }
                                 {demoLink.designURL&&
                                     <div className="flex gap-3 w-full items-center text-secondary">
                                         <p>Design : </p>
-                                        <Link className="hover:text-white text-gray-300" target="_blank" to={demoLink.designURL}>디자인 관련 URL</Link>
+                                        <Link className="hover:text-white text-gray-300 demoLink" target="_blank" to={demoLink.designURL}>디자인 관련 URL</Link>
                                     </div>
                                 }
                         </div>
