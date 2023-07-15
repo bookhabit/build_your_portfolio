@@ -6,7 +6,6 @@ import { Button, Input, Label, Textarea } from "../elements";
 import { InputChangeEvent } from "../elements/Input";
 import { CategoryType, DemoLinkType, DevelopPeriodType, Important_function, PortfolioDetailType, PortfolioType, SelectedUI } from "../Types/PortfolioType";
 import { ShowArray } from "./ResumeFormPage";
-import FormContainer from "../components/FormContainer";
 import PreviewIcon from "../assets/portfolio/imgpreview.svg"
 import { ValidatePortfolio } from "../components/common/validation/validatePortfolioForm";
 import  validatePortfolioForm  from "../components/common/validation/validatePortfolioForm";
