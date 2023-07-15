@@ -7,17 +7,17 @@
 
 <h1>포트폴리오 이미지</h1>
 사용자 페이지 - 3D 디자인  (사용자정보 + 이력서 + 포트폴리오)
-![userMain3D](https://github.com/bookhabit/build_your_portfolio/assets/81670442/ceb8def3-51fe-4d9a-a374-201fb33bc95c)
+<img width="1440" alt="userMain3D" src="https://github.com/bookhabit/build_your_portfolio/assets/81670442/ceb8def3-51fe-4d9a-a374-201fb33bc95c">
 사용자 페이지 - Basic 디자인 (사용자정보 + 이력서 + 포트폴리오)
-![userMainBasic](https://github.com/bookhabit/build_your_portfolio/assets/81670442/f3fe2cc1-febc-4f24-87e9-a15755fdee67)
+<img width="1440" alt="userMainBasic" src="https://github.com/bookhabit/build_your_portfolio/assets/81670442/f3fe2cc1-febc-4f24-87e9-a15755fdee67">
 포트폴리오 디자인 - A
-![PortfolioDesignA](https://github.com/bookhabit/build_your_portfolio/assets/81670442/e1430228-5464-473b-b2d5-0e7050d8054f)
+<img width="1440" alt="PortfolioDesignA" src="https://github.com/bookhabit/build_your_portfolio/assets/81670442/e1430228-5464-473b-b2d5-0e7050d8054f">
 포트폴리오 디자인 - B (scroll 디자인)
-![PortfolioDesignB](https://github.com/bookhabit/build_your_portfolio/assets/81670442/3a4beeac-ed39-4dbf-8924-40bae25822b2)
+<img width="1440" alt="PortfolioDesignB" src="https://github.com/bookhabit/build_your_portfolio/assets/81670442/3a4beeac-ed39-4dbf-8924-40bae25822b2">
 포트폴리오 디자인 - C (slide 디자인)
-![PortfolioDesignC](https://github.com/bookhabit/build_your_portfolio/assets/81670442/ac989305-e549-4aae-a1e1-6d4396ab4309)
+<img width="1440" alt="PortfolioDesignC" src="https://github.com/bookhabit/build_your_portfolio/assets/81670442/ac989305-e549-4aae-a1e1-6d4396ab4309">
 포트폴리오 디자인 - D (3d 디자인)
-![PortfolioDesignD](https://github.com/bookhabit/build_your_portfolio/assets/81670442/e478a9b6-a0d5-4376-b99e-902be4af2335)
+<img width="1440" alt="PortfolioDesignD" src="https://github.com/bookhabit/build_your_portfolio/assets/81670442/e478a9b6-a0d5-4376-b99e-902be4af2335">
 
 <h1>기술스택</h1>
 <h2>Frontend</h2> 
