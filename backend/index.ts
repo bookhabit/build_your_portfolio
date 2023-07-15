@@ -22,6 +22,7 @@ import axios, { AxiosResponse } from "axios"
 
 dotenv.config();
 const app: Express = express();
+const port = 4000 || process.env.PORT
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
@@ -529,4 +530,4 @@ app.get("/search", async (req: Request, res: Response) => {
   }
 });
 
-app.listen(4000)
+app.listen(port)

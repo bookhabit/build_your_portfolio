@@ -106,8 +106,8 @@ export default function IndexPage() {
               </div>
             </div>
           </div>
-          <div className="fadeInContainer flex flex-col lg:flex-row gap-10 w-full items-center lg:items-end">
-              <div className="user-profile">
+          <div className="flex flex-col lg:flex-row gap-10 w-full items-center lg:items-end">
+              <div className="fadeInContainer user-profile">
                 {subTitleCss("3D 디자인 PC")}
                 <video
                   autoPlay
@@ -119,7 +119,7 @@ export default function IndexPage() {
                   className="shadow-scrollUI rounded-xl"
                 ><source src={userMainVideo} type="video/mp4"/></video>
               </div>
-              <div className="user-profile">
+              <div className="fadeInContainer user-profile">
                 {subTitleCss("3D 디자인 Mobile")}
                 <video
                   autoPlay
@@ -136,7 +136,7 @@ export default function IndexPage() {
           
 
         {/* 포트폴리오 등록 페이지 */}
-        <div className="fadeInContainer preView-portfolio-form flex flex-col items-center gap-5">
+        <div className="preView-portfolio-form flex flex-col items-center gap-5">
           {TitleCss("나만의", "포트폴리오", "를 등록해보세요")}
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="fadeInContainer user-portfolio-form1">
@@ -186,11 +186,11 @@ export default function IndexPage() {
         <div
         className="fadeInContainer text-3xl py-14 text-center" onClick={handleClick}
         >
-          <button className="p-10 rounded-lg bg-orange-500 hover:bg-orange-600 text-white cursor-pointer">포트폴리오 등록하러 가기</button>
+          <button className="p-3 sm:p-10 rounded-lg bg-orange-500 hover:bg-orange-600 text-white cursor-pointer">포트폴리오 등록하러 가기</button>
         </div>
         
         {user && (
-          <div className="fixed bottom-5 right-5 w-68">
+          <div className="fixed bottom-5 right-5 w-68 ">
             <button className="w-full bg-header_bg text-header_element p-2 rounded-full font-bold text-xl py-5 px-5 hover:bg-gray-400" onClick={handleClick}>
               포트폴리오 등록하기
             </button>

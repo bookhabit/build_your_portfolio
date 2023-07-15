@@ -334,8 +334,8 @@ export default function PortfolioFormPage() {
               <UI_3D portfolio={previewForm} userPage={false}/>}
           </div>
         </div> : 
-        <FormContainer width="" height="" >
-        <div className="text-center py-4">
+        <form className="w-full px-0 lg:px-44" >
+        <div className="text-center py-4 w-full">
           <Input 
             type="text" 
             placeholder="프로젝트 제목" 
@@ -609,7 +609,7 @@ export default function PortfolioFormPage() {
         <div className={formItemTextareaClass()}>
           <Label label="포트폴리오 UI" sort="portfolioLabel"/>
           <p className="font-light text-gray-400">(미리보기 기능 : 해당 디자인을 클릭 후 확대버튼을 클릭하시면 됩니다)</p>
-          <div className="flex flex-col gap-8 justify-evenly md:flex-row">
+          <div className="flex flex-col gap-8 justify-evenly xl:flex-row">
             {PortfolioUIradio.map((kind)=>(
                 <label
                   key={kind.name}
@@ -648,7 +648,7 @@ export default function PortfolioFormPage() {
             text={updatePage?"수정완료":"작성완료"}
             _onClick={savePlace} />
         </div>
-    </FormContainer>
+    </form>
         }
       
       </div>
