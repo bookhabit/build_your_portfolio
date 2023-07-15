@@ -130,7 +130,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
         );
       }
     return (
-        <div className="flex flex-col items-center justify-center px-0 xl:px-80 bg-UI_user_profile_bg py-10">
+        <div className="flex flex-col items-center justify-center px-0 xl:px-80 bg-UI_user_profile_bg py-10 font-userBasic">
             <div className="w-full">
                 <div className="profile-div w-full  px-6 py-16 shadow-xl">
                     <div className="profile-card p-5">
@@ -140,7 +140,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                                     <h2 className={titleCard()}>{user?.name}</h2>
                                     <h2 className="font-2xl text-gray-400">({user?.nickName})</h2>
                                 </div>
-                                <p className="my-5 w-2/3 font-bold text-2xl">'{user?.userResumeDoc?.myselfSentence}'</p>
+                                <p className="my-5 w-full lg:w-2/3 font-bold text-2xl">'{user?.userResumeDoc?.myselfSentence}'</p>
                                 <div className="flex items-center my-6 flex-wrap gap-2">
                                     <img src={computerIcon} alt="컴퓨터아이콘"/>
                                     <p className={" font-bold "}>개발을 하는 이유 :</p>

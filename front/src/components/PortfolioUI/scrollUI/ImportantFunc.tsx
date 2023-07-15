@@ -38,7 +38,7 @@ const ProjectCard = ({ important_function, index }:ProjectCardType) => {
 
         <div className='mt-5'>
           <h3 className='text-gray-300 font-bold text-[24px]'>핵심기능 {index+1}</h3>
-          <p className='mt-2 text-white font-bold text-[18px] leading-10'>{important_function.important_function_desc}</p>
+          <p className='mt-2 text-white font-light text-[20px] leading-10'>{important_function.important_function_desc}</p>
         </div>
       </Tilt>
     </motion.div>

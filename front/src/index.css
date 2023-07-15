@@ -1,3 +1,6 @@
+/* 구글 폰트 - selected한것들 &로 구분해서 모두 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,8 +18,11 @@ input:focus::placeholder {
   opacity: 0;
 }
 
+h1,h2{
+  font-family:"Noto Sans KR"
+}
+
 p{
-  font-weight:600;
   font-size:18px;
 }
 

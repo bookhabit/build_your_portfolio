@@ -86,7 +86,7 @@ export default function ProfilePage() {
             <ShowNullData message={user?.name ? user.name+'님은 아직 이력서를 작성하지 않았습니다' : user?.nickName && user?.nickName +'님은 아직 이력서를 작성하지 않았습니다' }  />
             }
             {/* user UI 변경하는 section */}
-            <div className={`flex flex-col items-center justify-center px-0 xl:px-80 ${selectedUserUI==="3D" ? 'bg-black' : 'bg-UI_user_profile_bg'}`}>
+            <div className={`flex flex-col items-center justify-center font-index px-0 xl:px-80 ${selectedUserUI==="3D" ? 'bg-black' : 'bg-UI_user_profile_bg'}`}>
               <div className="w-full pt-20 text-center">
                 <h1 className={`md:text-[50px] sm:text-[40px] xs:text-[30px] text-[20px]  ${selectedUserUI==="3D" ? 'text-white' : 'text-gray-400'}`}>메인페이지 디자인 변경하기</h1>
               </div>

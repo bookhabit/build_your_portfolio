@@ -150,7 +150,7 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
       ];
       
     return (
-        <div className="px-0 xl:px-80 h-screen">
+        <div className="px-0 xl:px-80 h-screen font-portfolioC">
             <Slideshow slides={slides}/>
             {userPage&&
             <div className="pb-20">

@@ -312,7 +312,7 @@ export default function PortfolioFormPage() {
       return "flex gap-4 items-center"
     }
     return(
-      <div className="flex items-center justify-center py-12 px-14">
+      <div className="flex items-center justify-center py-12 px-14 font-form">
         {showPreview ? showPreview && previewForm &&  
         <div className="absolute inset-0 min-h-screen">
             <div className=" p-8 grid gap-4">

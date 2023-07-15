@@ -61,7 +61,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
         }, []);
     
     return (
-        <div className='relative z-0 bg-black'>
+        <div className='relative z-0 bg-black font-user3D'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
             <div className='bg-user3dBG bg-cover bg-no-repeat bg-center'>
                 <div className={`relative w-full h-screen mx-auto `}>
@@ -108,9 +108,9 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                         </div>
 
                         <div className='mt-5 w-1/2'>
-                            <h3 className='text-white font-bold text-[20px]'>{user?.userResumeDoc?.finalEducation}</h3>
-                            <p className='mt-2 text-secondary text-[14px]'>{user?.userResumeDoc?.birth}</p>
-                            <p className='mt-2 text-secondary text-[18px]'>{user?.userResumeDoc?.coverLetter}</p>
+                            <h3 className='text-white font-bold text-[24px]'>{user?.userResumeDoc?.finalEducation}</h3>
+                            <p className='mt-2 text-secondary text-[16px]'>{user?.userResumeDoc?.birth}</p>
+                            <p className='mt-2 text-secondary text-[20px]'>{user?.userResumeDoc?.coverLetter}</p>
                         </div>
                 </div>
 
@@ -148,19 +148,19 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 </h2>
                 <div className='bg-tertiary p-10 rounded-2xl sm:w-[660px] h-full w-full'>
                     <div>
-                        <span className='text-white font-medium mb-4'>Your Name</span>
+                        <h2 className='text-white font-medium mb-4'>Your Name</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.name}</p></div>
                     </div>
                     <div>
-                        <span className='text-white font-medium mb-4'>Your Email</span>
+                        <h2 className='text-white font-medium mb-4'>Your Email</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.email}</p></div>
                     </div>
                     <div>
-                        <span className='text-white font-medium mb-4'>Your Phone</span>
+                        <h2 className='text-white font-medium mb-4'>Your Phone</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.userResumeDoc?.phone}</p></div>
                     </div>
                     <div>
-                        <span className='text-white font-medium mb-4'>Your Channel</span>
+                        <h2 className='text-white font-medium mb-4'>Your Channel</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium">
                             {user?.userResumeDoc?.channel.map((channel)=>(
                                     <div className={"flex sm:flex-row flex-col items-center my-2"} key={channel.channelURL}>

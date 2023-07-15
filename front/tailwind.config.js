@@ -6,6 +6,17 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        index:['Noto Sans KR'],
+        auth:['Lora'],
+        form:['Noto Sans KR'],
+        userBasic:['Nanum Gothic'],
+        user3D:['Jua'],
+        portfolioA:['Noto Sans KR'],
+        portfolioB:['Jua'],
+        portfolioC:['Lora'],
+        portfolioD:['Jua'],
+      },
       backgroundImage:{
         'codingMan':"url('/coding.jpg')",
         'code':"url('/code.webp')",

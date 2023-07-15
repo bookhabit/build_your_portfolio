@@ -32,7 +32,7 @@ const CareerCard = ({ career }:CareerCardType) => {
       <div>
         <h3 className='text-white text-[24px] font-bold mb-3'> {career?.companyName}</h3>
         <p
-          className='text-secondary text-[16px] font-semibold'
+          className='text-secondary text-[18px] font-semibold'
           style={{ margin: 0 }}
         >
           {career.jobDetail}
@@ -42,7 +42,7 @@ const CareerCard = ({ career }:CareerCardType) => {
           {career.mainTask.map((task, index) => (
             <li
               key={`experience-task-${index}`}
-              className='text-white-100 text-[14px] pl-1 tracking-wider'
+              className='text-white-100 text-[20px] pl-1 tracking-wider'
             >
               {task}
             </li>
@@ -66,7 +66,7 @@ const AcitivityCard = ({ activity }:ActivityCardType) => {
       <div>
         <h3 className='text-white text-[24px] font-bold mb-3'> {activity?.activityName}</h3>
         <p
-          className='text-secondary text-[16px] font-semibold'
+          className='text-secondary text-[18px] font-semibold'
           style={{ margin: 0 }}
         >
           활동이력
@@ -75,7 +75,7 @@ const AcitivityCard = ({ activity }:ActivityCardType) => {
           {activity.activity.map((activity, index) => (
             <li
               key={`experience-activity-${index}`}
-              className='text-white-100 text-[14px] pl-1 tracking-wider'
+              className='text-white-100 text-[20px] pl-1 tracking-wider'
             >
               {activity}
             </li>

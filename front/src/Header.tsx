@@ -57,7 +57,7 @@ export default function Header() {
 console.log(isNavBarOpen)
   
   return (
-    <header className="flex justify-between h-16 items-center bg-header_bg px-5 sm:px-10 py-3">
+    <header className="flex justify-between h-16 items-center bg-header_bg px-5 sm:px-10 py-3 font-index">
       <Link to={'/'} className="flex items-center ">
         <span className="hidden xs:block  font-bold text-header_element">My Portfolio</span>
         <span className="block xs:hidden font-bold text-header_element">M.P</span>

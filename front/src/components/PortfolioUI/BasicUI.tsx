@@ -39,7 +39,7 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
       
 
     return (
-        <div className="px-0 xl:px-60 py-20 bg-gray-50">
+        <div className="px-0 xl:px-60 py-20 bg-gray-50 font-portfolioA">
             <div className="flex justify-between items-center border-b mb-10  p-3 ">
                 <h2 className="text-md w-full"><span className="text-xl text-cyan-500 ">{portfolio?.author_name}</span> 님의 포트폴리오</h2>
                 {userPage &&

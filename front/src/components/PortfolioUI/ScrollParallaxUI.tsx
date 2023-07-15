@@ -157,7 +157,7 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
     },[])
 
     return (
-        <div className="">
+        <div className=" font-portfolioB">
             <div className="flex flex-col lg:flex-row gap-10 justify-between items-center bg-slate-50 h-screen">
                 <h2 className="text-xl lg:text-3xl w-full text-center text-black ml-20 mt-20 lg:ml-0 lg:mt-0
                 leftMoveContainer">

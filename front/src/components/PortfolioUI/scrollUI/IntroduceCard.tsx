@@ -31,8 +31,8 @@ const IntroduceCard = ({title,src,portfolioTitle,desc}:IProps) => {
                         </div>
 
                         <div className='mt-5 w-full p-5'>
-                            <h3 className='text-secondary font-bold text-[20px]'>{portfolioTitle}</h3>
-                            <p className='mt-2 text-white text-[18px] leading-10'>{desc}</p>
+                            <h3 className='text-secondary font-bold text-[24px]'>{portfolioTitle}</h3>
+                            <p className='mt-2 text-white text-[20px] font-light leading-10'>{desc}</p>
                         </div>
                 </div>
 

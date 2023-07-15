@@ -90,7 +90,7 @@ export default function IndexPage() {
     )
   }
   return (
-      <div className="px-0 md:px-14 py-0 sm:py-20">
+      <div className="px-0 md:px-14 py-0 sm:py-20 font-index">
         {/* 유저 페이지 */}
         <div className="preView-resume flex flex-col items-center gap-5 mb-20 px-0 lg:px-40">
           <div className="profile flex flex-col lg:flex-row w-full justify-around gap-5">

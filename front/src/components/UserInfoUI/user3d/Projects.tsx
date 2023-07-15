@@ -58,7 +58,7 @@ const ProjectCard = ({ portfolio, index }:ProjectCardType) => {
 
         <div className='mt-5'>
           <h3 className='text-white font-bold text-[24px]'>{portfolio.title}</h3>
-          <p className='mt-2 text-secondary text-[14px]'>{truncateText(portfolio.introduce)}</p>
+          <p className='mt-2 text-secondary text-[20px]'>{truncateText(portfolio.introduce)}</p>
         </div>
       </Tilt>
     </motion.div>

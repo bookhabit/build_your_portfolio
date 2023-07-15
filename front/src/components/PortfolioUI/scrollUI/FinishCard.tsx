@@ -17,7 +17,7 @@ const FinishCard = ({period,category,demoLink}:IProps) => {
                 </h2>
                 <div className='bg-tertiary p-10 rounded-2xl sm:w-[660px] h-full w-full'>
                     <div>
-                        <span className='text-white font-medium mb-4'>Date</span>
+                        <h2 className='text-white font-medium mb-4'>Date</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium">
                             <p>
                                 {period.start}
@@ -26,13 +26,13 @@ const FinishCard = ({period,category,demoLink}:IProps) => {
                             </p>
                         </div>
                     <div>
-                        <span className='text-white font-medium mb-4'>Category</span>
+                        <h2 className='text-white font-medium mb-4'>Category</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium">
                             <p>{convertCategory(category)}</p>
                         </div>
                     </div>
                     <div>
-                        <span className='text-white font-medium mb-4'>Demo Link</span>
+                        <h2 className='text-white font-medium mb-4'>Demo Link</h2>
                         <div className="py-4 px-6 rounded-lg outline-none border-none font-medium">
                             <div className="flex flex-col gap-5 text-sm text-gray-400  w-full">
                                 {demoLink.projectURL&&
@@ -50,7 +50,7 @@ const FinishCard = ({period,category,demoLink}:IProps) => {
                                 {demoLink.documentURL&&
                                     <div className="flex gap-3 w-full items-center text-secondary">
                                         <p>Document : </p>
-                                        <Link className="hover:text-white text-gray-300demoLink " target="_blank" to={demoLink.documentURL}>관련 문서 URL</Link>
+                                        <Link className="hover:text-white text-gray-300 demoLink " target="_blank" to={demoLink.documentURL}>관련 문서 URL</Link>
                                     </div>
                                 }
                                 {demoLink.designURL&&

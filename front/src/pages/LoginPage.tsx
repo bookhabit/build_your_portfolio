@@ -163,7 +163,7 @@ export default function LoginPage() {
     }
 
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className="flex items-center justify-center h-full font-auth">
         <form ref={formRef} className="loginForm py-12 bg-form_bg shadow-2xl">
           <h1 className=" text-4xl font-bold text-center mb-4">Login</h1>
           <div className={`flex flex-col my-12 items-center ${validateMode? "gap-2":"gap-8"}`}>

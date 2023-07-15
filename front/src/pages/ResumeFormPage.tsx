@@ -355,7 +355,7 @@ export default function ResumeFormPage() {
     }
 
     return(
-      <div className="flex items-center justify-center py-10">
+      <div className="flex items-center justify-center py-10 font-form">
         <form className="relative resumeForm bg-resume_card_BG shadow-2xl py-12 px-16 2xl:w-3/5 lg:w-3/5 md:w-4/5 xs:w-full">
           <h1 className=" text-2xl font-bold text-center mb-16">이력서</h1>
           <div className="flex flex-col justify-center items-start gap-7">

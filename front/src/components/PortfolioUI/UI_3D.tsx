@@ -53,7 +53,7 @@ const UI_3D = ({portfolio,userPage}:IProps) => {
     }, []);
 
     return (
-        <div className='relative z-0 bg-black'>
+        <div className='relative z-0 bg-black font-portfolioD'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
             <div className='bg-user3dBG bg-cover bg-no-repeat bg-center'>
                 <div className={`relative w-full h-screen mx-auto `}>
