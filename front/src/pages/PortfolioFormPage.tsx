@@ -636,7 +636,10 @@ export default function PortfolioFormPage() {
                     : "선택한 이미지 없음"
                   }
                 </div>
-                <button className="bg-transparent border border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
+                <button className="bg-transparent border border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={(event)=>{
+                  event.preventDefault()
+                  setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}
+                }>삭제</button>
               </div>
             ))    
         )}
