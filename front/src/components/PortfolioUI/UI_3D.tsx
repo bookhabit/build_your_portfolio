@@ -96,6 +96,8 @@ const UI_3D = ({portfolio,userPage}:IProps) => {
                 portfolioTitle={portfolio?.PortfolioDoc.title}
                 desc={portfolio.PortfolioDoc.introduce}
             />
+
+            {/* 페이지3 -work Timeline >> 개발과정 배운점 */}
             <motion.section
                 variants={staggerContainer()}
                 initial='hidden'
@@ -103,22 +105,37 @@ const UI_3D = ({portfolio,userPage}:IProps) => {
                 viewport={{ once: true, amount: 0.25 }}
                 className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
             >
-                
-                {/* 페이지3 -work Timeline >> 개발과정 배운점 */}
                 <TimeLine 
                     learned={portfolio.PortfolioDoc.learned} 
                     process={portfolio.PortfolioDoc.process} />
-                
-                {/* 페이지4 -about >> 기술스택 */}
+            </motion.section>
+
+            {/* 페이지4 -about >> 기술스택 */}
+            <motion.section
+                variants={staggerContainer()}
+                initial='hidden'
+                whileInView='show'
+                viewport={{ once: true, amount: 0.25 }}
+                className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
+            >
                 {portfolio.PortfolioDoc.usedTechnology
                 && <About 
                         skills={portfolio.PortfolioDoc.usedTechnology} 
                         title={"Skills"} />}
+            </motion.section>
 
-                {/* 페이지5 - 핵심기능 소개  */}
+            {/* 페이지5 - 핵심기능 소개  */}
+            <motion.section
+                variants={staggerContainer()}
+                initial='hidden'
+                whileInView='show'
+                viewport={{ once: true, amount: 0.25 }}
+                className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
+            >
                 <ImportantFunc
                     important_functions={portfolio.PortfolioDoc.important_functions} />
             </motion.section>
+            
             {/* 마무리 - 카테고리 , date, demo link */}
             <FinishCard
                 period={portfolio.PortfolioDoc.developPeriod}

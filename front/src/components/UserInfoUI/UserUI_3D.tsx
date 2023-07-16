@@ -115,6 +115,8 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 </div>
 
             </div>
+
+            {/* 페이지3 -work Timeline >> 자격증,대외활동,경력  */}
             <motion.section
                 variants={staggerContainer()}
                 initial='hidden'
@@ -122,25 +124,47 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 viewport={{ once: true, amount: 0.25 }}
                 className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
             >
-                
-                {/* 페이지3 -work Timeline >> 자격증,대외활동,경력  */}
                 <Experience 
                     careers={user?.userResumeDoc?.career} 
                     activities={user?.userResumeDoc?.activity} />
-                
-                {/* 페이지4 -about >> 기술스택 + 자격증 */}
+            </motion.section>
+
+            {/* 페이지4 -about >> 기술스택 */}
+            <motion.section
+                variants={staggerContainer()}
+                initial='hidden'
+                whileInView='show'
+                viewport={{ once: true, amount: 0.25 }}
+                className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
+            >
                 {user?.userResumeDoc?.technology 
                 && <About 
                         skills={user?.userResumeDoc?.technology} 
                         title={"Skills"} />}
-                
+            </motion.section>   
+            {/* 페이지4 -about >> 자격증 */}
+             <motion.section
+                variants={staggerContainer()}
+                initial='hidden'
+                whileInView='show'
+                viewport={{ once: true, amount: 0.25 }}
+                className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
+            >
                 {user?.userResumeDoc?.certification 
                 &&  <About 
                         skills={user?.userResumeDoc?.certification} title={"Certification"} />}
+            </motion.section>
 
-                {/* 페이지5 -projects >> 포트폴리오 소개 카드  */}
+            {/* 페이지5 -projects >> 포트폴리오 소개 카드  */}
+            <motion.section
+            variants={staggerContainer()}
+            initial='hidden'
+            whileInView='show'
+            viewport={{ once: true, amount: 0.25 }}
+            className={`${styles.padding} max-w-7xl mx-auto relative z-0`}>
                 <Projects portfolios={user?.userPortfolio}/>
             </motion.section>
+            
             {/* Contact >> 연락처  */}
             <div className={'fadeInContainer pb-40 sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
                 <h2 className={`${styles.sectionHeadText} mb-10`}>
