@@ -37,7 +37,6 @@ export default function PortfolioFormPage() {
     const [learned,setLearned] = useState<string>('');
     const [addedLinkPhotos,setAddedLinkPhotos] = useState<string[]>([]);
     const [usedTechnologyInput,setUsedTechnologyInput] = useState<string>('');
-    const [usedTechnologyArr,setUsedTechnologyArr] = useState<string[]>([]);
     const [developPeriod,setDevelopPeriod] = useState<DevelopPeriodType>({
       start:"",
       end:"",
@@ -51,6 +50,9 @@ export default function PortfolioFormPage() {
     const [important_functionInput,setImportant_functionInput] = useState<string>("");
     const [important_functionPhotos,setImportant_functionPhotos] = useState<string[]>([]);
     const [important_functionArr,setImportant_functionArr] = useState<Important_function[]>([]);
+    const [usedTechnologyArr,setUsedTechnologyArr] = useState<string[]>([]);
+    const [processArr,setProcessArr] = useState<string[]>([]);
+    const [learnedArr,setLearnedArr] = useState<string[]>([]);
     // radio
     const [category,setCategory] = useState<CategoryType>("clone");
     const [selectedUI,setSelectedUI] = useState<SelectedUI>("A");
@@ -229,8 +231,8 @@ export default function PortfolioFormPage() {
         PortfolioDoc:{
           title,purpose,
           introduce, 
-          process,
-          learned,
+          process:processArr,
+          learned:learnedArr,
           photos:addedLinkPhotos,
           usedTechnology:usedTechnologyArr,
           developPeriod,
@@ -250,8 +252,8 @@ export default function PortfolioFormPage() {
           setTitle(result.title)
           setPurpose(result.purpose)
           setIntroduce(result.introduce)
-          setProcess(result.process)
-          setLearned(result.learned)
+          setProcessArr(result.process)
+          setLearnedArr(result.learned)
           setAddedLinkPhotos(result.photos)
           if(result.important_functions){
             setImportant_functionArr(result.important_functions)
@@ -275,8 +277,8 @@ export default function PortfolioFormPage() {
         const portfolioForm:PortfolioType = {
           title,purpose,
           introduce, 
-          process,
-          learned,
+          process:processArr,
+          learned:learnedArr,
           photos:addedLinkPhotos,
           usedTechnology:usedTechnologyArr,
           developPeriod,
@@ -295,7 +297,7 @@ export default function PortfolioFormPage() {
               });
               if(response.status===200){
                 Swal.fire("성공",'포트폴리오를 수정하였습니다','success')
-                router("/")
+                router("/account")
               }
           } else {
               // new post
@@ -385,30 +387,75 @@ export default function PortfolioFormPage() {
         </div>
         <div className={formItemTextareaClass()}>
           <Label label="개발과정 : 프로젝트를 진행하면서 발생한 문제 / 문제를 해결한 과정" sort="portfolioLabel"/>
-          <Textarea
-            value={process}
-            name="process"
-            _onChange={onChangeTextarea}
-            sort="portfolioTexarea"
-            height="h-32"
-            isValid={!!errorMessage.process}
-            errorMessage={errorMessage.process}
-            validateMode={validateMode}
-          />
+          <div className="flex gap-5">
+            <Textarea
+              value={process}
+              name="process"
+              _onChange={onChangeTextarea}
+              sort="portfolioTexarea"
+              height="h-24"
+              isValid={!!errorMessage.process}
+              errorMessage={errorMessage.process}
+              validateMode={validateMode}
+            />
+            <button className="bg-transparent border border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={(event)=>{
+                  event.preventDefault()
+                  if(process){
+                    setProcess("")
+                    setProcessArr([process,...processArr])
+                  }
+                }}>추가</button>
+          </div>
         </div>
+        {processArr.length > 0 && (
+            processArr.map((process,index)=>(
+              <div key={index} className="flex gap-5">
+                <div className="w-full border-2 mt-5 p-5">
+                  <p className="font-bold font-index">{`개발과정 ${index+1}`}</p>
+                  <p className="font-portfolioD mt-3">{process}</p>
+                </div>
+                <button className="bg-transparent border mt-5 border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" 
+                onClick={(event)=>{
+                  event.preventDefault()
+                  setProcessArr(prevArr => prevArr.filter((_, i) => i !== index))}}>삭제</button>
+              </div>
+            ))
+          )}
         <div className={formItemTextareaClass()}>
-          <Label label="배운점 / 느낀점" sort="portfolioLabel"/>
-          <Textarea
-            value={learned}
-            name="learned"
-            _onChange={onChangeTextarea}
-            sort="portfolioTexarea"
-            height="h-32"
-            isValid={!!errorMessage.learned}
-            errorMessage={errorMessage.learned}
-            validateMode={validateMode}
-          />
-        </div>
+          <Label label="배운 점 / 느낀 점" sort="portfolioLabel"/>
+          <div className="flex gap-5">
+            <Textarea
+              value={learned}
+              name="learned"
+              _onChange={onChangeTextarea}
+              sort="portfolioTexarea"
+              height="h-24"
+              isValid={!!errorMessage.learned}
+              errorMessage={errorMessage.learned}
+              validateMode={validateMode}
+            />
+            <button className="bg-transparent border border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={(event)=>{
+                    event.preventDefault()
+                    if(learned){
+                      setLearned("")
+                      setLearnedArr([learned,...learnedArr])
+                    }
+                  }}>추가</button>
+            </div>
+          </div>
+        {learnedArr.length > 0 && (
+            learnedArr.map((learned,index)=>(
+              <div key={index} className="flex gap-5">
+                <div className="w-full border-2 mt-5 p-5">
+                  <p className="font-bold font-index">{`배운 점 ${index+1}`}</p>
+                  <p className="font-portfolioD mt-3">{learned}</p>
+                </div>
+                <button className="bg-transparent border mt-5 border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={(event)=>{
+                  event.preventDefault()
+                  setLearnedArr(prevArr => prevArr.filter((_, i) => i !== index))}}>삭제</button>
+              </div>
+            ))
+          )}
         <div className={formItemTextareaClass()}>
           <Label label="프로젝트 이미지 첨부" sort="portfolioLabel"/>
           <PhotosUploader
@@ -589,7 +636,7 @@ export default function PortfolioFormPage() {
                     : "선택한 이미지 없음"
                   }
                 </div>
-                <button className="w-24 p-3 bg-gray-100 rounded-md hover:bg-gray-50 items-end" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
+                <button className="bg-transparent border border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={()=>setImportant_functionArr(prevArr => prevArr.filter((_, i) => i !== index))}>삭제</button>
               </div>
             ))    
         )}

@@ -54,7 +54,6 @@ export default function Header() {
     setResultValues(response.data)
     setShowResultValues(true)
   }
-console.log(isNavBarOpen)
   
   return (
     <header className="flex justify-between h-16 items-center bg-header_bg px-5 sm:px-10 py-3 font-index">

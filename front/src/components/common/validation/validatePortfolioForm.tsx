@@ -47,14 +47,14 @@ function validatePortfolioForm(portfolioForm:PortfolioType,setErrorMessage:React
       }))
       return false
     }
-    if(!process){
+    if(process.length<=0){
       setErrorMessage((prevState)=>({
         ...prevState,
         process:requiredMsg,
       }))
       return false
     }
-    if(!learned){
+    if(learned.length<=0){
       setErrorMessage((prevState)=>({
         ...prevState,
         learned:requiredMsg,

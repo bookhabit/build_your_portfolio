@@ -59,7 +59,11 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
         <div className="w-full h-full bg-codingMan text-white ">
                 <div className="h-full flex flex-col gap-10 items-center justify-center px-5 sm:px-40 bg-black/70">
                     <h2 className="text-3xl font-bold">개발과정 또는 문제해결과정</h2>
-                    <p className="w-full leading-10">{portfolio.PortfolioDoc.introduce}</p>
+                    {portfolio.PortfolioDoc.process.length > 0 && 
+                        portfolio.PortfolioDoc.process.map((processDetail,index)=>(
+                            <p key={index} className="w-full leading-10">{index+1}. {processDetail}</p>
+                        ))
+                    }
                 </div>
         </div>
     )
@@ -67,7 +71,11 @@ const SlideUI = ({portfolio,userPage}:IProps) => {
         <div className="w-full h-full bg-code text-white ">
                 <div className="h-full flex flex-col gap-10 items-center justify-center px-5 sm:px-40 bg-black/70">
                     <h2 className="text-3xl font-bold">프로젝트를 통해 배운 점</h2>
-                    <p className="w-full leading-10">{portfolio.PortfolioDoc.learned}</p>
+                    {portfolio.PortfolioDoc.learned.length > 0 && 
+                        portfolio.PortfolioDoc.learned.map((learnedDetail,index)=>(
+                            <p key={index} className="w-full leading-10">{index+1}. {learnedDetail}</p>
+                        ))
+                    }
                 </div>
         </div>
     )

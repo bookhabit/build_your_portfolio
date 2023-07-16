@@ -16,6 +16,7 @@ interface IProps{
 }
 
 const BasicUI = ({portfolio,userPage}:IProps) => {
+    console.log(portfolio)
     const router = useNavigate();
     const setUser = useSetRecoilState(userAtom);
 
@@ -41,19 +42,7 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
             </div>
           </div>
           );
-    }
-
-    // 포트폴리오 삭제 
-    const deletePortfolio = async (portfolioId:string|undefined)=>{
-        const response = await axios.delete(`/portfolio/delete/${portfolioId}`)
-        if(response.status===200){
-            Swal.fire('성공','포트폴리오를 삭제하였습니다.','success')
-            router("/account")
-        }else{
-            Swal.fire('실패','포트폴리오를 삭제하는 데 실패하였습니다','error')
-        }
-    }
-      
+    } 
 
     return (
         <div className="px-0 xl:px-60 py-20 bg-gray-50 font-portfolioA">
@@ -145,14 +134,22 @@ const BasicUI = ({portfolio,userPage}:IProps) => {
                     </div>
                 ))
                 }
-                <div className="flex flex-col gap-3 mb-5 border shadow-md p-5  text-black">
-                    <p className="text-cyan-400">개발과정</p>
-                    <p className="text-md font-light leading-10">{portfolio.PortfolioDoc.process}</p>
-                </div>
-                <div className="flex flex-col gap-3 mb-10 border shadow-md p-5  text-black">
-                    <p className="text-cyan-400">배운점</p>
-                    <p className="text-md font-light leading-10">{portfolio.PortfolioDoc.learned}</p>
-                </div>
+                {portfolio.PortfolioDoc.process.length>0 && 
+                    portfolio.PortfolioDoc.process.map((processDetail,index)=>(
+                        <div key={index} className="flex flex-col gap-3 mb-5 border shadow-md p-5  text-black">
+                            <p className="text-cyan-400">{`개발과정 ${index+1}`}</p>
+                            <p className="text-md font-light leading-10">{processDetail}</p>
+                        </div>
+                    ))
+                }
+                {portfolio.PortfolioDoc.learned.length>0 && 
+                    portfolio.PortfolioDoc.learned.map((learnedDetail,index)=>(
+                        <div key={index} className="flex flex-col gap-3 mb-5 border shadow-md p-5  text-black">
+                            <p className="text-cyan-400">{`배운 점 ${index+1}`}</p>
+                            <p className="text-md font-light leading-10">{learnedDetail}</p>
+                        </div>
+                    ))
+                }
                 <div className="flex flex-col items-center md:flex-row gap-20 w-full border shadow-md p-5">
                     <div className="flex flex-col gap-5 text-sm text-gray-400  w-full  md:w-1/3">
                         <p className="text-cyan-400">Demo Link</p>

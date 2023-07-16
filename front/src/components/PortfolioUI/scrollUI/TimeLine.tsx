@@ -9,16 +9,11 @@ import {  textVariant } from "../../utils/motion";
 import { styles } from "../../UserInfoUI/UserUI_3D";
 
 
-type LearnedType= {
-  learned:string;
+type TimeLineType= {
+  content:string;
 }
 
-type ProcessType = {
-  process:string;
-}
-
-
-const LearnedCard = ({ learned }:LearnedType) => {
+const TimeLineCard = ({ content }:TimeLineType) => {
   return (
     <VerticalTimelineElement
       contentStyle={{
@@ -29,31 +24,10 @@ const LearnedCard = ({ learned }:LearnedType) => {
     >
       <div className="w-full h-full">
         <p
-          className='text-white text-[20px] font-semibold'
+          className='text-white'
           style={{ margin: 0 }}
         >
-          {learned}
-        </p>
-      </div>
-    </VerticalTimelineElement>
-  );
-};
-
-const ProcessCard = ({ process }:ProcessType) => {
-  return (
-    <VerticalTimelineElement
-      contentStyle={{
-        background: "#1d1836",
-        color: "#fff",
-      }}
-      contentArrowStyle={{ borderRight: "7px solid  #232631" }}
-    >
-      <div>
-        <p
-          className='text-white text-[20px] font-semibold'
-          style={{ margin: 0 }}
-        >
-          {process}
+          {content}
         </p>
       </div>
     </VerticalTimelineElement>
@@ -62,8 +36,8 @@ const ProcessCard = ({ process }:ProcessType) => {
 
 
 type ExperienceProps = {
-  learned:string;
-  process:string;
+  learned:string[];
+  process:string[];
 };
 
 const TimeLine = ({learned,process}:ExperienceProps) => {
@@ -77,9 +51,11 @@ const TimeLine = ({learned,process}:ExperienceProps) => {
 
       <div className='mt-20 flex flex-col'>
         <VerticalTimeline>
-          <LearnedCard
-              learned={learned}
-          />
+          {learned.map((learnedDetail)=>(
+            <TimeLineCard
+                content={learnedDetail}
+            />
+          ))}
         </VerticalTimeline>
       </div>
 
@@ -90,9 +66,11 @@ const TimeLine = ({learned,process}:ExperienceProps) => {
       </motion.div>
       <div className='mt-20 mb-40 flex flex-col'>
         <VerticalTimeline>
-          <ProcessCard
-            process={process}
-           />
+          {process.map((processDetail)=>(
+            <TimeLineCard
+              content={processDetail}
+            />
+          ))}
         </VerticalTimeline>
       </div>
     </>

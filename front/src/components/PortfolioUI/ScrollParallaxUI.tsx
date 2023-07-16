@@ -243,11 +243,19 @@ const ScrollParallaxUI = ({portfolio,userPage}:IProps) => {
                 <div className="flex flex-col lg:flex-row gap-10">
                     <div className="flex flex-col gap-3 border shadow-md p-5  text-black w-full lg:w-1/2">
                         <p className="text-Scroll_UI_SubTitle  mb-10 textContainer">개발과정</p>
-                        <p className="text-md font-light leading-10 fadeInContainer">{portfolio.PortfolioDoc.process}</p>
+                        {portfolio.PortfolioDoc.process.length > 0 && 
+                        portfolio.PortfolioDoc.process.map((processDetail,index)=>(
+                            <p key={index} className="text-md font-light leading-10 fadeInContainer">{index+1}. {processDetail}</p>
+                        ))
+                        }
                     </div>
                     <div className="flex flex-col gap-3 border shadow-md p-5  text-black w-full lg:w-1/2">
                         <p className="text-Scroll_UI_SubTitle  mb-10 textContainer">배운점</p>
-                        <p className="text-md font-light leading-10 fadeInContainer">{portfolio.PortfolioDoc.learned}</p>
+                        {portfolio.PortfolioDoc.learned.length > 0 && 
+                        portfolio.PortfolioDoc.learned.map((learnedDetail,index)=>(
+                            <p key={index} className="text-md font-light leading-10 fadeInContainer">{index+1}. {learnedDetail}</p>
+                        ))
+                        }
                     </div>
                 </div>
                 

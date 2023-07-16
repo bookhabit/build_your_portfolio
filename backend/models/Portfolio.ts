@@ -6,8 +6,8 @@ const PortfolioSchema = new Schema({
     title:String, 
     purpose:String,
     introduce:String, 
-    process:String,
-    learned:String,
+    process:[String],
+    learned:[String],
     photos:[String],
     usedTechnology:[String],
     demoLink:{

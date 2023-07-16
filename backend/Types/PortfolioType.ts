@@ -3,8 +3,8 @@ export type PortfolioType = {
     title:string; 
     purpose:string;
     introduce:string;
-    process:string; 
-    learned:string;
+    process:string[]; 
+    learned:string[];
     photos: string[],
     usedTechnology:string[];
     developPeriod:DevelopPeriodType;
