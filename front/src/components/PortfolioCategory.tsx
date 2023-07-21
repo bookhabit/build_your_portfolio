@@ -13,7 +13,7 @@ const PortfolioCategory = ({categoryName,portfolio}:IProps) => {
     return (
         <div className={portfolioCategoryCSS()}>
             <p className="text-neutral-500 text-2xl font-bold">{categoryName}</p>
-            <div className="flex gap-8 flex-wrap">
+            <div className="flex justify-center gap-8 flex-wrap">
                 {
                 portfolio?.map((portfolio)=>(
                     <PortfolioImage key={portfolio._id} portfolio={portfolio}/>
