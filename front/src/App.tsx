@@ -12,7 +12,10 @@ import UserPage from './pages/UserPage';
 import PortfolioPage from './pages/PortfolioPage';
 import {RecoilRoot} from "recoil"
 
-axios.defaults.baseURL = "http://localhost:4000"
+const LOCAL_BACKEND="http://localhost:4000"
+const DEPLOY_BACKEND="https://build-your-portfolio-0ccbe2f7f061.herokuapp.com"
+
+axios.defaults.baseURL = DEPLOY_BACKEND
 axios.defaults.withCredentials = true;
 
 function App() {

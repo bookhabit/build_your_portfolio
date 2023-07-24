@@ -275,7 +275,7 @@ const UserInfoBasic = ({user}:{user:UserInfoType|null|undefined}) => {
                 </div>
                 <div className="portfolio-div w-full  flex flex-col items-center pt-16 pb-36 shadow-xl">
                         <h2 className="text-white bg-neutral-400 p-3 rounded-lg font-bold text-3xl">Portfolio</h2>
-                        <div className="protfoilo-group w-full flex flex-col justify-evenly gap-6 md:flex-row mt-20">
+                        <div className="protfoilo-group w-full flex flex-col justify-center md:justify-around  md:flex-row mt-20">
                             {user?.userPortfolio?.length===0 && <p>포트폴리오를 등록해주세요</p>}
                             {clonePortfolios && clonePortfolios?.length>0 &&
                                 <PortfolioCategory categoryName="클론코딩" portfolio={clonePortfolios}/>
