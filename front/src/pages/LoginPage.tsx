@@ -64,7 +64,11 @@ export default function LoginPage() {
             setUser(data);
             Swal.fire('로그인 성공', data.name+'님 안녕하세요', 'success');
             router('/')
-          });
+          })
+          .catch((err)=>{
+            console.log(err)
+            Swal.fire('로그인 실패','프로필 정보를 가져오지 못하였습니다', 'error');
+          })
         }
       }catch(err:any){
         console.log(err)
