@@ -13,7 +13,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import {RecoilRoot} from "recoil"
 
 const LOCAL_BACKEND="http://localhost:4000"
-const DEPLOY_BACKEND="http://ec2-54-180-155-198.ap-northeast-2.compute.amazonaws.com:4000"
+const DEPLOY_BACKEND="http://54.180.155.198:4000/"
 
 axios.defaults.baseURL = DEPLOY_BACKEND
 axios.defaults.withCredentials = true;
