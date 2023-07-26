@@ -76,7 +76,7 @@ app.post('/login', async (req:Request,res:Response) => {
           id:userDoc._id
         }, jwtSecret, {}, (err,token) => {
           if (err) throw err;
-          res.cookie('token', token,{ sameSite: 'none' }).status(200).json(userDoc);
+          res.cookie('token', token,{ sameSite: 'none', secure: true }).status(200).json(userDoc);
         });
       } else {
         res.status(400).json('비밀번호가 일치하지 않습니다');
