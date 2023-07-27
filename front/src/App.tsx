@@ -13,7 +13,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import {RecoilRoot} from "recoil"
 
 const LOCAL_BACKEND="http://localhost:4000"
-const DEPLOY_BACKEND="http://build-your-portfolio.de"
+const DEPLOY_BACKEND="http://build-your-portfolio.de:4000"
  
 axios.defaults.baseURL = DEPLOY_BACKEND
 axios.defaults.withCredentials = true;
