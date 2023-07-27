@@ -35,6 +35,10 @@ app.use(cors({credentials:true,origin:['https://build-your-portfolio.netlify.app
 // 몽고DB 연결
 connectToMongoDB();
 
+app.get('/',async (req:Request,res:Response) => {
+  res.json('백엔드 서버 테스트')
+})
+
 // 회원가입
 app.post('/register', async (req:Request,res:Response) => {
       const {nickName,name,email,password} = req.body;
