@@ -34,6 +34,7 @@ app.use(cors({credentials:true,origin:['https://build-your-portfolio.netlify.app
 
 // 몽고DB 연결
 connectToMongoDB();
+console.log(process.env.GOOGLE_REDIRECT_URI)
 
 app.get('/',async (req:Request,res:Response) => {
   res.json('백엔드 서버 테스트')
