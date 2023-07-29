@@ -34,7 +34,6 @@ app.use(cors({credentials:true,origin:['https://build-your-portfolio.netlify.app
 
 // 몽고DB 연결
 connectToMongoDB();
-console.log(process.env.GOOGLE_REDIRECT_URI)
 
 app.get('/',async (req:Request,res:Response) => {
   res.json('백엔드 서버 테스트')
@@ -230,7 +229,7 @@ app.get("/google/login",async (req: Request, res: Response) => {
 
 // 로그아웃
 app.post('/logout',(req:Request,res:Response)=>{
-  res.cookie('token','').json(true);
+  res.cookie('token','',{ sameSite: 'none', secure: true }).json(true);
 })
 
 // 로그인 유지 및 유저정보
