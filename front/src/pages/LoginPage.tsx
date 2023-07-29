@@ -159,7 +159,7 @@ export default function LoginPage() {
     async function loginWithGoogle(event: React.FormEvent) {
       event.preventDefault();
 
-      const redirectUri = "https://my-portfolio-server.com/google/login"
+      const redirectUri = "https://build-your-portfolio.netlify.app/login/google"
       const scope = "profile email";
       window.location.assign(
         `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`
