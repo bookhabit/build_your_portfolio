@@ -4,6 +4,7 @@ import { InputChangeEvent } from "./elements/Input";
 import axios from "axios";
 import { UserInfoType } from "./Types/userType";
 import ImageUI from "./components/common/ImageUI";
+import Logo from "/header_logo.png"
 import {  useRecoilState, useSetRecoilState } from "recoil";
 import { SearchRedirectAtom } from "./recoil/searchAtom";
 import { userAtom } from "./recoil/userAtom";
@@ -57,9 +58,10 @@ export default function Header() {
   
   return (
     <header className="flex justify-between h-16 items-center bg-header_bg px-5 sm:px-10 py-3 font-index">
-      <Link to={'/'} className="flex items-center ">
-        <span className="hidden xs:block  font-bold text-header_element">My Portfolio</span>
-        <span className="block xs:hidden font-bold text-header_element">M.P</span>
+      <Link to={'/'} className="flex items-center gap-2">
+        <img src={Logo} alt="로고" className="w-8 h-8"/>
+        <span className="hidden sm:block  font-bold text-header_element">My Portfolio</span>
+        <span className="block sm:hidden font-bold text-header_element">M.P</span>
       </Link>
       <form className="relative w-1/2 lg:w-1/3
        flex items-center" onSubmit={onSubmit}>
