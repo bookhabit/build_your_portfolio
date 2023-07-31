@@ -462,8 +462,13 @@ export default function ResumeFormPage() {
             </div>
             {certificationArr.length > 0 && (
               <ShowArray>
-              {certificationArr.map((certification)=>(
-                <span key={certification}>{certification+' '}</span>    
+              {certificationArr.map((certification,index)=>(
+                <div>
+                  <span key={certification}>{certification+' '}</span>    
+                  <button className="bg-transparent border mt-5 border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={(event)=>{
+                  event.preventDefault()
+                  setCertificationArr(prevArr => prevArr.filter((_, i) => i !== index))}}>삭제</button>
+                </div>
               ))}    
               </ShowArray>
             )}
@@ -656,9 +661,14 @@ export default function ResumeFormPage() {
             </div>
             {careerArr.length > 0 && (
               <ShowArray>
-                {careerArr.map((career)=>(
+                {careerArr.map((career,index)=>(
                   <div key={career.companyName} className="border flex flex-col gap-3 p-5 rounded-lg w-full">
-                    <p>회사명 : {career.companyName+' : '+career.jobDetail}</p>
+                    <div className="flex justify-between items-center">
+                      <p>회사명 : {career.companyName+' : '+career.jobDetail}</p>
+                      <button className="bg-transparent border mt-5 border-gray-500 px-4 rounded-lg font-bold hover:text-white min-w-fit hover:bg-gray-300" onClick={(event)=>{
+                  event.preventDefault()
+                  setCareerArr(prevArr => prevArr.filter((_, i) => i !== index))}}>삭제</button>
+                    </div>
                     <p>기간 : {career.period.start+' : '+career.period.end}</p>
                       {career.mainTask.map(((task,index)=>(
                       <div key={index} className="flex flex-wrap items-center">
@@ -668,6 +678,7 @@ export default function ResumeFormPage() {
                         </p>
                       </div>
                     )))}
+                    
                   </div>
                 ))}   
               </ShowArray>

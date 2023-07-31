@@ -92,8 +92,8 @@ export default function Header() {
                     >
                       <div className="flex items-center gap-3">
                         <div className=" bg-slate-50 rounded-full w-8 h-8 flex justify-center items-center">
-                          {user.profileImg ?
-                          <ImageUI src={user.profileImg} className="w-7 h-7" alt="사용자 프로필 이미지" /> 
+                          {user?.profileImg ?
+                          <ImageUI src={user?.profileImg} className="w-7 h-7" alt="사용자 프로필 이미지" /> 
                           : 
                             <img src={defaultProfileImg} alt="기본 프로필 이미지" className="rounded-full w-7 h-7" />
                           }
