@@ -9,6 +9,7 @@ import { SearchRedirectAtom } from '../recoil/searchAtom';
 import ErrorMsg from '../components/ErrorMsg';
 import ShowNullData from '../components/ShowNullData';
 
+
 const UserPage = () => {
     const {id:userId} = useParams();
     const [redirect,setRedirect] = useRecoilState(SearchRedirectAtom)

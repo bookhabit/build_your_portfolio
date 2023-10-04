@@ -11,11 +11,14 @@ import ResumeFormPage from './pages/ResumeFormPage';
 import UserPage from './pages/UserPage';
 import PortfolioPage from './pages/PortfolioPage';
 import {RecoilRoot} from "recoil"
+import BookhabitPage from './pages/bookhabitPage';
+import BookhabitPortfolio from './pages/BookhabitPortfolio';
 
 const LOCAL_BACKEND="http://localhost:4000"
 const DEPLOY_BACKEND="https://my-portfolio-server.com"
- 
-axios.defaults.baseURL = DEPLOY_BACKEND
+const TEST_BACKEND = "http://15.165.98.25"
+
+axios.defaults.baseURL = LOCAL_BACKEND
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -35,6 +38,9 @@ function App() {
               <Route path={'/user/:id'} element={<UserPage/>}/>
               <Route path={'/portfolio/:id'} element={<PortfolioPage/>}/>
               <Route path="/account" element={<ProfilePage />} />
+              {/* 백엔드 서버 내리고 포트폴리오만 보여주는 용도의 페이지 */}
+              <Route path={'/bookhabit'} element={<BookhabitPage/>}/>
+              <Route path={'/bookhabit/portfolio/:id'} element={<BookhabitPortfolio/>}/>
             </Route>
           </Routes>
     </RecoilRoot>

@@ -1,5 +1,5 @@
 import {  FormEvent, useEffect, useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import { InputChangeEvent } from "./elements/Input";
 import axios from "axios";
 import { UserInfoType } from "./Types/userType";
@@ -13,6 +13,7 @@ import NavBarIcon from "../src/assets/navBar.svg"
 
 export default function Header() {
   const router = useNavigate();
+  const location = useLocation();
   const [user,setUser] = useRecoilState(userAtom)
   const [searchValue,setSearchValue] = useState<string>('');
   const [showResultValues,setShowResultValues] = useState<boolean>(false)
@@ -26,11 +27,15 @@ export default function Header() {
   const setRedirect = useSetRecoilState(SearchRedirectAtom)
 
   useEffect(() => {
-    if (!user) {
-      axios.get('/profile')
-            .then(({data}:{data:UserInfoType}) => {
-              setUser(data);
-            });
+    try{
+      if (!user && location.pathname !== "/bookhabit") {
+        axios.get('/profile')
+              .then(({data}:{data:UserInfoType}) => {
+                setUser(data);
+              });
+      }
+    }catch(e){
+      console.log(e)
     }
   }, []);
 

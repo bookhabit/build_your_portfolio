@@ -6,9 +6,11 @@ import {staggerContainer } from "../utils/motion";
 import Experience from "./user3d/Experience";
 import Projects from "./user3d/Projects";
 import ImageUI from "../common/ImageUI";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
+import BookhabitImageUI from "../common/BookhabitImageUI";
 
 export const styles = {
     paddingX: "sm:px-16 px-6",
@@ -28,6 +30,15 @@ export const styles = {
 
 
 const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
+
+    const location = useLocation();
+    const [bookhaibtPage,setBookhabitPage] = useState<boolean>(false);
+
+    useEffect(()=>{
+        if(location.pathname==="/bookhabit"){
+        setBookhabitPage(true)
+        }
+    },[])
         // 페이드인
         const fadeIn = (element:Element) =>{
             gsap.to(element,1,{
@@ -98,7 +109,16 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 </h2>
                 <div className='bg-tertiary p-5 rounded-2xl sm:w-[660px] h-full w-full'>
                         <div className='relative w-full h-[280px] cursor-pointer flex items-center justify-center'>
-                            {user?.profileImg&& 
+                            {
+                                bookhaibtPage ? 
+                                user?.profileImg&& 
+                                <BookhabitImageUI
+                                    src={user?.profileImg}
+                                    className='w-[250px] h-[250px] object-cover rounded-2xl'
+                                    alt="프로필 이미지"
+                                />
+                                :
+                                user?.profileImg&&    
                                 <ImageUI
                                     src={user?.profileImg}
                                     className='w-[250px] h-[250px] object-cover rounded-2xl'
@@ -107,7 +127,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                             }
                         </div>
 
-                        <div className='mt-5 w-1/2'>
+                        <div className='mt-5'>
                             <h3 className='text-white font-bold text-[24px]'>{user?.userResumeDoc?.finalEducation}</h3>
                             <p className='mt-2 text-secondary text-[16px]'>{user?.userResumeDoc?.birth}</p>
                             <p className='mt-2 text-secondary text-[20px]'>{user?.userResumeDoc?.coverLetter}</p>
@@ -172,19 +192,19 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 </h2>
                 <div className='bg-tertiary p-10 rounded-2xl sm:w-[660px] h-full w-full'>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Your Name</h2>
+                        <h2 className='text-white font-medium mb-4'>Name</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.name}</p></div>
                     </div>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Your Email</h2>
+                        <h2 className='text-white font-medium mb-4'>Email</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.email}</p></div>
                     </div>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Your Phone</h2>
+                        <h2 className='text-white font-medium mb-4'>Phone</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.userResumeDoc?.phone}</p></div>
                     </div>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Your Channel</h2>
+                        <h2 className='text-white font-medium mb-4'>Channel</h2>
                         <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium">
                             {user?.userResumeDoc?.channel.map((channel)=>(
                                     <div className={"flex sm:flex-row flex-col items-center my-2"} key={channel.channelURL}>

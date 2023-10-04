@@ -5,7 +5,9 @@ import { fadeIn, textVariant } from "../../utils/motion";
 import { PortfolioType } from "../../../Types/PortfolioType";
 import githubImg from "../../../assets/github.png";
 import ImageUI from "../../common/ImageUI";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import BookhabitImageUI from "../../common/BookhabitImageUI";
 
 type ProjectCardType= {
   portfolio:PortfolioType,
@@ -14,6 +16,23 @@ type ProjectCardType= {
 
 const ProjectCard = ({ portfolio, index }:ProjectCardType) => {
   const router = useNavigate();
+  const location = useLocation();
+  const [bookhaibtPage,setBookhabitPage] = useState<boolean>(false);
+  console.log('bookhabit페이지',bookhaibtPage)
+  useEffect(()=>{
+    if(location.pathname==="/bookhabit"){
+      setBookhabitPage(true)
+    }
+  },[])
+
+  const goToPortfolioPage = (portfolioId:string|undefined)=>{
+    if(bookhaibtPage){
+      router(`/bookhabit/portfolio/${portfolioId}`)
+    }else{
+      router(`/portfolio/${portfolioId}`)
+    }
+  }
+
   function truncateText(text: string): string {
     if (text.length <= 80) {
       return text;
@@ -31,13 +50,23 @@ const ProjectCard = ({ portfolio, index }:ProjectCardType) => {
         }}
         className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
       >
-        <div className='relative w-full h-[230px] cursor-pointer' onClick={()=>router(`/portfolio/${portfolio._id}`)}>
-          {portfolio.photos[0] && 
+        <div className='relative w-full h-[230px] cursor-pointer' onClick={()=>goToPortfolioPage(portfolio._id)}>
+          {
+          bookhaibtPage ?
+          portfolio.photos[0] && 
+          <BookhabitImageUI
+              src={portfolio.photos[0]}
+              className='w-full h-full object-cover rounded-2xl'
+              alt="포트폴리오 이미지"
+          />
+          :
+          portfolio.photos[0] && 
             <ImageUI
               src={portfolio.photos[0]}
               className='w-full h-full object-cover rounded-2xl'
               alt="포트폴리오 이미지"
             />
+
           }
 
           <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
