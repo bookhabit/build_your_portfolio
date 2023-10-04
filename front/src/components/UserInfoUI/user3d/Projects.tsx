@@ -18,7 +18,7 @@ const ProjectCard = ({ portfolio, index }:ProjectCardType) => {
   const router = useNavigate();
   const location = useLocation();
   const [bookhaibtPage,setBookhabitPage] = useState<boolean>(false);
-  console.log('bookhabit페이지',bookhaibtPage)
+  
   useEffect(()=>{
     if(location.pathname==="/bookhabit"){
       setBookhabitPage(true)

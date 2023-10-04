@@ -28,7 +28,7 @@ export default function Header() {
 
   useEffect(() => {
     try{
-      if (!user && location.pathname !== "/bookhabit") {
+      if (!user && location.pathname !== "/bookhabit" || !location.pathname.includes("/bookhabit/portfolio")) {
         axios.get('/profile')
               .then(({data}:{data:UserInfoType}) => {
                 setUser(data);

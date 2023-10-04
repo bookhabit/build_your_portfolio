@@ -4,6 +4,9 @@ import { fadeIn, textVariant } from "../../utils/motion";
 import { Important_function } from "../../../Types/PortfolioType";
 import ImageUI from "../../common/ImageUI";
 import { styles } from "../../UserInfoUI/UserUI_3D";
+import { useLocation } from "react-router";
+import { useEffect, useState } from "react";
+import BookhabitImageUI from "../../common/BookhabitImageUI";
 
 type ProjectCardType= {
   important_function:Important_function,
@@ -11,6 +14,15 @@ type ProjectCardType= {
 }
 
 const ProjectCard = ({ important_function, index }:ProjectCardType) => {
+  const location = useLocation();
+    const [bookhaibtPage,setBookhabitPage] = useState<boolean>(false);
+    
+    useEffect(()=>{
+        if(location.pathname.includes("/bookhabit/portfolio")){
+        setBookhabitPage(true)
+        }
+    },[])
+
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt
@@ -22,17 +34,26 @@ const ProjectCard = ({ important_function, index }:ProjectCardType) => {
         className='bg-tertiary p-5 rounded-2xl sm:w-[460px] w-full min-h-[500px]'
       >
         <div className='relative w-full h-[230px] cursor-pointer'>
-          {important_function.important_function_photo[0] && 
+          {!important_function.important_function_photo[0] && 
+            <div
+                className='bg-gray-300 w-full h-full object-fill rounded-2xl flex justify-center items-center'
+            >등록된 이미지가 없습니다</div>
+          }
+          {
+            bookhaibtPage ? 
+            important_function.important_function_photo[0] && 
+            <BookhabitImageUI
+              src={important_function.important_function_photo[0]}
+              className='w-full h-full object-cover rounded-2xl'
+              alt="핵심기능 이미지"
+            />
+            :
+            important_function.important_function_photo[0] && 
             <ImageUI
               src={important_function.important_function_photo[0]}
               className='w-full h-full object-cover rounded-2xl'
               alt="핵심기능 이미지"
             />
-          }
-          {!important_function.important_function_photo[0] && 
-            <div
-                className='bg-gray-300 w-full h-full object-fill rounded-2xl flex justify-center items-center'
-            >등록된 이미지가 없습니다</div>
           }
         </div>
 
