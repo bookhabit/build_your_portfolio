@@ -103,7 +103,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
             </div>
             {/* 페이지2 -Testimonials>> 학력,생년월일 
                     자기소개  */}
-            <div className={'fadeInContainer sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
+            <div className={'fadeInContainer sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto flex flex-col items-center'}>
                 <h2 className={`${styles.sectionHeadText} mb-10`}>
                     자기소개
                 </h2>
@@ -186,7 +186,7 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
             </motion.section>
             
             {/* Contact >> 연락처  */}
-            <div className={'fadeInContainer pb-40 sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto'}>
+            <div className={'fadeInContainer pb-40 sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto flex flex-col items-center'}>
                 <h2 className={`${styles.sectionHeadText} mb-10`}>
                     Contact
                 </h2>
