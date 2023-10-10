@@ -13,6 +13,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import {RecoilRoot} from "recoil"
 import BookhabitPage from './pages/bookhabitPage';
 import BookhabitPortfolio from './pages/BookhabitPortfolio';
+import BookhabitPortfolioFunction from './pages/BookhabitPortfolioFunction';
 
 const LOCAL_BACKEND="http://localhost:4000"
 const DEPLOY_BACKEND="https://my-portfolio-server.com"
@@ -41,6 +42,7 @@ function App() {
               {/* 백엔드 서버 내리고 포트폴리오만 보여주는 용도의 페이지 */}
               <Route path={'/bookhabit'} element={<BookhabitPage/>}/>
               <Route path={'/bookhabit/portfolio/:id'} element={<BookhabitPortfolio/>}/>
+              <Route path={'/bookhabit/portfolio/function/:id'} element={<BookhabitPortfolioFunction/>}/>
             </Route>
           </Routes>
     </RecoilRoot>

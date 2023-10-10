@@ -1,10 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import {  useNavigate, useParams } from 'react-router';
 import { PortfolioDetailType, PortfolioType } from '../Types/PortfolioType';
-import BasicUI from '../components/PortfolioUI/BasicUI';
-import ScrollParallaxUI from '../components/PortfolioUI/ScrollParallaxUI';
-import SlideUI from '../components/PortfolioUI/SlideUI';
-import UI_3D from '../components/PortfolioUI/UI_3D';
 import BookhabitBasicUI from '../components/PortfolioUI/bookhabit/BookhabitBasicUI';
 import BookhabitUI_3D from '../components/PortfolioUI/bookhabit/BookhabitUI_3D';
 
@@ -116,21 +111,31 @@ const portfolioProject:PortfolioDetailType = {
 
 const BookhabitPortfolio = () => {
     const {id:portfolioId} = useParams();
+    const router = useNavigate();
 
     return (
         <div>
             {/* id값에 따라서 중고거래포트폴리오 3d */}
-            {/* {portfolioId === "649bff04b8e47edd49b16e5d" &&  <BookhabitBasicUI portfolio={portfolio} userPage={false} />} */}
+            {/* {portfolioId === "64b418a826eb678cc0763263" &&
+                <>
+                    <BookhabitUI_3D portfolio={portfolioProject} userPage={false} />
+                    <button className='fixed bottom-10 right-10 bg-slate-50 w-60 h-10 rounded-md text-xl text-slate-950 hover:bg-slate-600 hover:text-slate-50 p-1' onClick={()=>router(`/bookhabit/portfolio/function/중고거래프로젝트id`)}>기능설명 보러가기</button>
+                </>
+              } */}
 
             {/* id값에 따라서 포트폴리오 공유사이트 3d */}
-            {portfolioId === "64b418a826eb678cc0763263" &&  <BookhabitUI_3D portfolio={portfolioProject} userPage={false} />}
+            {portfolioId === "64b418a826eb678cc0763263" &&
+                <>
+                    <BookhabitUI_3D portfolio={portfolioProject} userPage={false} />
+                    <button className='fixed bottom-10 right-10 bg-slate-50 w-60 h-10 rounded-md text-xl text-slate-950 hover:bg-slate-600 hover:text-slate-50 p-1' onClick={()=>router(`/bookhabit/portfolio/function/64b418a826eb678cc0763263`)}>기능설명 보러가기</button>
+                </>
+              }
 
             {/* id값에 따라서 mern 보일러 프로젝트 basic */}
             {portfolioId === "64b41af326eb678cc07632db" &&  <BookhabitBasicUI portfolio={mernStartProject} userPage={false} />}
 
             {/* id값에 따라서 번개장터 클론코딩 프로젝트 basic */}
             {portfolioId === "649bff04b8e47edd49b16e5d" &&  <BookhabitBasicUI portfolio={cloneCodingPlatform} userPage={false} />}
-
         </div>
     );
 };

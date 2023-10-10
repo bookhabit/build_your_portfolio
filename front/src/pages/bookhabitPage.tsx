@@ -1,4 +1,3 @@
-
 import { UserInfoType } from '../Types/userType';
 import UserInfoBasic from '../components/UserInfoUI/UserInfoBasic';
 import UserUI_3D from '../components/UserInfoUI/UserUI_3D';
@@ -59,7 +58,7 @@ const userInfo:UserInfoType = {
             },
             demoLink:{
                 projectURL:"",
-                githubURL:"https://github.com/bookhabit/build_your_portfolio",
+                githubURL:"https://github.com/bookhabit/school_used_trade",
                 designURL:"https://www.figma.com/file/njTdqOOdQ8t6mHfPc9L0cB/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4-%EA%B4%80%EB%A6%AC-%EC%82%AC%EC%9D%B4%ED%8A%B8?type=design&node-id=0-1&mode=design&t=XdObjeiUPsZmuC4T-0",
                 documentURL:"https://www.notion.so/8f36464ecd574df8a6f34e637fefb602",
             },
@@ -132,7 +131,6 @@ const userInfo:UserInfoType = {
         },
     ],
     profileImg:"photo1688185563360.png",
-
 }
 const BookhabitPage = () => {
     return (
