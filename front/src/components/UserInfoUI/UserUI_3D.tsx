@@ -129,8 +129,8 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
 
                         <div className='mt-5'>
                             <h3 className='text-white font-bold text-[24px]'>{user?.userResumeDoc?.finalEducation}</h3>
-                            <p className='mt-2 text-secondary text-[16px]'>{user?.userResumeDoc?.birth}</p>
-                            <p className='mt-2 text-secondary text-[20px]'>{user?.userResumeDoc?.coverLetter}</p>
+                            <p className='mt-2 text-white text-[16px]'>{user?.userResumeDoc?.birth}</p>
+                            <p className='mt-2 text-white text-[20px]'>{user?.userResumeDoc?.coverLetter}</p>
                         </div>
                 </div>
 
@@ -192,24 +192,24 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                 </h2>
                 <div className='bg-tertiary p-10 rounded-2xl sm:w-[660px] h-full w-full'>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Name</h2>
-                        <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.name}</p></div>
+                        <h2 className=' text-secondary font-medium mb-4'>Name</h2>
+                        <div className="py-4 px-6 text-white rounded-lg outline-none border-none font-medium"><p>{user?.name}</p></div>
                     </div>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Email</h2>
-                        <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.email}</p></div>
+                        <h2 className=' text-secondary font-medium mb-4'>Email</h2>
+                        <div className="py-4 px-6 text-white rounded-lg outline-none border-none font-medium"><p>{user?.email}</p></div>
                     </div>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Phone</h2>
-                        <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium"><p>{user?.userResumeDoc?.phone}</p></div>
+                        <h2 className=' text-secondary font-medium mb-4'>Phone</h2>
+                        <div className="py-4 px-6 text-white rounded-lg outline-none border-none font-medium"><p>{user?.userResumeDoc?.phone}</p></div>
                     </div>
                     <div>
-                        <h2 className='text-white font-medium mb-4'>Channel</h2>
-                        <div className="py-4 px-6 text-secondary rounded-lg outline-none border-none font-medium">
+                        <h2 className=' text-secondary font-medium mb-4'>Channel</h2>
+                        <div className="py-4 px-6 text-white rounded-lg outline-none border-none font-medium">
                             {user?.userResumeDoc?.channel.map((channel)=>(
                                     <div className={"flex sm:flex-row flex-col items-center my-2"} key={channel.channelURL}>
                                         <p className={"mx-2"}>{channel.channelName} :</p>
-                                        <Link className="demoLink text-secondary  hover:text-white" target="_blank" to={channel.channelURL}>{channel.channelURL}</Link>
+                                        <Link className="demoLink text-white  hover:text-secondary" target="_blank" to={channel.channelURL}>{channel.channelURL}</Link>
                                     </div>
                                 ))}
                         </div>

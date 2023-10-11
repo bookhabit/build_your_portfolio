@@ -9,7 +9,7 @@ const BookhabitPortfolioFunction = () => {
     console.log('포트폴리오 id',portfolioId)
     return (
         <div>
-            {portfolioId === "중고거래id" &&
+            {portfolioId === "6526763253b879944514caf8" &&
                 <>
                     <ShowSchoolTrade/>
                 </>

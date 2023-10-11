@@ -16,6 +16,8 @@ const UserPage = () => {
     const [userInfo,setUserInfo] = useState<UserInfoType|undefined>();
     const [errorMsg,setErrorMsg] = useState<string>('');
 
+  console.log('user정보',userInfo)
+
     useEffect(()=>{
         const fetchUserData = async () => {
             try {

@@ -43,32 +43,32 @@ type ExperienceProps = {
 const TimeLine = ({learned,process}:ExperienceProps) => {
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <h2 className={`${styles.sectionHeadText}`}>
-          배운점
-        </h2>
-      </motion.div>
+      
+      <h2 className={`${styles.sectionHeadText}`}>
+        배운점
+      </h2>
+      
 
-      <div className='mt-20 flex flex-col'>
+      <div className='mt-20 flex flex-col mb-20'>
         <VerticalTimeline>
           {learned.map((learnedDetail)=>(
             <TimeLineCard
                 content={learnedDetail}
+                key={learnedDetail}
             />
           ))}
         </VerticalTimeline>
       </div>
 
-      <motion.div variants={textVariant()} className="mt-40">
-        <h2 className={`${styles.sectionHeadText}`}>
+      <h2 className={`${styles.sectionHeadText}`}>
           개발과정 및 문제해결
-        </h2>
-      </motion.div>
+      </h2>
       <div className='mt-20 mb-40 flex flex-col'>
         <VerticalTimeline>
           {process.map((processDetail)=>(
             <TimeLineCard
               content={processDetail}
+              key={processDetail}
             />
           ))}
         </VerticalTimeline>

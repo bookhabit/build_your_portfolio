@@ -10,7 +10,7 @@ const PortfolioLabel = tw.label`
 `;
 
 const LinkLabel = tw.label`
-  p-2 bg-portfolio_gray rounded-md w-32 font-bold
+  p-2 bg-portfolio_gray rounded-md w-36 font-bold
 `;
 interface IProps{
     icon?:string,
