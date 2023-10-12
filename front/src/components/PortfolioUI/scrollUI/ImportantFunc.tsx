@@ -82,7 +82,7 @@ const ImportantFunc = ({ important_functions }: ProjectsProps) => {
           variants={fadeIn("", "", 0.1, 1)}
           className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
         >
-          
+          기능설명
         </motion.p>
       </div>
 
