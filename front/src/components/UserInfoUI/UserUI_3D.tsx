@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import BookhabitImageUI from "../common/BookhabitImageUI";
 
+
 export const styles = {
     paddingX: "sm:px-16 px-6",
     paddingY: "sm:py-16 py-6",
@@ -30,15 +31,24 @@ export const styles = {
 
 
 const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+      const mediaQuery = window.matchMedia("(max-width: 500px)");
+  
+      setIsMobile(mediaQuery.matches);
+    },[])
 
     const location = useLocation();
     const [bookhaibtPage,setBookhabitPage] = useState<boolean>(false);
+    const [scrollBottom,setScrollBottom] = useState(true)
+    const [scrollUp,setScrollUp] = useState(true)
 
     useEffect(()=>{
         if(location.pathname==="/bookhabit"){
         setBookhabitPage(true)
         }
     },[])
+
         // 페이드인
         const fadeIn = (element:Element) =>{
             gsap.to(element,1,{
@@ -48,7 +58,6 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
     
         // 관찰자 생성
         useEffect(() => {
-    
             const options = {
             root: null, // viewport
             rootMargin: "0px",
@@ -70,9 +79,23 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
             const boxList = document.querySelectorAll(".fadeInContainer");
             boxList.forEach((el) => observer.observe(el));    
         }, []);
+
+        const scrollEvent = ()=>{
+            if(scrollBottom){
+                // 아래로 이동
+                window.scrollTo(0,800)
+                setScrollBottom(false)
+                setScrollUp(true)
+            }
+            if(scrollUp){
+                window.scrollTo(0,0)
+                setScrollUp(false)
+                setScrollBottom(true)
+            }
+        }
     
     return (
-        <div className='relative z-0 bg-black font-user3D'>
+        <div className='bg-black font-user3D'>
             {/* 페이지1 : 유저 소개부분 - 이름,자기소개 */}
             <div className='bg-user3dBG bg-cover bg-no-repeat bg-center'>
                 <div className={`relative w-full h-screen mx-auto `}>
@@ -94,11 +117,11 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                         </div>
                     </div>
                     <ComputersCanvas/>
-                    
-                    {/* 다음 부분 개발 진행 */}
-                    <div className='absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center'>
-                        
+                    {isMobile && scrollBottom && 
+                    <div className=' absolute w-full flex justify-center items-center'>
+                        <button className=" fixed bottom-10 w-20 h-5 text-black bg-white rounded-lg cursor-pointer" onClick={scrollEvent}>아래로</button>
                     </div>
+                    }
                 </div>
             </div>
             {/* 페이지2 -Testimonials>> 학력,생년월일 
@@ -215,7 +238,12 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                         </div>
                     </div>
                 </div>
-
+                {scrollUp && 
+                <div className='mt-20 w-full flex justify-center items-center'>
+                    <button className="bottom-20 w-20 h-5 text-black bg-white rounded-lg cursor-pointer" onClick={scrollEvent}>맨 위로</button>
+                </div>
+                }
+                
             </div>
         </div>
     );
