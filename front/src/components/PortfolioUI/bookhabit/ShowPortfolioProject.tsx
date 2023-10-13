@@ -20,7 +20,7 @@ type LeftVideoPropsType = {
 const RightVideo = ({title,desc,_src,width}:RightVideoPropsType)=>{
     return(
         <div className="w-full flex flex-col md:flex-row items-center justify-center gap-20">
-            <div className="w-1/3">
+            <div className="w-full md:w-1/3">
                 <p className="text-2xl text-zinc-600 mb-14 font-index">{title}</p>
                 <p className="text-xl font-userBasic">{desc}</p>
             </div>
@@ -33,7 +33,7 @@ const LeftVideo = ({title,desc,_src,width}:LeftVideoPropsType)=>{
     return(
         <div className="w-full flex flex-col md:flex-row justify-center items-center gap-20">
             <video src={_src} width={width} height={400}  muted controls className=" shadow-lg" />
-            <div className="w-1/3">
+            <div className="w-full md:w-1/3">
                 <p className="text-2xl text-zinc-600 mb-14 font-index">{title}</p>
                 <p className="text-xl font-userBasic">{desc}</p>
             </div>
@@ -44,7 +44,7 @@ const LeftVideo = ({title,desc,_src,width}:LeftVideoPropsType)=>{
 const ShowPortfolioProject = () => {
     const router = useNavigate();
     return (
-        <div className="bg-neutral-100 p-48">
+        <div className="bg-neutral-100 p-10 md:p-48">
             <h2 className="text-3xl text-center text-slate-500 mb-48">포트폴리오 프로젝트 기능설명</h2>
             <div className="flex flex-col items-center gap-80 ">
                 <RightVideo 
