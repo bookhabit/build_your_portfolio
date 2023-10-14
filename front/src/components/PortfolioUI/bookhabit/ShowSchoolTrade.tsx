@@ -131,7 +131,7 @@ const ShowSchoolTrade = () => {
                     </div>
                 </div>
             </div>
-            <button className='fixed bottom-10 right-10 bg-slate-50 w-44 h-10 rounded-md text-xl text-slate-950 hover:bg-slate-600 hover:text-slate-50 p-1' onClick={()=>router(`/bookhabit/portfolio/64b418a826eb678cc0763263`)}>이전 페이지</button>
+            <button className='fixed bottom-10 right-10 bg-slate-50 w-44 h-10 rounded-md text-xl text-slate-950 hover:bg-slate-600 hover:text-slate-50 p-1' onClick={()=>router(`/bookhabit/portfolio/6526763253b879944514caf8`)}>이전 페이지</button>
         </div>
     );
 };
