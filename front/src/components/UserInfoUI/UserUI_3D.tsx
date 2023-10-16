@@ -137,14 +137,14 @@ const UserUI_3D = ({user}:{user:UserInfoType|null|undefined}) => {
                                 user?.profileImg&& 
                                 <BookhabitImageUI
                                     src={user?.profileImg}
-                                    className='w-[250px] h-[250px] object-cover rounded-2xl'
+                                    className='w-[400px] h-[300px] object-contain rounded-2xl'
                                     alt="프로필 이미지"
                                 />
                                 :
                                 user?.profileImg&&    
                                 <ImageUI
                                     src={user?.profileImg}
-                                    className='w-[250px] h-[250px] object-cover rounded-2xl'
+                                    className='w-[400px] h-[300px] object-contain rounded-2xl'
                                     alt="프로필 이미지"
                                 />
                             }

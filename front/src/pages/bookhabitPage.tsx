@@ -175,7 +175,7 @@ const userInfo:UserInfoType = {
             author:"649060df8f0c8613f7649b1c",
         },
     ],
-    profileImg:"photo1688185563360.png",
+    profileImg:"증명사진.jpg",
 }
 const BookhabitPage = () => {
     return (
