@@ -9,6 +9,8 @@ import FavoriteListVideo from "/bookhabit/portfolio/school_trade_project/관심�
 import TradeReviewVideo from "/bookhabit/portfolio/school_trade_project/거래후기.mp4"
 import SoldListVideo from "/bookhabit/portfolio/school_trade_project/판매내역.mp4"
 import BuyListVideo from "/bookhabit/portfolio/school_trade_project/구매내역.mp4"
+import CategoryVideo from "/bookhabit/portfolio/school_trade_project/카테고리.mp4"
+import SearchVideo from "/bookhabit/portfolio/school_trade_project/검색기능.mp4"
 import SkeletonLoadingVideo from "/bookhabit/portfolio/school_trade_project/상품리스트로딩_스켈레톤ui.mp4"
 import LoadingVideo from "/bookhabit/portfolio/school_trade_project/카카오로그인_로딩처리.mp4"
 import MainPageImg from "/bookhabit/portfolio/school_trade_project/메인페이지.png"
@@ -73,6 +75,8 @@ const ShowSchoolTrade = () => {
     const infiniteScrollRef = useRef<HTMLDivElement | null>(null);
     const scrollRestorationRef = useRef<HTMLDivElement | null>(null);
     const projectImageRef = useRef<HTMLDivElement | null>(null);
+    const categoryRef = useRef<HTMLDivElement | null>(null);
+    const searchRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         // query값에 따라서 스크롤 이동으로 해당기능영상 보여주기
@@ -100,6 +104,16 @@ const ShowSchoolTrade = () => {
             case "scrollRestoration":
                 if(scrollRestorationRef.current){
                     scrollRestorationRef.current.scrollIntoView({ behavior: "smooth" });
+                }
+                break;
+            case "category":
+                if(categoryRef.current){
+                    categoryRef.current.scrollIntoView({ behavior: "smooth" });
+                }
+                break;
+            case "search":
+                if(searchRef.current){
+                    searchRef.current.scrollIntoView({ behavior: "smooth" });
                 }
                 break;
             case "projectImage":
@@ -187,6 +201,20 @@ const ShowSchoolTrade = () => {
                     title="구매내역"
                     desc="구매내역 또한 결제기능이 추가되면 결제 이후 자동으로 구매내역 리스트로 추가할 예정입니다."
                     width={600}
+                />
+                <RightVideo
+                    _src={CategoryVideo}
+                    title="카테고리 조회"
+                    desc="사용자가 전체 상품리스트에서 하나하나 찾아보는 불편함을 해결하기 위해 자신이 원하는 카테고리 종류를 선택해서 조회한 다음 그 카테고리 범주 안에서 상품을 찾아볼 수 있도록 하기 위해 구현하였습니다."
+                    width={600}
+                    _ref={categoryRef}
+                />
+                <LeftVideo
+                    _src={SearchVideo}
+                    title="검색기능"
+                    desc="사용자가 원하는 상품의 단어를 입력하여 검색하여 간편하게 관련 상품들을 살펴볼 수 있도록 구현하였습니다."
+                    width={600}
+                    _ref={searchRef}
                 />
                 <RightVideo
                     _src={LoadingVideo}
